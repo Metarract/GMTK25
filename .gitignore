@@ -1,16 +1,33 @@
-# Godot 4+ specific ignores
+##### Godot 4+ specific ignores
 .godot/
-.nomedia
+/android/
 
-# Godot-specific ignores
-.import/
-export.cfg
-export_credentials.cfg
+##### IDE specific folders
+.idea/
+.vscode/
 
-# Imported translations (automatically generated from CSV files)
-*.translation
+##### Binary assets
+# we'll be handling our assets via Drive, so let's make sure to ignore these items here
 
-# Mono-specific ignores
-.mono/
-data_*/
-mono_crash.*.json
+### Images
+*.png
+*.jpg
+*.jpeg
+
+### Audio
+*.mp3
+*.wav
+*.ogg
+
+### Fonts
+*.ttf
+ 
+### Sources/Misc
+# project files for / anything not covered by the aforementioned sections
+
+# Audacity
+*.aup
+*.aup3
+
+# I wonder!
+*.aseprite

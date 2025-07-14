@@ -1,21 +1,24 @@
 ﻿# Git Gud Guide
 
-Basic Git guide that will get you through this workflow easily. All that being said, realistically it is easier to use a
-Git client to handle most of these tasks when you're not used to these sorts of things. The workflow will still be the
-same, but the client will handle some of the rigmarole surrounding it, like the commands to use etc.
+Basic Git guide that will get you through this workflow (somewhat) easily. All that being said, realistically it is
+easier to use a Git client to handle most of these tasks when you're not used to these sorts of things. The workflow
+will still be the same, but the client will handle some of the rigmarole surrounding it, like the commands to use etc.
 
 If you're used to using CLI tools, this probably won't be too crazy. Otherwise, no sense in overwhelming yourself for
-now.
+now. Personally, I prefer using the git CLI directly, but it can be intimidating at first blush.
 
-### What is Git?
+## What is Git?
 
-Git is a **V**ersion **C**ontrol **S**ystem / tool which allows you to create an efficient history of linked changes to
-text files.
+Git is a **V**ersion **C**ontrol **S**ystem which allows you to create an efficient history of linked changes to text
+files.
 Importantly, git is for _text_ files. With effort, it can track binary files, but it's not meant for it. These are
-things like images, audio, executables, etc. If you open it up in Notepad, and there's, it's probably a binary file. We
-use a file called a `.gitignore` file to designate patterns for files we do NOT want to add to git. Anytime we are
-adding things to the repository we should consider whether it is a binary file and whether it should be added to the
-`.gitignore` so that we don't accidentally add it to the repo.
+things like images, audio, executables, etc. If you open it up in Notepad, and there's a bunch of crazy characters, it's
+probably a binary file. We use a file called a `.gitignore` file to designate patterns for files we do NOT want to add
+to git. Anytime we are adding things to the repository we should consider whether it is a binary file and whether it
+should be added to the `.gitignore` so that we don't accidentally add it to the repo. We should also include in this
+`.gitignore` almost anything that is _generated_ by the engine. `.uid` files for scripts notwithstanding, if the engine
+can generate it at build / runtime, it can do it again with little effort, and we shouldn't include it in the
+repository. These are usually whole directories that we are excluding in this scenario.
 
 Whole files are not stored in git - only the changes, or the _diffs_ are stored. Each set of changes is stored in a
 commit, and each commit links, or _points_ to the previous commit it is based on. What this means is that the _order_ of
@@ -28,7 +31,7 @@ A git repo is simply a history of commits - a long line of changes stemming from
 of that main history, sometimes called the `trunk`, to make changes that deviate from that base commit history. You can
 then merge that branching commit history back into the main commit history as long as they can be traced back to a
 common parent commit (technically, this isn't true - you can do a lot with git history to do whatever you want. But that
-is far beyond the scope of this document, and it's honestly better not to mess with them anyway).
+is beyond the scope of this document, and it's honestly better not to mess with them anyway).
 
 Git is very smart about how to handle merging these changes, and oftentimes it will just figure things out on its own.
 However, sometimes when two separate people's changes have modifications to the same file, you may run into _conflicts_.
@@ -37,7 +40,8 @@ someone else's changes) and which is outgoing (your changes). You'll have to res
 continuing. Generally speaking it is better to work in isolated sections in this case - if you've got everything in one
 file, you are almost guaranteed to run into conflicts. So we split things out into logically separated sections to help
 avoid these sorts of issues. There are other benefits in organizing things this way, but for Git's purposes this is
-the most important.
+the most important. We also try to keep changes to the smallest possible units so that reviewing changes is quick and
+easy, and we can easily see the effects of the changes that are being implemented.
 
 There are many methods of collaborating via the aforementioned systems, but for a small project we will be using the
 most simple workflow:
@@ -54,10 +58,26 @@ We _never_ make changes directly to the `main` branch in this setup - this allow
 of truth", a starting point from which we can simply just get the most recent update to it and start fresh on whatever
 new thing we are working on, and know that it's the baseline for what others have as well.
 
-As a final note to all of these things, there are exceptions - I won't be going over them, but git is a powerful tool
-that can be used in a lot of amazing (but oftentimes stupid) ways. It's best to stick to the basics.
+### Important Takeaways
 
-### Commands
+- Git is for text files, not binary files. If a binary file is in the repository, we should add it to the `.gitignore`
+- Most generated files should also be ignored. These are usually things generated when compiling / building / running
+  the game
+    - An exception to this for Godot would be unique identifiers - so-called `.uid` files, and by extension,
+      `.<ext>.import` files - as these have a direct correlation between things like say, scripts, and where they are
+      pulled into scenes and resources. These must be accurate.
+- Git tracks _changes_, not _files_. Each set of changes is a `commit`
+- Do not make changes directly to the `main` branch
+- When making your changes, first create a new `branch` off of the `main` branch (after ensuring your `main` branch is
+  updated)
+- _Conflicts_ can occur when multiple people make changes to the same file
+- To avoid conflicts, try to work in small, compartmentalized, deliverables
+- Do not hesitate to ask for clarification on anything. It is far better to ask than to break, you will not be bothering
+  me by doing so
+- Stick to the basics for now. There are exceptions to nearly all of these things above, but I won't be explaining them
+  here for the sake of time and complexity
+
+## Commands
 
 These are the commands you will probably need to know or be aware of in some way, whether to use directly with the Git
 CLI, or with whatever their abstraction is within a Git Client. There are _many_ other commands to git, as well as many
@@ -77,7 +97,7 @@ other options and uses to the below commands, but that is beyond the scope of th
 - `git merge <branch-name>`
 - `git pull`
 
-#### Explanation of Commands
+### Explanation of Commands
 
 - `git clone <clone/url>`
     - This is your initial command to bring the repository from the `remote`, and put it onto your local machine.
@@ -135,61 +155,7 @@ other options and uses to the below commands, but that is beyond the scope of th
     - Use this when you want to get the most recent update to a certain branch, and you haven't made any local changes
       to it
 
-## The Meat and Potatoes - A.K.A., the WORKFLOW
 
-Here's the important bits. Should all of that left your eyes rolling towards the back of your head, if nothing
-else commit to trying to follow these steps.
+## Putting it into practice
 
-After cloning down the repository onto your machine, the basic workflow should be:
-
-1. `git checkout main`
-    - switch to the main branch
-2. `git pull`
-    - `fetch` the latest version of `main` and `merge` it into your local version
-3. `git checkout -b <new-branch-name>`
-    - create a new `branch` off of your current one, in this case `main`, and then `checkout` that `branch`
-4. make some changes for the thing you are doing
-5. `git status`
-    - check your `status` to see what files you have changed
-6. `git add ./folder/` or `git add ./folder/file` or just `git add .`
-    - `add` the items you wish to commit to your branch, whether it be everything in a folder, a single file, or every
-      change in the current directory
-7. `git commit -m "<message here>"`
-    - `commit` the items to your branch to save your changes to it, along with a message describing the changes you have
-      made
-8. GOTO 4 until you feel the thing you are working on is done / ready to be merged into the project
-9. if there are changes to the main branch, it may be preferable to bring those changes down locally to make sure
-   they are simpatico. Otherwise, this can probably be ignored
-    1. `git checkout main` - `git pull` - `git checkout <new-branch-name>`
-        - before you push your work up, pull down changes to our `main` branch and merge it into your branch locally
-          first to make sure they are
-          compatible
-        - there are certainly "better" or "different" ways to do this, but let's stick with knowledge that we already
-          have
-    2. `git merge main`
-        - `merge` the `main` branch into your local branch (if there are changes)
-        - resolve any conflicts if there are any (if we are not working on the same things, this should not happen)
-        - this works because the commit history will be the same whether you merge it now, or merge it later - the
-          changes
-          are exactly the same
-        - so we merge it now, locally, to see if things are broken, and then resolve whatever's broken
-        - if there ARE merge conflicts, oftentimes it's better to have a tool to resolve them. VS Code is quite good at
-          this, but any Git Client worth it's salt should have something to decide whether to take the _incoming
-          change_ (
-          whatever was up in the remote) or the _outgoing change_ (your stuff)
-        - alternatively, you can examine both changes and make an entirely new change that incorporates both changes
-10. `git push origin <new-branch-name>`
-    - `push` your branch, with all of its commits, up to the remote repository
-11. go to your branch on GitHub and create a pull request (PR) for your branch into the `main` branch
-    - there should be a new little section below the `<> Code` button that shows a `Contribute` dropdown, with an option
-      to make a Pull Request
-    - this just creates a little comparison which shows the sum of all the changes you have made as they apply to master
-    - if you merge and resolved locally, there should be no conflicts to worry about here
-12. if it all looks good, and you don't think you need someone to double-check it, complete the PR
-    - in this situation, just create a Merge Commit as your merging strategy
-    - this is the most straightforward method that also preserves all the commits you made
-    - alternatively, feel free to ask for a once-over - that's part of what a PR is for, code review
-13. GOTO 1 and start again
-    - we start from the checkout/pull again because you need to make sure you have the version of `main` that you just
-      created, even if you merged it locally earlier—the new merge commit should be pulled down as well so that when you
-      create a new branch off of `main` you are starting at the correct spot in the history
+See [CONTRIBUTING](./CONTRIBUTING.md)

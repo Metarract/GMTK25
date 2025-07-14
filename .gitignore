@@ -1,25 +1,26 @@
-##### Godot 4+ specific ignores
+##### Generated Folders ###############################################
+### Godot 4+ specific ignores
 .godot/
 /android/
 
-##### IDE specific folders
+### IDE specific folders
 .idea/
 .vscode/
 
-##### Binary assets
+##### Binary assets ###############################################
 # we'll be handling our assets via Drive, so let's make sure to ignore these items here
 
-### Images
+## Images
 *.png
 *.jpg
 *.jpeg
 
-### Audio
+## Audio
 *.mp3
 *.wav
 *.ogg
 
-### Fonts
+## Fonts
 *.ttf
  
 ### Sources/Misc
@@ -31,3 +32,11 @@
 
 # I wonder!
 *.aseprite
+
+### Exceptions ###############################################
+# if we are looking to ignore a directory, if there are / will be matching items below then it is better to ignore items within that directory than the whole directory
+# e.g., "folder/**/*" is better than "folder/" as it (recursively) ignores items, rather than the directory, and thus the below exceptions are preserved
+
+## Godot-generated, required for accurate id usage within scenes/nodes
+!*.import
+!*.uid

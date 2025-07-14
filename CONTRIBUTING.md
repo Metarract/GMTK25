@@ -2,6 +2,32 @@
 
 We will not be accepting outside contributions, this is mainly just for the team
 
+## Getting the repository
+
+if you're going to be making code changes:
+
+1. go to the [repository](https://github.com/Metarract/GMTK25) in GitHub
+2. get the `clone` url using the green `<> Code` button
+    - SSH requires setting up an SSH
+      key. [Info here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+3. find a nice quiet directory on your computer and navigate to it in your git client or in CMD
+4. run `git clone <your clone url>` or whatever the equivalent is in your git client
+
+if you simply want to grab the latest iteration of the project to test assets out on, you may instead:
+
+1. go to the [repository](https://github.com/Metarract/GMTK25) in GitHub
+2. ensure you are on the `main` branch (left side, below repository title)
+3. using the green `<> Code` button, download the zip
+4. unzip it wherever you please
+
+## Getting Assets
+
+1. go to the [drive](https://drive.google.com/drive/u/0/folders/1_iQon-YsFfkdMFy38_EjBdw7FhfmHjXW)
+2. download the `assets` folder as a zip
+3. unzip it wherever you please
+    - if you have the repository, you should unzip/copy the contents of the zip into the `assets` folder in the
+      repository, overwriting the existing contents
+
 ## General Workflow
 
 1. check the board `Backlog` to see what needs doing
@@ -10,18 +36,21 @@ We will not be accepting outside contributions, this is mainly just for the team
     - make sure to let the team know when you're picking something up
 2. move the item to `Doing` and put your name on it
 3. after finishing, upload / push up your work
-   1. if it requires merging, do so
+    1. if it requires merging, do so
 4. inform the team of the changes
 5. move your item to `Done`
 
 ## Asset Workflow
 
-1. download the latest version of the [assets](https://drive.google.com/drive/folders/1mABOBiUYkEcktTIkc9ELlYjbfZlMKIOX?usp=drive_link) folder in the drive to your local
+1. download the latest version of
+   the [assets](https://drive.google.com/drive/folders/1mABOBiUYkEcktTIkc9ELlYjbfZlMKIOX?usp=drive_link) folder in the
+   drive to your local
 2. make your updates
 3. upload just the files you changed to the drive
-   - this way if multiple files are updated you don't overwrite someone else's changes
-   - try to keep renames/reorganization to a minimum, so that `.uid` / `.<ext>.import` files remain in the correct spots, as well as referencing the correct files
-   - inform the team if renaming/reorganization was necessary
+    - this way if multiple files are updated you don't overwrite someone else's changes
+    - try to keep renames/reorganization to a minimum, so that `.uid` / `.<ext>.import` files remain in the correct
+      spots, as well as referencing the correct files
+    - inform the team if renaming/reorganization was necessary
 
 ## Coding Workflow
 
@@ -43,24 +72,24 @@ We will not be accepting outside contributions, this is mainly just for the team
 8. GOTO 4 until you feel the thing you are working on is done / ready to be merged into the project
 9. if there are changes to the main branch, it may be preferable to bring those changes down locally to make sure
    they are simpatico. Otherwise, this can probably be ignored
-   1. `git checkout main` - `git pull` - `git checkout <new-branch-name>`
-       - before you push your work up, pull down changes to our `main` branch and merge it into your branch locally
-         first to make sure they are
-         compatible
-       - there are certainly "better" or "different" ways to do this, but let's stick with knowledge that we already
-         have
-   2. `git merge main`
-       - `merge` the `main` branch into your local branch (if there are changes)
-       - resolve any conflicts if there are any (if we are not working on the same things, this should not happen)
-       - this works because the commit history will be the same whether you merge it now, or merge it later - the
-         changes
-         are exactly the same
-       - so we merge it now, locally, to see if things are broken, and then resolve whatever's broken
-       - if there ARE merge conflicts, oftentimes it's better to have a tool to resolve them. VS Code is quite good at
-         this, but any Git Client worth it's salt should have something to decide whether to take the _incoming
-         change_ (
-         whatever was up in the remote) or the _outgoing change_ (your stuff)
-       - alternatively, you can examine both changes and make an entirely new change that incorporates both changes
+    1. `git checkout main` - `git pull` - `git checkout <new-branch-name>`
+        - before you push your work up, pull down changes to our `main` branch and merge it into your branch locally
+          first to make sure they are
+          compatible
+        - there are certainly "better" or "different" ways to do this, but let's stick with knowledge that we already
+          have
+    2. `git merge main`
+        - `merge` the `main` branch into your local branch (if there are changes)
+        - resolve any conflicts if there are any (if we are not working on the same things, this should not happen)
+        - this works because the commit history will be the same whether you merge it now, or merge it later - the
+          changes
+          are exactly the same
+        - so we merge it now, locally, to see if things are broken, and then resolve whatever's broken
+        - if there ARE merge conflicts, oftentimes it's better to have a tool to resolve them. VS Code is quite good at
+          this, but any Git Client worth it's salt should have something to decide whether to take the _incoming
+          change_ (
+          whatever was up in the remote) or the _outgoing change_ (your stuff)
+        - alternatively, you can examine both changes and make an entirely new change that incorporates both changes
 10. `git push origin <new-branch-name>`
     - `push` your branch, with all of its commits, up to the remote repository at `origin`
 11. go to your branch on GitHub and create a pull request (PR) for your branch into the `main` branch

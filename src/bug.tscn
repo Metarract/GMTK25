@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5o8l2iklites"]
 
 [ext_resource type="Script" uid="uid://b5p7r4e8hbdhm" path="res://src/bug.gd" id="1_a7w1d"]
-[ext_resource type="Texture2D" uid="uid://bkhc0fb05lfne" path="res://assets/pillbug.png" id="2_euec3"]
+[ext_resource type="Texture2D" uid="uid://d186uu11oth8b" path="res://assets/pillbug.png" id="2_euec3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a7w1d"]
 radius = 6.0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhdq712uv82i5"
-path="res://.godot/imported/pillbug.png-5957cabff962210c848c63acb50443da.ctex"
+uid="uid://giiqi2ka2qi7"
+path="res://.godot/imported/ladybug.png-44ff3b9f5ce26256a27371614f79d6bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pillbug.png"
-dest_files=["res://.godot/imported/pillbug.png-5957cabff962210c848c63acb50443da.ctex"]
+source_file="res://assets/Sprites/ladybug.png"
+dest_files=["res://.godot/imported/ladybug.png-44ff3b9f5ce26256a27371614f79d6bb.ctex"]
 
 [params]
 

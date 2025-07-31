@@ -1,11 +1,11 @@
 class_name LineDrawer
 extends Node2D
 
-# constants
-const MAX_SEGMENT_SIZE: float = 10.0
-const MIN_SEGMENT_SIZE: float = 2.0
-const MAX_SEGMENT_COUNT: int = 1000
-const SEGMENT_TIMEOUT_MS: int = 5000
+# "constants"
+@export var MAX_SEGMENT_SIZE: float = 10.0
+@export var MIN_SEGMENT_SIZE: float = 2.0
+@export var MAX_SEGMENT_COUNT: int = 1000
+@export var SEGMENT_TIMEOUT_MS: int = 5000
 
 # state
 enum DrawState {
@@ -35,15 +35,12 @@ func _ready() -> void:
 
 func bitmap_setup() -> void:
   env_bitmap = BitMap.new()
-
-  var vrect: Rect2 = get_viewport_rect()
-  env_bitmap.create(vrect.size)
-
+  env_bitmap.create(get_viewport_rect().size)
   image_tex = ImageTexture.new()
   image_tex.set_image(env_bitmap.convert_to_image())
+
   line_sprite.centered = false
   line_sprite.texture = image_tex
-  update_visuals()
 
 func _unhandled_input(_event: InputEvent) -> void:
   match draw_state:
@@ -101,6 +98,7 @@ func handle_erasing_input():
 func try_add_segments(a: Vector2, b: Vector2) -> bool:
   var distance: float = a.distance_to(b)
   if distance < MIN_SEGMENT_SIZE: return false
+  var timeout_cd = Time.get_ticks_msec() + SEGMENT_TIMEOUT_MS
   if distance > MAX_SEGMENT_SIZE:
     # distance is too great, split into multiple segments
     # keeps our segments small so that erasing isn't too wonky
@@ -111,11 +109,11 @@ func try_add_segments(a: Vector2, b: Vector2) -> bool:
     for i in range(segment_count):
       # create a new vector denoting the point MAX_SEGMENT_SIZE from current a
       var nb: Vector2 = (a.direction_to(b) * MAX_SEGMENT_SIZE) + a
-      segment_array.append(Segment.new(a, nb, coll_body))
+      segment_array.append(Segment.new(a, nb, coll_body, timeout_cd))
       # move up the line
       a = nb
       pass
-  segment_array.append(Segment.new(a, b, coll_body))
+  segment_array.append(Segment.new(a, b, coll_body, timeout_cd))
   return true
 
 ## returns false if no segments were removed, otherwise true
@@ -151,24 +149,33 @@ func queue_segment_cap_removals():
     segment_array.erase(segment_array[s])
 
 func handle_removal_queue():
-  if removal_queue.size() > 0:
+  var update_vis := false
+  while removal_queue.size() > 0:
+    update_vis = true
     var s = removal_queue.front()
     removal_queue.erase(s)
     s.queue_free()
+  if update_vis: update_visuals()
 #endregion
 
 func update_visuals() -> void:
-  # for each existing segment, draw some shit
-  image_tex.update(env_bitmap.convert_to_image())
+  env_bitmap.create(get_viewport_rect().size)
+  for s in segment_array:
+    # get bitmap from each segment
+    var center = s.origin
+    # todo actually apply a nice simple circle to the spot
+    var size = Vector2i(MAX_SEGMENT_SIZE, MAX_SEGMENT_SIZE)
+    var origin = center - (size / 2)
+    env_bitmap.set_bit_rect(Rect2i(origin, size), true)
 
-func is_outside_bounds(pos: Vector2i) -> bool:
-  return pos.x < 0 or pos.y < 0 or pos.x >= env_bitmap.get_size().x or pos.y >= env_bitmap.get_size().y
+  image_tex.update(env_bitmap.convert_to_image())
 
 ## helper class to keep track of some data
 class Segment extends RefCounted:
   var timeout: int
   var coll: CollisionShape2D
   var segment: SegmentShape2D
+  var origin: Vector2i
 
   var a: Vector2:
     set(value):
@@ -181,14 +188,20 @@ class Segment extends RefCounted:
     get():
       return segment.b
 
-  func _init(start: Vector2, end: Vector2, body: CollisionObject2D) -> void:
-    timeout = Time.get_ticks_msec() + SEGMENT_TIMEOUT_MS
+  func _init(start: Vector2, end: Vector2, body: CollisionObject2D, timeout_cd: int) -> void:
+    timeout = timeout_cd
     segment = SegmentShape2D.new()
+    coll = CollisionShape2D.new()
+
     segment.a = start
     segment.b = end
 
-    coll = CollisionShape2D.new()
     coll.shape = segment
+
+    var c_x = (segment.a.x + segment.b.x) / 2
+    var c_y = (segment.a.y + segment.b.y) / 2
+    origin = Vector2i(c_x, c_y)
+
     body.add_child(coll) # this is a little goofy but this should only ever be used here
 
   func queue_free():

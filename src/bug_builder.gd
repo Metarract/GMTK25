@@ -66,7 +66,7 @@ func slug() -> BugBuilder:
   var description = "the biggest pos this side of the garden"
   var tex_path = "res://assets/Sprites/sloog.png"
   var base_trade_value = 1.0
-  var color = Color.RED
+  var color = Color.BISQUE
   var weight = 3.0
   var speed = 1.0
   var affability = 0.0
@@ -101,3 +101,24 @@ static func normal_dist_stat(value: float) -> float:
   var dist = randfn(value, NORMAL_DIST_DEVIATION)
   return clampf(dist, MIN_STAT, MAX_STAT)
 #endregion
+
+
+####################
+## Finally, this is a fallback confused bug in case things go wrooooong during Bug scene setup
+## This does NOT work with the Fluent Builder
+static func get_confused_bug() -> Bug:
+  var name = "Confused Bug"
+  var description = "This bug is confused!"
+  var tex_path = "res://assets/Sprites/pillbug.png"
+  var weight = 1.0
+  var speed = 1.0
+  var base_trade_value = 99999.0
+  var color = Color.WHITE
+  var affability = 1.0
+  var cronch = 1.0
+  var honor = 1.0
+  var juice = 1.0
+  var leg = 6
+  var stink = 1.0
+
+  return Bug.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)

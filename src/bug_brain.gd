@@ -26,15 +26,17 @@ var movement_target_pos:Vector2 = Vector2.ZERO
 
 func _ready() -> void:
   
-  bug = Bug.new("Pillbug", "Small but evasive.", "", 1.0, 50.0, 2)
+  # bug = Bug.new("Pillbug", "Small but evasive.", "", 1.0, 50.0, 2)
   
   if not bug:
-    bug = Bug.new("Confused Bug", "This bug is a Bug!", "", 0.0, 0.0, 99999, Color.RED)
+    bug = BugBuilder.get_confused_bug()
   
   # Assign node references
   sprite = $Sprite2D
   collision_shape = $CollisionShape2D
-  
+
+  # setup from bug data
+  sprite.texture = load(bug.texture_path)
   # update color if assigned
   sprite.modulate = bug.color
 

@@ -13,23 +13,23 @@ extends PanelContainer
 @onready var rtl_stink:RichTextLabel = $VBoxContainer/Body/VBoxContainer/vbStats/HBoxContainer/hbCol2/vbStats2/rtlStink
 
 func _ready() -> void:
-	pass
-	#var new_bugg = Bug.new("Icky Gross Bug", "A very gross and also icky bug.", null, 69.420, 10.0, 5.0)
-	#loadBug(new_bugg)
+  pass
+  #var new_bugg = Bug.new("Icky Gross Bug", "A very gross and also icky bug.", null, 69.420, 10.0, 5.0)
+  #loadBug(new_bugg)
 
 func loadBug(b:Bug) -> bool:
-	if !b: return false
-	
-	rtl_bug_name.text = b.bug_name
-	rtl_bug_description.text = b.description
-	rtl_weight.text = "%3.1f" % [b.weight]
-	rtl_speed.text = "%3.1f" % [b.movement_speed]
-	rtl_value.text = "%3.1f" % [b.trade_value]
-	rtl_aff.text = "%3.1f" % [b.affability]
-	rtl_honor.text = "%3.1f" % [b.honor]
-	rtl_leg.text = "%3.1f" % [b.leg]
-	rtl_crunch.text = "%3.1f" % [b.cronch]
-	rtl_juice.text = "%3.1f" % [b.juice]
-	rtl_stink.text = "%3.1f" % [b.stink]
-	
-	return true
+  if !b: return false
+  
+  rtl_bug_name.text = b.bug_name
+  rtl_bug_description.text = b.description
+  rtl_weight.text = "%3.1f" % [b.weight]
+  rtl_speed.text = "%3.1f" % [b.movement_speed]
+  rtl_value.text = "%3.1f" % [b.trade_value]
+  rtl_aff.text = "%3.1f" % [b.affability]
+  rtl_honor.text = "%3.1f" % [b.honor]
+  rtl_leg.text = "%3.1f" % [b.leg]
+  rtl_crunch.text = "%3.1f" % [b.cronch]
+  rtl_juice.text = "%3.1f" % [b.juice]
+  rtl_stink.text = "%3.1f" % [b.stink]
+  
+  return true

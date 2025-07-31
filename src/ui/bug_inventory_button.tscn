@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dog3hbksl4e5s"]
+
+[ext_resource type="Script" uid="uid://c3tpkv07husqt" path="res://src/ui/bug_inventory_button.gd" id="1_u4q6d"]
+
+[node name="BugInventoryButton" type="Button"]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_u4q6d")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

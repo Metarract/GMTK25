@@ -14,6 +14,10 @@ enum DrawingState {
 
 var draw_state := DrawingState.IDLE
 
+var segment_array: Array = []
+var last_mouse_pos: Vector2 = Vector2()
+const MAX_SEGMENT_SIZE := 10.0
+
 func _ready() -> void:
   line_sprite = $%LineSprite
   coll_body = $%Collider
@@ -44,22 +48,24 @@ func _unhandled_input(_event: InputEvent) -> void:
 func _physics_process(_delta: float) -> void:
   if draw_state == DrawingState.IDLE:
     return
+  var is_erasing := draw_state == DrawingState.ERASING
 
-  var is_erasing := false
-  if draw_state == DrawingState.ERASING:
-    is_erasing = true
-  var mouse_pos = line_sprite.to_local(get_global_mouse_position())
-  draw_circle_to_bitmap(10, mouse_pos, is_erasing)
-  update_colliders()
-  update_visuals()
+  var mouse_pos = get_global_mouse_position()
+  if draw_state == DrawingState.DRAWING:
+    add_segments(last_mouse_pos, mouse_pos)
+    last_mouse_pos = mouse_pos
+  else:
+    check_erase_colls(mouse_pos, 5)
+  # draw_circle_to_bitmap(10, mouse_pos, is_erasing)
+  # update_visuals()
 
 #region state handlers
 func handle_idle_input():
   if Input.is_action_just_pressed("draw_line"):
+    last_mouse_pos = get_global_mouse_position()
     draw_state = DrawingState.DRAWING
   elif Input.is_action_just_pressed("erase_line"):
     draw_state = DrawingState.ERASING
-  pass
 
 func handle_drawing_input():
   if Input.is_action_just_released("draw_line"):
@@ -71,23 +77,53 @@ func handle_erasing_input():
   if Input.is_action_just_released("erase_line"):
     draw_state = DrawingState.IDLE
   elif Input.is_action_just_pressed("draw_line"):
+    last_mouse_pos = get_global_mouse_position()
     draw_state = DrawingState.DRAWING
 #endregion
 
 func update_visuals() -> void:
   image_tex.update(env_bitmap.convert_to_image())
 
-func update_colliders():
-  var polygons = env_bitmap.opaque_to_polygons(Rect2i(Vector2i(), env_bitmap.get_size()), 3)
+func add_segments(a: Vector2, b: Vector2) -> void:
+  var distance: float = a.distance_to(b)
+  var new_segment_arr := []
+  if distance > MAX_SEGMENT_SIZE:
+    # distance is too great, split into multiple segments
+    var rem = fmod(distance, MAX_SEGMENT_SIZE)
+    var flat_dist = distance - rem
+    var segment_count = floori(flat_dist / MAX_SEGMENT_SIZE)
+    # for each, create a vector from a->b (store b as next a)
+    for i in range(segment_count):
+      # create a new vector denoting the point MAX_DIST from current a
+      var nb: Vector2 = (a.direction_to(b) * MAX_SEGMENT_SIZE) + a
+      new_segment_arr.append(get_segment_coll(a, nb))
+      # move up the line
+      a = nb
+      pass
+  new_segment_arr.append(get_segment_coll(a, b))
 
-  var collider_shapes = coll_body.get_children()
-  for coll in collider_shapes:
-    coll.queue_free()
+  for s in new_segment_arr:
+    segment_array.append(s)
+    coll_body.add_child(s)
 
-  for polygon in polygons:
-    var c = CollisionPolygon2D.new()
-    c.polygon = polygon
-    coll_body.add_child(c)
+func get_segment_coll(a: Vector2, b: Vector2) -> CollisionShape2D:
+  var line = SegmentShape2D.new()
+  line.a = a
+  line.b = b
+  var coll = CollisionShape2D.new()
+  coll.shape = line
+  return coll
+
+func check_erase_colls(origin: Vector2, radius: float):
+  var erasable_segments = []
+  for s in segment_array:
+    var seg = (s.shape as SegmentShape2D)
+    if seg.a.distance_to(origin) < radius or seg.b.distance_to(origin) < radius:
+      erasable_segments.append(s)
+
+  for s in erasable_segments:
+    segment_array.erase(s)
+    s.queue_free()
 
 # TODO adapt shader to do everything below
 # receive the bitmap information and our items below
@@ -131,3 +167,33 @@ func bitmap_setup() -> void:
   line_sprite.centered = false
   line_sprite.texture = image_tex
   update_visuals()
+
+class Segment extends RefCounted:
+  const TIMEOUT_MS: int = 5000
+  var timestamp: int
+  var coll: CollisionShape2D
+  var seg: SegmentShape2D
+
+  var start: Vector2:
+    set(value):
+      printerr("don't")
+    get():
+      return seg.a
+  var end: Vector2:
+    set(value):
+      printerr("don't")
+    get():
+      return seg.b
+
+  func _init(start: Vector2, end: Vector2, body: CollisionObject2D) -> void:
+    timestamp = Time.get_ticks_msec() + TIMEOUT_MS
+    seg = SegmentShape2D.new()
+    seg.a = start
+    seg.b = end
+
+    coll = CollisionShape2D.new()
+    coll.shape = seg
+    body.add_child(coll)
+
+  func queue_free():
+    coll.queue_free()

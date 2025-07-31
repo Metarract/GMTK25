@@ -1,10 +1,16 @@
 class_name LineDrawer
 extends Node2D
 
+# constants (real)
+# see: src/shaders/linedraw_bitmap_processor.gdshader
+var S_PARAM_LINE_COLOR := "line_color"
+var S_PARAM_SEGMENT_RADIUS := "segment_radius"
+var S_PARAM_SEGMENT_COUNT := "segment_count"
+var S_PARAM_SEGMENTS := "segments"
 # "constants"
-@export var MAX_SEGMENT_SIZE: float = 10.0
+@export var MAX_SEGMENT_SIZE: float = 5.0 # set this to influence the size of the line as well
 @export var MIN_SEGMENT_SIZE: float = 2.0
-@export var MAX_SEGMENT_COUNT: int = 1000
+@export var MAX_SEGMENT_COUNT: int = 1000 # absolutely CANNOT go above 1000 without editing the shader
 @export var SEGMENT_TIMEOUT_MS: int = 5000
 
 # state
@@ -21,16 +27,22 @@ var segment_array: Array = []
 var removal_queue: Array = []
 var last_mouse_pos: Vector2 = Vector2()
 
+@export var segment_color: Color = Color.DARK_GRAY:
+  set = set_segment_color
+
 # nodes
 var line_sprite: Sprite2D
 var coll_body: StaticBody2D
 var env_bitmap: BitMap
 var image_tex: ImageTexture
+var shader_mat: ShaderMaterial
 
 #region lifecycle
 func _ready() -> void:
   line_sprite = $%LineSprite
   coll_body = $%Collider
+  shader_mat = line_sprite.material as ShaderMaterial
+  set_segment_color(segment_color)
   bitmap_setup()
 
 func bitmap_setup() -> void:
@@ -159,16 +171,16 @@ func handle_removal_queue():
 #endregion
 
 func update_visuals() -> void:
-  env_bitmap.create(get_viewport_rect().size)
+  var segment_vec2_array: PackedVector2Array = []
   for s in segment_array:
-    # get bitmap from each segment
-    var center = s.origin
-    # todo actually apply a nice simple circle to the spot
-    var size = Vector2i(MAX_SEGMENT_SIZE, MAX_SEGMENT_SIZE)
-    var origin = center - (size / 2)
-    env_bitmap.set_bit_rect(Rect2i(origin, size), true)
+    segment_vec2_array.append(s.origin)
+  shader_mat.set_shader_parameter(S_PARAM_SEGMENT_RADIUS, MAX_SEGMENT_SIZE)
+  shader_mat.set_shader_parameter(S_PARAM_SEGMENT_COUNT, segment_vec2_array.size())
+  shader_mat.set_shader_parameter(S_PARAM_SEGMENTS, segment_vec2_array)
 
-  image_tex.update(env_bitmap.convert_to_image())
+func set_segment_color(c: Color) -> void:
+  segment_color = c
+  shader_mat.set_shader_parameter(S_PARAM_LINE_COLOR, segment_color)
 
 ## helper class to keep track of some data
 class Segment extends RefCounted:
@@ -176,6 +188,7 @@ class Segment extends RefCounted:
   var coll: CollisionShape2D
   var segment: SegmentShape2D
   var origin: Vector2i
+  # TODO color, noise usage, etc. other values to account for when drawing with different implements
 
   var a: Vector2:
     set(value):

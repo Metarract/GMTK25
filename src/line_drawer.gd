@@ -33,8 +33,6 @@ var last_mouse_pos: Vector2 = Vector2()
 # nodes
 var line_sprite: Sprite2D
 var coll_body: StaticBody2D
-var env_bitmap: BitMap
-var image_tex: ImageTexture
 var shader_mat: ShaderMaterial
 
 #region lifecycle
@@ -43,16 +41,16 @@ func _ready() -> void:
   coll_body = $%Collider
   shader_mat = line_sprite.material as ShaderMaterial
   set_segment_color(segment_color)
-  bitmap_setup()
+  setup_blank_image()
 
-func bitmap_setup() -> void:
-  env_bitmap = BitMap.new()
-  env_bitmap.create(get_viewport_rect().size)
-  image_tex = ImageTexture.new()
-  image_tex.set_image(env_bitmap.convert_to_image())
+func setup_blank_image() -> void:
+  # probably better to use a ColorRect rather than do this nonsense here, but it only happens once so who cares right now
+  var bmp = BitMap.new()
+  bmp.create(get_viewport_rect().size)
 
   line_sprite.centered = false
-  line_sprite.texture = image_tex
+  line_sprite.texture = ImageTexture.new()
+  line_sprite.texture.set_image(bmp.convert_to_image());
 
 func _unhandled_input(_event: InputEvent) -> void:
   match draw_state:

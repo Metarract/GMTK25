@@ -6,10 +6,10 @@ extends PanelContainer
 @onready var stats_panel = $HBoxContent/StatsPanel
 
 func _ready() -> void:
-  #var buggy1 = Bug.new("Bug", "A pretty normal bug.", "res://assets/Sprites/ant.png", 4.20, 2.0, 5.0)
-  #var buggy2 = Bug.new("Icky Bug", "A very icky bug.", "res://assets/Sprites/ant.png", 6.9, 4.0, 10.0)
-  #var buggy3 = Bug.new("Gross Bug", "A very gross bug.", "res://assets/Sprites/ant.png", 42.069, 6.0, 25.0)
-  #var buggy4 = Bug.new("Icky Gross Bug", "A very gross and also icky bug.", "res://assets/Sprites/ant.png", 69.420, 8.0, 50.0)
+  #var buggy1 = BugStats.new("BugStats", "A pretty normal bug.", "res://assets/Sprites/ant.png", 4.20, 2.0, 5.0)
+  #var buggy2 = BugStats.new("Icky BugStats", "A very icky bug.", "res://assets/Sprites/ant.png", 6.9, 4.0, 10.0)
+  #var buggy3 = BugStats.new("Gross BugStats", "A very gross bug.", "res://assets/Sprites/ant.png", 42.069, 6.0, 25.0)
+  #var buggy4 = BugStats.new("Icky Gross BugStats", "A very gross and also icky bug.", "res://assets/Sprites/ant.png", 69.420, 8.0, 50.0)
   #inventory = [buggy1, buggy2, buggy3, buggy4]
   
   load_inventory(inventory)
@@ -48,7 +48,7 @@ func load_inventory(i:Array) -> bool:
     
   return true
 
-func bug_button_pushed(b:Bug) -> bool:
+func bug_button_pushed(b:BugStats) -> bool:
   if not b: return false
   stats_panel.visible = true
   stats_panel.loadBug(b)

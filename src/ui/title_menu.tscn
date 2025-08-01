@@ -1,0 +1,89 @@
+[gd_scene load_steps=10 format=3 uid="uid://bkjvkras1ef0n"]
+
+[ext_resource type="Script" uid="uid://cog455qxu3fev" path="res://src/ui/title_menu.gd" id="1_e5aq7"]
+[ext_resource type="Texture2D" uid="uid://bkxerejppnrsu" path="res://assets/Sprites/Menus-UI/menuboard_base.png" id="1_vkhhk"]
+[ext_resource type="Texture2D" uid="uid://oqfonwe1lvk8" path="res://assets/Sprites/Menus-UI/titlescreen_mainbook.png" id="2_e5aq7"]
+[ext_resource type="Texture2D" uid="uid://dta20iy4xop83" path="res://assets/Sprites/Menus-UI/titlescreen_notebook.png" id="3_kgqd2"]
+[ext_resource type="FontFile" uid="uid://cud18yyrj1j0q" path="res://assets/Fonts/RecMonoCasual-Regular-1.085.ttf" id="4_yeaxc"]
+
+[sub_resource type="Animation" id="Animation_vkhhk"]
+resource_name = "fadein"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/PanelContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kgqd2"]
+_data = {
+&"fadein": SubResource("Animation_vkhhk")
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tem3t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ikni3"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 0.470588)
+
+[node name="TitleMenu" type="Node2D"]
+script = ExtResource("1_e5aq7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_kgqd2")
+}
+autoplay = "fadein"
+
+[node name="MenuboardBase" type="Sprite2D" parent="."]
+texture = ExtResource("1_vkhhk")
+centered = false
+
+[node name="TitlescreenMainbook" type="Sprite2D" parent="."]
+texture = ExtResource("2_e5aq7")
+centered = false
+
+[node name="TitlescreenNotebook" type="Sprite2D" parent="."]
+texture = ExtResource("3_kgqd2")
+centered = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 100)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tem3t")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_ikni3")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/PanelContainer/PanelContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("4_yeaxc")
+theme_override_font_sizes/normal_font_size = 40
+text = "Press Any Key"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

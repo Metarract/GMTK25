@@ -3,6 +3,9 @@ extends RigidBody2D
 
 enum states {IDLE, TARGETING, MOVING}
 
+# for use by inventory and spawn controller
+signal on_bug_captured(bug_stats: BugStats)
+
 # debug flag
 var DEBUG:bool = false
 
@@ -24,6 +27,8 @@ var max_idle_time:float = 2.5
 
 # "MOVING" state variables
 var movement_target_pos:Vector2 = Vector2.ZERO
+
+var last_pos: Vector2 = Vector2()
 
 func _ready() -> void:
   
@@ -70,7 +75,7 @@ func _process(delta: float) -> void:
       
     states.MOVING:
       #if DEBUG: print(str(global_position), " > ", str(movement_target_pos))
-      
+      last_pos = global_position
       if movement_target_pos == Vector2.ZERO:
         change_state(states.TARGETING)
         
@@ -83,8 +88,23 @@ func _process(delta: float) -> void:
         var movement_direction = global_position.direction_to(movement_target_pos)
         if not move_and_collide(movement_direction * bug_stats.movement_speed * delta, true):
           move_and_collide(movement_direction * bug_stats.movement_speed * delta)
+          update_rotation_from_move()
         else:
           # probably go to targeting
           if DEBUG: print('bonk')
     _:
       print("ERR: Dafuq state are we in? ", current_state)
+
+func update_rotation_from_move():
+  # only rotate if we have moved some distance
+  # thus we don't jitter when we stop and rotate to 0
+  if is_zero_approx(last_pos.distance_to(global_position)): return
+  # currently sprites lookin up
+  # rotate a bit since right is 0 rot in godot
+  sprite.rotation = last_pos.angle_to_point(global_position) + (PI / 2)
+
+func capture():
+  # all that our bug is should be in our stats - so just pass that data to whoever wanted it
+  on_bug_captured.emit(bug_stats)
+  # remove ourselves, our job here is done
+  queue_free()

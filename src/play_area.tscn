@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy6vvu414roo7"]
+
+[ext_resource type="Texture2D" uid="uid://gyg3ixu6101l" path="res://assets/Backgrounds/bg_paper.png" id="1_j4w8q"]
+[ext_resource type="Script" uid="uid://b633mn77u4jgt" path="res://src/bug_spawning/spawn_controller.gd" id="2_7maq6"]
+
+[node name="PlayArea" type="Node2D"]
+
+[node name="Bg" type="Sprite2D" parent="."]
+texture = ExtResource("1_j4w8q")
+centered = false
+
+[node name="SpawnController" type="Node" parent="."]
+script = ExtResource("2_7maq6")
+
+[node name="SpawnPositions" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Marker2D" type="Marker2D" parent="SpawnPositions"]
+position = Vector2(-27, 100)
+
+[node name="Marker2D2" type="Marker2D" parent="SpawnPositions"]
+position = Vector2(93, 386)
+
+[node name="Marker2D3" type="Marker2D" parent="SpawnPositions"]
+position = Vector2(-24, 226)
+
+[node name="Marker2D4" type="Marker2D" parent="SpawnPositions"]
+position = Vector2(116, -19)
+
+[node name="Stage" type="Node2D" parent="."]
+unique_name_in_owner = true

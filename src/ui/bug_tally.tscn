@@ -33,3 +33,5 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = -5
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

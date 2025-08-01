@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://36uan8wcllj7"]
+[gd_scene load_steps=22 format=3 uid="uid://36uan8wcllj7"]
 
 [ext_resource type="Script" uid="uid://dhc26rwvyrcwq" path="res://src/ui/notebook.gd" id="1_rga7h"]
 [ext_resource type="Texture2D" uid="uid://51jm4a52dmhg" path="res://assets/Sprites/Menus-UI/menu_notebook_open.png" id="2_y5vph"]
@@ -8,7 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://b76ldn8w2werw" path="res://assets/Sprites/Menus-UI/menu_notebook_hoverclosed.png" id="6_3q0g6"]
 [ext_resource type="FontFile" uid="uid://deydr763hra6v" path="res://assets/Fonts/RecMonoCasual-Bold-1.085.ttf" id="8_epnlk"]
 [ext_resource type="Texture2D" uid="uid://c3v3xotw72lsk" path="res://assets/Sprites/Menus-UI/sliderbar.png" id="9_g40sl"]
+[ext_resource type="PackedScene" uid="uid://pqtbgfc1vpvb" path="res://src/ui/bug_tally.tscn" id="10_g40sl"]
 [ext_resource type="Texture2D" uid="uid://01j55mg104dg" path="res://assets/Sprites/Menus-UI/sliderhandle.png" id="10_y5vph"]
+[ext_resource type="PackedScene" uid="uid://b6wjw7a5sjajh" path="res://src/ui/bug_stats_distribution_graph.tscn" id="11_g40sl"]
 
 [sub_resource type="Animation" id="Animation_q5cew"]
 resource_name = "slide"
@@ -109,6 +111,11 @@ size = Vector2(182.5, 64)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g40sl"]
 bg_color = Color(0.12549, 0.156863, 0.32549, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3q0g6"]
+content_margin_left = 50.0
+content_margin_top = 25.0
+content_margin_right = 0.0
+
 [node name="Notebook" type="Node2D"]
 script = ExtResource("1_rga7h")
 
@@ -132,7 +139,7 @@ position = Vector2(535, 0)
 texture = ExtResource("2_y5vph")
 centered = false
 
-[node name="Button" type="Button" parent="Open"]
+[node name="CloseJournal" type="Button" parent="Open"]
 custom_minimum_size = Vector2(30, 30)
 offset_left = 544.0
 offset_top = 55.0
@@ -263,6 +270,7 @@ step = 0.25
 value = 0.5
 
 [node name="BugsMenu" type="PanelContainer" parent="."]
+visible = false
 custom_minimum_size = Vector2(300, 190)
 anchors_preset = 8
 anchor_left = 0.5
@@ -271,14 +279,66 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 722.0
 offset_top = 42.0
-offset_right = 1022.0
-offset_bottom = 232.0
+offset_right = 1038.0
+offset_bottom = 242.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_eq8er")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BugsMenu"]
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BugsMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="BugTally" parent="BugsMenu/VBoxContainer/HBoxContainer" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="BugTally2" parent="BugsMenu/VBoxContainer/HBoxContainer" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="BugTally3" parent="BugsMenu/VBoxContainer/HBoxContainer" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="BugTally4" parent="BugsMenu/VBoxContainer/HBoxContainer" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="BugTally5" parent="BugsMenu/VBoxContainer/HBoxContainer" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="BugsMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="BugTally" parent="BugsMenu/VBoxContainer/HBoxContainer2" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="BugTally2" parent="BugsMenu/VBoxContainer/HBoxContainer2" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="BugTally3" parent="BugsMenu/VBoxContainer/HBoxContainer2" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="BugTally4" parent="BugsMenu/VBoxContainer/HBoxContainer2" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="BugTally5" parent="BugsMenu/VBoxContainer/HBoxContainer2" instance=ExtResource("10_g40sl")]
+layout_mode = 2
+
+[node name="StatsGraph" type="PanelContainer" parent="BugsMenu"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3q0g6")
+
+[node name="BugStatsDistributionGraph" parent="BugsMenu/StatsGraph" instance=ExtResource("11_g40sl")]
+layout_mode = 2
+
+[node name="CloseStatsGraph" type="Button" parent="BugsMenu/StatsGraph"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_epnlk")
+text = "X"
 
 [node name="ExclaimMenu" type="PanelContainer" parent="."]
 visible = false
@@ -299,7 +359,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_eq8er")
 [node name="VBoxContainer" type="VBoxContainer" parent="ExclaimMenu"]
 layout_mode = 2
 
-[connection signal="pressed" from="Open/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Open/CloseJournal" to="." method="_on_close_journal_pressed"]
 [connection signal="input_event" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_input_event"]
 [connection signal="mouse_entered" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_mouse_entered"]
 [connection signal="mouse_exited" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_mouse_exited"]
@@ -310,3 +370,4 @@ layout_mode = 2
 [connection signal="mouse_entered" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_entered"]
 [connection signal="mouse_exited" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_exited"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/PanelContainer/VBoxContainer/HSliderLoud" to="." method="_on_h_slider_loud_value_changed"]
+[connection signal="pressed" from="BugsMenu/StatsGraph/CloseStatsGraph" to="." method="_on_close_stats_graph_pressed"]

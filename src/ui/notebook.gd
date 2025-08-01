@@ -26,6 +26,8 @@ var lerp_weight = 7.5
 # Bugs menu nodes
 @onready var bugs_menu = $BugsMenu
 @onready var bugs_menu_vbox = $BugsMenu/VBoxContainer
+@onready var stats_graph_container = $BugsMenu/StatsGraph
+@onready var stats_graph = $BugsMenu/StatsGraph/BugStatsDistributionGraph #.set_bug_stats(BugBuilder.new().ladybug()._bug_stats)
 
 # Exclaim menu nodes
 @onready var exclaim_menu = $ExclaimMenu
@@ -71,9 +73,17 @@ func _on_h_slider_loud_value_changed(value: float) -> void:
   AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value))
   play_sfx("res://assets/Sounds/Library Scribbling B.wav")
 
-func _on_button_pressed() -> void:
-  # get rid of this button when we can get this to close properly
+func _on_close_stats_graph_pressed() -> void:
+   # TODO: Get the stats graph to close proerply so we can get rid of this button
+  stats_graph_container.visible = false
+
+func _on_close_journal_pressed() -> void:
+  # TODO: Get the journal to close proerply so we can get rid of this button
   close_journal()
+
+func on_bug_tally_pressed(b:Bug) -> void:
+  stats_graph_container.visible = true  
+  stats_graph.set_bug_stats(b.bug_stats)
 
 #func _unhandled_input(event: InputEvent) -> void: 
 #  if event is InputEventMouseButton:
@@ -147,8 +157,8 @@ func build_bug_menu(bug_collection:Dictionary) -> void:
     current_row.add_child(new_bug_tally)
     new_bug_tally.load_tallies(bug, bug_collection[bug])
     
-    # connect bug button signal
-    #new_bug_button.connect("bug_inventory_button_pressed", bug_button_pushed)
+    # connect bug tally signal
+    new_bug_tally.connect("bug_tally_pressed", on_bug_tally_pressed)
   
   # bug_collection = {Bug: Int, Bug: Int}
   open_journal(2)

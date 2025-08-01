@@ -2,7 +2,7 @@ extends Button
 
 signal bug_inventory_button_pressed
 
-var assigned_bug:Bug:
+var assigned_bug:BugStats:
   set(b):
     assigned_bug = b
     load_bug()

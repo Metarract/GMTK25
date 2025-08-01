@@ -11,7 +11,7 @@ const TWEEN_DURATION_S := 2
 @onready var origin: Marker2D = $%Origin
 @onready var stat_poly: Polygon2D = $%StatPoly
 
-var bug_stats: Bug
+var bug_stats: BugStats
 
 # order matters here! must move in a clockwise or anticlockwise fashion
 # all others, could be in any order but let's be consistent lol
@@ -44,7 +44,7 @@ func _ready() -> void:
 
 #################################
 ## initiates the redraw
-func set_bug_stats(bug: Bug) -> void:
+func set_bug_stats(bug: BugStats) -> void:
   stats["juice"].value = bug.juice
   stats["honor"].value = bug.honor
   stats["stink"].value = bug.stink

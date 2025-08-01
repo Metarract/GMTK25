@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bkjvkras1ef0n"]
+[gd_scene load_steps=9 format=3 uid="uid://bkjvkras1ef0n"]
 
 [ext_resource type="Script" uid="uid://cog455qxu3fev" path="res://src/ui/title_menu.gd" id="1_e5aq7"]
 [ext_resource type="Texture2D" uid="uid://bkxerejppnrsu" path="res://assets/Sprites/Menus-UI/menuboard_base.png" id="1_vkhhk"]
 [ext_resource type="Texture2D" uid="uid://oqfonwe1lvk8" path="res://assets/Sprites/Menus-UI/titlescreen_mainbook.png" id="2_e5aq7"]
 [ext_resource type="Texture2D" uid="uid://dta20iy4xop83" path="res://assets/Sprites/Menus-UI/titlescreen_notebook.png" id="3_kgqd2"]
-[ext_resource type="FontFile" uid="uid://cud18yyrj1j0q" path="res://assets/Fonts/RecMonoCasual-Regular-1.085.ttf" id="4_yeaxc"]
 
 [sub_resource type="Animation" id="Animation_vkhhk"]
 resource_name = "fadein"
@@ -81,7 +80,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ikni3")
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
-theme_override_fonts/normal_font = ExtResource("4_yeaxc")
 theme_override_font_sizes/normal_font_size = 40
 text = "Press Any Key"
 fit_content = true

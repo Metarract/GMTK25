@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://c870phv8ewu4t"]
+
+[ext_resource type="Texture2D" uid="uid://in52emm8kfkf" path="res://assets/Sprites/Menus-UI/ticks1thru54040.png" id="1_jyyii"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62qdp"]
+atlas = ExtResource("1_jyyii")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5d4u"]
+atlas = ExtResource("1_jyyii")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v4oy"]
+atlas = ExtResource("1_jyyii")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swi7w"]
+atlas = ExtResource("1_jyyii")
+region = Rect2(120, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wym0c"]
+atlas = ExtResource("1_jyyii")
+region = Rect2(160, 0, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wym0c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62qdp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o5d4u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1v4oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swi7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wym0c")
+}],
+"loop": true,
+"name": &"count",
+"speed": 5.0
+}]
+
+[node name="Tallies" type="TextureRect"]
+custom_minimum_size = Vector2(24, 24)
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_wym0c")
+animation = &"count"
+frame = 4
+centered = false

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5o8l2iklites"]
+[gd_scene load_steps=5 format=3 uid="uid://b5o8l2iklites"]
 
 [ext_resource type="Texture2D" uid="uid://dwuyrrqorjdcl" path="res://assets/Sprites/bugs/doodle_pillbug.png" id="2_a7w1d"]
 [ext_resource type="Script" uid="uid://0bgvuqadhxfu" path="res://src/bug.gd" id="2_tcnvp"]
+[ext_resource type="Script" uid="uid://biftf3kr6tko1" path="res://src/state/models/state_machine.gd" id="3_euec3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a7w1d"]
 radius = 6.0
@@ -13,30 +14,43 @@ script = ExtResource("2_tcnvp")
 [node name="Rays" type="Node2D" parent="."]
 
 [node name="RayS" type="RayCast2D" parent="Rays"]
+collision_mask = 2
 
 [node name="RaySW" type="RayCast2D" parent="Rays"]
 rotation = 0.785398
+collision_mask = 2
 
 [node name="RayW" type="RayCast2D" parent="Rays"]
 rotation = 1.5708
+collision_mask = 2
 
 [node name="RayNW" type="RayCast2D" parent="Rays"]
 rotation = 2.35619
+collision_mask = 2
 
 [node name="RayN" type="RayCast2D" parent="Rays"]
 rotation = 3.14159
+collision_mask = 2
 
 [node name="RayNE" type="RayCast2D" parent="Rays"]
 rotation = 3.92699
+collision_mask = 2
 
 [node name="RayE" type="RayCast2D" parent="Rays"]
 rotation = 4.71239
+collision_mask = 2
 
 [node name="RaySE" type="RayCast2D" parent="Rays"]
 rotation = 5.49779
+collision_mask = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_a7w1d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_a7w1d")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("bug")]
+unique_name_in_owner = true
+script = ExtResource("3_euec3")
+bug = NodePath("..")

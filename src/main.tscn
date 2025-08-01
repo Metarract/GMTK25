@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://gyg3ixu6101l" path="res://assets/Backgrounds/bg_paper.png" id="1_gh0ne"]
 [ext_resource type="Shader" uid="uid://igsg3y2o4ojw" path="res://src/shaders/pixelate.gdshader" id="2_5q4o7"]
-[ext_resource type="PackedScene" uid="uid://36uan8wcllj7" path="res://src/ui/notebook.tscn" id="3_5q4o7"]
+[ext_resource type="PackedScene" path="res://src/ui/notebook.tscn" id="3_5q4o7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3cfgd"]
 shader = ExtResource("2_5q4o7")

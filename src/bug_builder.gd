@@ -156,7 +156,7 @@ static func normal_dist_stat(value: float) -> float:
 static func get_confused_bug_stats() -> BugStats:
   var name = "Confused BugStats"
   var description = "This bug is confused!"
-  var tex_path = "res://assets/Sprites/bugs/doodle_ant.png"
+  var tex_path = "res://assets/Sprites/bugs/doodle_pillbug.png"
   var weight = 1.0
   var speed = 1.0
   var base_trade_value = 99999.0

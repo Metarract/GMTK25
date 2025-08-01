@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://36uan8wcllj7"]
+[gd_scene load_steps=19 format=3 uid="uid://36uan8wcllj7"]
 
 [ext_resource type="Script" uid="uid://dhc26rwvyrcwq" path="res://src/ui/notebook.gd" id="1_rga7h"]
 [ext_resource type="Texture2D" uid="uid://51jm4a52dmhg" path="res://assets/Sprites/Menus-UI/menu_notebook_open.png" id="2_y5vph"]
@@ -6,9 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://dfgsciucwkiit" path="res://assets/Sprites/Menus-UI/tab_full_bugs.png" id="4_4olm5"]
 [ext_resource type="Texture2D" uid="uid://duauaamvvvkxr" path="res://assets/Sprites/Menus-UI/tab_full_exclaim.png" id="5_1quvf"]
 [ext_resource type="Texture2D" uid="uid://b76ldn8w2werw" path="res://assets/Sprites/Menus-UI/menu_notebook_hoverclosed.png" id="6_3q0g6"]
-[ext_resource type="Script" uid="uid://cwyl8qi7uyya1" path="res://src/ui/settings_menu.gd" id="7_drt2r"]
 [ext_resource type="FontFile" uid="uid://deydr763hra6v" path="res://assets/Fonts/RecMonoCasual-Bold-1.085.ttf" id="8_epnlk"]
-[ext_resource type="FontFile" uid="uid://cud18yyrj1j0q" path="res://assets/Fonts/RecMonoCasual-Regular-1.085.ttf" id="9_u64ge"]
+[ext_resource type="Texture2D" uid="uid://c3v3xotw72lsk" path="res://assets/Sprites/Menus-UI/sliderbar.png" id="9_g40sl"]
+[ext_resource type="Texture2D" uid="uid://01j55mg104dg" path="res://assets/Sprites/Menus-UI/sliderhandle.png" id="10_y5vph"]
 
 [sub_resource type="Animation" id="Animation_q5cew"]
 resource_name = "slide"
@@ -45,15 +45,54 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"transitions": PackedFloat32Array(1, 2),
 "update": 0,
 "values": [Vector2(535, 0), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SettingsMenu:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [Vector2(722, 52), Vector2(193, 52)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BGFade:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BugsMenu:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [Vector2(722, 42), Vector2(193, 42)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t3iph"]
 _data = {
 &"slide": SubResource("Animation_q5cew")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4olm5"]
+bg_color = Color(1.56425e-07, 0, 0.19701, 0.333333)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vcna2"]
 size = Vector2(176, 68)
@@ -63,6 +102,13 @@ size = Vector2(182.5, 64)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eq8er"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4olm5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1quvf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g40sl"]
+bg_color = Color(0.12549, 0.156863, 0.32549, 1)
+
 [node name="Notebook" type="Node2D"]
 script = ExtResource("1_rga7h")
 
@@ -70,6 +116,16 @@ script = ExtResource("1_rga7h")
 libraries = {
 &"": SubResource("AnimationLibrary_t3iph")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"UI"
+
+[node name="BGFade" type="PanelContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4olm5")
 
 [node name="Open" type="Sprite2D" parent="."]
 position = Vector2(535, 0)
@@ -151,17 +207,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 193.0
+offset_left = 722.0
 offset_top = 52.0
-offset_right = 493.0
-offset_bottom = 242.0
+offset_right = 1022.0
+offset_bottom = 1108.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_eq8er")
-script = ExtResource("7_drt2r")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="RichTextLabel" type="RichTextLabel" parent="SettingsMenu/VBoxContainer"]
 layout_mode = 2
@@ -175,58 +231,54 @@ autowrap_mode = 1
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_4olm5")
+
+[node name="TextureRect" type="TextureRect" parent="SettingsMenu/VBoxContainer/PanelContainer"]
+layout_mode = 2
+texture = ExtResource("9_g40sl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/separation = -10
 
-[node name="RichTextLabel" type="RichTextLabel" parent="SettingsMenu/VBoxContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsMenu/VBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("9_u64ge")
+theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
-text = "Loud!"
+text = "[i]Shh[/i]	                     [b]AHHH!!"
 fit_content = true
 
-[node name="HSliderOverall" type="HSlider" parent="SettingsMenu/VBoxContainer/VBoxContainer"]
+[node name="HSliderLoud" type="HSlider" parent="SettingsMenu/VBoxContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_icons/grabber = ExtResource("10_y5vph")
+theme_override_icons/grabber_highlight = ExtResource("10_y5vph")
+theme_override_styles/slider = SubResource("StyleBoxEmpty_1quvf")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_g40sl")
 max_value = 1.0
 step = 0.25
 value = 0.5
-tick_count = 5
-ticks_on_borders = true
 
 [node name="BugsMenu" type="PanelContainer" parent="."]
-visible = false
 custom_minimum_size = Vector2(300, 190)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 193.0
-offset_top = 52.0
-offset_right = 493.0
-offset_bottom = 242.0
+offset_left = 722.0
+offset_top = 42.0
+offset_right = 1022.0
+offset_bottom = 232.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_eq8er")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BugsMenu"]
 layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="BugsMenu/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/bold_font = ExtResource("8_epnlk")
-theme_override_font_sizes/bold_font_size = 25
-bbcode_enabled = true
-text = "[b]Bugs
-"
-fit_content = true
-autowrap_mode = 1
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="ExclaimMenu" type="PanelContainer" parent="."]
 visible = false
@@ -247,18 +299,6 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_eq8er")
 [node name="VBoxContainer" type="VBoxContainer" parent="ExclaimMenu"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ExclaimMenu/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/bold_font = ExtResource("8_epnlk")
-theme_override_font_sizes/bold_font_size = 25
-bbcode_enabled = true
-text = "[b]Exclaim!"
-fit_content = true
-autowrap_mode = 1
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [connection signal="pressed" from="Open/Button" to="." method="_on_button_pressed"]
 [connection signal="input_event" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_input_event"]
 [connection signal="mouse_entered" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_mouse_entered"]
@@ -269,4 +309,4 @@ vertical_alignment = 1
 [connection signal="input_event" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_input_event"]
 [connection signal="mouse_entered" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_entered"]
 [connection signal="mouse_exited" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_exited"]
-[connection signal="value_changed" from="SettingsMenu/VBoxContainer/VBoxContainer/HSliderOverall" to="SettingsMenu" method="_on_h_slider_overall_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/PanelContainer/VBoxContainer/HSliderLoud" to="." method="_on_h_slider_loud_value_changed"]

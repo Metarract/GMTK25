@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6wjw7a5sjajh"]
+
+[ext_resource type="Texture2D" uid="uid://bt18jnggh83i5" path="res://assets/Sprites/Menus-UI/bugstatgraphblank.png" id="1_elywk"]
+[ext_resource type="Script" uid="uid://b0sx37vytobsg" path="res://src/ui/bug_stats_distribution_graph.gd" id="1_kely5"]
+
+[node name="BugStatsDistributionGraph" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_kely5")
+
+[node name="StickyNote" type="Sprite2D" parent="."]
+position = Vector2(95, 109)
+texture = ExtResource("1_elywk")
+
+[node name="Origin" type="Marker2D" parent="StickyNote"]
+unique_name_in_owner = true
+position = Vector2(-5, -37)
+
+[node name="StatPoly" type="Polygon2D" parent="StickyNote/Origin"]
+unique_name_in_owner = true
+color = Color(0.827667, 1, 0.06, 0.764706)
+
+[node name="JuiceExtent" type="Marker2D" parent="StickyNote/Origin"]
+unique_name_in_owner = true
+position = Vector2(-13, -33)
+
+[node name="CronchExtent" type="Marker2D" parent="StickyNote/Origin"]
+unique_name_in_owner = true
+position = Vector2(-45, -5)
+
+[node name="HonorExtent" type="Marker2D" parent="StickyNote/Origin"]
+unique_name_in_owner = true
+position = Vector2(31, -26)
+
+[node name="StinkExtent" type="Marker2D" parent="StickyNote/Origin"]
+unique_name_in_owner = true
+position = Vector2(48, 12)
+
+[node name="AffabilityExtent" type="Marker2D" parent="StickyNote/Origin"]
+unique_name_in_owner = true
+position = Vector2(17, 45)
+
+[node name="LegExtent" type="Marker2D" parent="StickyNote/Origin"]
+unique_name_in_owner = true
+position = Vector2(-36, 33)

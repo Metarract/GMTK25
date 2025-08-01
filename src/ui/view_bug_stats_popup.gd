@@ -14,10 +14,10 @@ extends PanelContainer
 
 func _ready() -> void:
   pass
-  #var new_bugg = Bug.new("Icky Gross Bug", "A very gross and also icky bug.", null, 69.420, 10.0, 5.0)
+  #var new_bugg = BugStats.new("Icky Gross BugStats", "A very gross and also icky bug.", null, 69.420, 10.0, 5.0)
   #loadBug(new_bugg)
 
-func loadBug(b:Bug) -> bool:
+func loadBug(b:BugStats) -> bool:
   if !b: return false
   
   rtl_bug_name.text = b.bug_name

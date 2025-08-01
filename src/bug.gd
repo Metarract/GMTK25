@@ -1,60 +1,90 @@
-extends Node
 class_name Bug
+extends RigidBody2D
+
+enum states {IDLE, TARGETING, MOVING}
 
 # debug flag
 var DEBUG:bool = false
 
-# bio
-var bug_name:String = ""
-var description:String = ""
-var texture_path:String = "" 
-var color:Color = Color(1.0, 1.0, 1.0, 1.0)
-var weight:float = 0.0
-var movement_speed:float = 0.0 # likely to move to Brain ?
+# bug_stats
+var bug_stats:BugStats
 
-var base_trade_value:float = 10.0
-var trade_value:float:
-  set(v):
-    print('WARNING: should we be setting Bug.trade_value directly?')
-    trade_value = v
-  get():
-    return base_trade_value + ((10 * affability) + (10 * cronch) + (10 * honor) + (10 * juice) + (10 * leg) + (10 * stink))
+# scene vars
+var sprite:Sprite2D = null
+var collision_shape:CollisionShape2D = null
 
-# stats
-var affability:float = 0.0
-var cronch:float = 0.0
-var honor:float = 0.0
-var juice:float = 0.0
-var leg:int = 0 # literally the number of legs the bug has
-var stink:float = 0.0
+# State machine variables
+var current_state:states = states.IDLE
+var previous_state:states
+var time_in_state:float = 0.0
 
-func _init(bn:String, d:String, tp:String, wgt:float, ms:float, btv:float, col:Color=Color.TRANSPARENT, a:float=-1.0, c:float=-1.0, h:float=-1.0, j:float=-1.0, l:int=-1, s:float=-1.0) -> void:
-  bug_name = bn
-  description = d
-  texture_path = tp
-  weight = wgt
-  movement_speed = ms
+# "IDLE" state variables
+var min_idle_time:float = 0.5
+var max_idle_time:float = 2.5
+
+# "MOVING" state variables
+var movement_target_pos:Vector2 = Vector2.ZERO
+
+func _ready() -> void:
   
-  base_trade_value = btv
+  # bug_stats = BugStats.new("Pillbug", "Small but evasive.", "", 1.0, 50.0, 2)
   
-  # Assign values if passed, or define random ranges here
-  if col != Color.TRANSPARENT: color = col
-  else: color = Color(randf_range(0.0, 1.0), randf_range(0.0, 1.0), randf_range(0.0, 1.0), 1.0)
+  if not bug_stats:
+    bug_stats = BugBuilder.get_confused_bug_stats()
   
-  if a != -1.0: affability = a
-  else: affability = randf_range(0.0, 10.0)
+  # Assign node references
+  sprite = $Sprite2D
+  collision_shape = $CollisionShape2D
+
+  # setup from bug_stats data
+  sprite.texture = load(bug_stats.texture_path)
+  # update color if assigned
+  sprite.modulate = bug_stats.color
+
+func change_state(state:states) -> void:
+  if DEBUG: print('Changing from ', str(current_state), ' to ', str(state))
   
-  if c != -1.0: cronch = c
-  else: cronch = randf_range(0.0, 10.0)
+  previous_state = current_state
+  current_state = state
+  time_in_state = 0.0
+
+func _process(delta: float) -> void:
+  time_in_state += delta # keep track of how long we have been in the current state
   
-  if h != -1.0: honor = h
-  else: honor = randf_range(0.0, 10.0)
+  match current_state:
+    states.IDLE:
+      if time_in_state >= max_idle_time:
+        change_state(states.TARGETING)
+      else:
+        if time_in_state >= min_idle_time:
+          # 20% to change
+          if randf() >= 0.2: change_state(states.TARGETING)
+        
+      # else maybe chance to spin around or smth?
   
-  if j != -1.0: juice = j
-  else: juice = randf_range(0.0, 10.0)
-  
-  if l != -1: leg = l
-  else: leg = randi_range(1, 10)
-  
-  if s != -1.0: stink = s
-  else: stink = randf_range(0.0, 10.0)
+    states.TARGETING:
+      # get sad about rays
+      # if no rays pick a random spot on the screen
+      movement_target_pos = Vector2( randi_range(1, 640), randi_range(1, 360) )
+      change_state(states.MOVING)
+      
+    states.MOVING:
+      #if DEBUG: print(str(global_position), " > ", str(movement_target_pos))
+      
+      if movement_target_pos == Vector2.ZERO:
+        change_state(states.TARGETING)
+        
+      # if global_position within +/- 1 of movement_target_pos
+      elif (global_position.x >= movement_target_pos.x -1 and global_position.x <= movement_target_pos.x +1) and \
+        (global_position.y >= movement_target_pos.y -1 and global_position.y <= movement_target_pos.y +1):
+        change_state(states.IDLE)
+        
+      else:
+        var movement_direction = global_position.direction_to(movement_target_pos)
+        if not move_and_collide(movement_direction * bug_stats.movement_speed * delta, true):
+          move_and_collide(movement_direction * bug_stats.movement_speed * delta)
+        else:
+          # probably go to targeting
+          if DEBUG: print('bonk')
+    _:
+      print("ERR: Dafuq state are we in? ", current_state)

@@ -9,7 +9,7 @@ anchors_preset = 0
 script = ExtResource("1_kely5")
 
 [node name="StickyNote" type="Sprite2D" parent="."]
-position = Vector2(95, 109)
+position = Vector2(91, 106)
 texture = ExtResource("1_elywk")
 
 [node name="Origin" type="Marker2D" parent="StickyNote"]
@@ -22,7 +22,7 @@ color = Color(0.827667, 1, 0.06, 0.764706)
 
 [node name="JuiceExtent" type="Marker2D" parent="StickyNote/Origin"]
 unique_name_in_owner = true
-position = Vector2(-13, -33)
+position = Vector2(-13, -32)
 
 [node name="CronchExtent" type="Marker2D" parent="StickyNote/Origin"]
 unique_name_in_owner = true
@@ -34,12 +34,12 @@ position = Vector2(31, -26)
 
 [node name="StinkExtent" type="Marker2D" parent="StickyNote/Origin"]
 unique_name_in_owner = true
-position = Vector2(48, 12)
+position = Vector2(45, 11)
 
 [node name="AffabilityExtent" type="Marker2D" parent="StickyNote/Origin"]
 unique_name_in_owner = true
-position = Vector2(17, 45)
+position = Vector2(15, 42)
 
 [node name="LegExtent" type="Marker2D" parent="StickyNote/Origin"]
 unique_name_in_owner = true
-position = Vector2(-36, 33)
+position = Vector2(-34, 31)

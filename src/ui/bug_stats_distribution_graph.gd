@@ -39,7 +39,7 @@ func _ready() -> void:
   # TODO probably have these as constants on the bug builder or the bug stats
   stats["leg"].max_val = 20.0
   ############# debug
-  # set_bug_stats(BugBuilder.new().ant()._bug)
+  # set_bug_stats(BugBuilder.new().ladybug()._bug_stats)
   ############# debug
 
 #################################
@@ -66,7 +66,7 @@ func reset_tick_tween():
   tick_tweener.set_ease(Tween.EASE_OUT)
   tick_tweener.set_trans(Tween.TRANS_EXPO)
   tick_tweener.tween_callback(bound_polygon_call)
-  tick_tweener.tween_interval(0.5)
+  tick_tweener.tween_interval(1)
   tick_tweener.tween_method(do_polygon_tick, MIN_PERCENT, MAX_PERCENT, TWEEN_DURATION_S)
 
 func do_polygon_tick(percent: float):

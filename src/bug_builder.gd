@@ -22,12 +22,23 @@ func build() -> Bug:
 
 #region get bug functions
 
+## dict of callables that can be substituted for a .bug(). call if handled properly
+## use BugType.values() to get an array to index into
+## USAGE: BugBuilder.new().BugType.values()[#].call().build()
+## USAGE: BugBuilder.new().BugType["key_name"].call().build()
+var BugType := {
+  "ant": ant,
+  "slug": slug,
+  "pillbug": pillbug,
+  "ladybug": ladybug
+}
+
 ## DO NOT USE THIS SPECIFIC ONE
 ## ONLY to be copied out to fill out info for other bugs in a human-readable way
 func _NULL() -> BugBuilder:
   var name = "NULL"
   var description = "NULL"
-  var tex_path = "res://assets/Sprites/ant.png"
+  var tex_path = "res://assets/Sprites/bugs/doodle_ant.png"
   var weight = 1.0
   var speed = 1.0
   var base_trade_value = 1.0
@@ -46,11 +57,11 @@ func _NULL() -> BugBuilder:
 func ant() -> BugBuilder:
   var name = "Ant"
   var description = "Small, but oh so mighty"
-  var tex_path = "res://assets/Sprites/ant.png"
+  var tex_path = "res://assets/Sprites/bugs/ant.png"
   var base_trade_value = 2.0
   var color = Color.RED
   var weight = 1.0
-  var speed = 6.0
+  var speed = 60.0
   var affability = 3.0
   var cronch = 4.0
   var honor = 9.0
@@ -64,11 +75,11 @@ func ant() -> BugBuilder:
 func slug() -> BugBuilder:
   var name = "Slug"
   var description = "The biggest pos this side of the garden"
-  var tex_path = "res://assets/Sprites/sloog.png"
+  var tex_path = "res://assets/Sprites/bugs/sloog.png"
   var base_trade_value = 1.0
   var color = Color.BISQUE
   var weight = 3.0
-  var speed = 1.0
+  var speed = 3.0
   var affability = 0.0
   var cronch = 0.0
   var honor = 0.0
@@ -82,9 +93,9 @@ func slug() -> BugBuilder:
 func pillbug() -> BugBuilder:
   var name = "Pillbug"
   var description = "Small but evasive"
-  var tex_path = "res://assets/Sprites/ant.png"
+  var tex_path = "res://assets/Sprites/bugs/pillbug.png"
   var weight = 1.0
-  var speed = 1.0
+  var speed = 15.0
   var base_trade_value = 1.0
   var color = Color.WHITE
   var affability = 1.0
@@ -93,6 +104,24 @@ func pillbug() -> BugBuilder:
   var juice = 1.0
   var leg = 6
   var stink = 1.0
+
+  _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
+  return self
+
+func ladybug() -> BugBuilder:
+  var name = "Ladybug"
+  var description = "Don't be fooled by her appearance, this lady is a killer"
+  var tex_path = "res://assets/Sprites/bugs/ladybug.png"
+  var weight = 15.0
+  var speed = 30.0
+  var base_trade_value = 1.0
+  var color = Color.RED
+  var affability = 9.0
+  var cronch = 5.0
+  var honor = 4.0
+  var juice = 6.0
+  var leg = 6
+  var stink = 7.0
 
   _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
   return self
@@ -118,7 +147,7 @@ func normalize_stats() -> BugBuilder:
 
 static func normal_dist_stat(value: float) -> float:
   var dist = randfn(value, NORMAL_DIST_DEVIATION)
-  return clampf(dist, MIN_STAT, MAX_STAT)
+  return clampf(dist, MIN_STAT, INF)
 #endregion
 
 ####################
@@ -127,7 +156,7 @@ static func normal_dist_stat(value: float) -> float:
 static func get_confused_bug_stats() -> BugStats:
   var name = "Confused BugStats"
   var description = "This bug is confused!"
-  var tex_path = "res://assets/Sprites/pillbug.png"
+  var tex_path = "res://assets/Sprites/bugs/doodle_ant.png"
   var weight = 1.0
   var speed = 1.0
   var base_trade_value = 99999.0

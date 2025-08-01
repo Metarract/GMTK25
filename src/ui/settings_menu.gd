@@ -1,6 +1,6 @@
 extends PanelContainer
 
-@onready var hslider_overall:HSlider = $VBoxContainer/Body/VBoxContainer/HSliderOverall
+@onready var hslider_overall:HSlider = $VBoxContainer/VBoxContainer/HSliderOverall
 
 func _ready():
   # set the Overall slider value to the value of the Master audio bus

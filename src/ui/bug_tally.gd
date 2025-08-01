@@ -2,17 +2,24 @@ extends VBoxContainer
 # This is used in the Notebook menu
 # and displays count info for one collection of bugs
 
+signal bug_tally_pressed
+
 @onready var texture_rect_doodle = $TextureRectDoodle
 @onready var rtl_bug_name = $RTLBugName
 @onready var vbox_container_tallies = $VBoxContainerTallies
 @onready var preload_tallies:PackedScene = preload("res://src/ui/tallies.tscn")
  
+@onready var loaded_bug:Bug = null
+
 func _ready() -> void:
   #load_tallies(BugBuilder.new().ant().shiny().normalize_stats().build(), 12)
   pass
 
 func load_tallies(b:Bug, count:int):
   if not b or count < 1: return
+  
+  # assigned loaded bug to pass with signal
+  loaded_bug = b
   
   var doodle_path = ""
   var split = b.bug_stats.texture_path.split("/")
@@ -70,3 +77,9 @@ func load_tallies(b:Bug, count:int):
     var leftover_tallies = preload_tallies.instantiate()
     current_row.add_child(leftover_tallies)
     leftover_tallies.find_child("AnimatedSprite2D").frame = number_leftover_tallies - 1
+
+
+func _on_gui_input(event: InputEvent) -> void:
+  if event is InputEventMouseButton:
+    if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed:
+      if loaded_bug: emit_signal("bug_tally_pressed", loaded_bug)

@@ -1,0 +1,272 @@
+[gd_scene load_steps=15 format=3 uid="uid://36uan8wcllj7"]
+
+[ext_resource type="Script" uid="uid://dhc26rwvyrcwq" path="res://src/ui/notebook.gd" id="1_rga7h"]
+[ext_resource type="Texture2D" uid="uid://y32rbhtn5uew" path="res://assets/Sprites/Menus-UI/menu_notebook_open.png" id="2_y5vph"]
+[ext_resource type="Texture2D" uid="uid://bgqlro6d6mcv3" path="res://assets/Sprites/Menus-UI/tab_full_settings.png" id="3_g40sl"]
+[ext_resource type="Texture2D" uid="uid://dw4jx04ip2l38" path="res://assets/Sprites/Menus-UI/tab_full_bugs.png" id="4_4olm5"]
+[ext_resource type="Texture2D" uid="uid://qr8nim0y7h47" path="res://assets/Sprites/Menus-UI/tab_full_exclaim.png" id="5_1quvf"]
+[ext_resource type="Texture2D" uid="uid://rtn7tc6uewd7" path="res://assets/Sprites/Menus-UI/menu_notebook_hoverclosed.png" id="6_3q0g6"]
+[ext_resource type="Script" uid="uid://cwyl8qi7uyya1" path="res://src/ui/settings_menu.gd" id="7_drt2r"]
+[ext_resource type="FontFile" uid="uid://deydr763hra6v" path="res://assets/Fonts/RecMonoCasual-Bold-1.085.ttf" id="8_epnlk"]
+[ext_resource type="FontFile" uid="uid://cud18yyrj1j0q" path="res://assets/Fonts/RecMonoCasual-Regular-1.085.ttf" id="9_u64ge"]
+
+[sub_resource type="Animation" id="Animation_q5cew"]
+resource_name = "slide"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Journal:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [Vector2(535, 6), Vector2(8, 6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Journal/Cover:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Open:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(535, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t3iph"]
+_data = {
+&"slide": SubResource("Animation_q5cew")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcna2"]
+size = Vector2(176, 68)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qwlf0"]
+size = Vector2(182.5, 64)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eq8er"]
+
+[node name="Notebook" type="Node2D"]
+script = ExtResource("1_rga7h")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_t3iph")
+}
+
+[node name="Open" type="Sprite2D" parent="."]
+position = Vector2(535, 0)
+texture = ExtResource("2_y5vph")
+centered = false
+
+[node name="Button" type="Button" parent="Open"]
+custom_minimum_size = Vector2(30, 30)
+offset_left = 544.0
+offset_top = 55.0
+offset_right = 574.0
+offset_bottom = 85.0
+theme_override_fonts/font = ExtResource("8_epnlk")
+text = "X"
+
+[node name="Journal" type="Node2D" parent="."]
+position = Vector2(535, 6)
+
+[node name="SettingsTab" type="Node2D" parent="Journal"]
+z_index = -10
+z_as_relative = false
+position = Vector2(87, 81)
+
+[node name="Sprite" type="Sprite2D" parent="Journal/SettingsTab"]
+texture = ExtResource("3_g40sl")
+region_enabled = true
+region_rect = Rect2(8, 40, 184, 80)
+
+[node name="Area2DSettings" type="Area2D" parent="Journal/SettingsTab"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/SettingsTab/Area2DSettings"]
+position = Vector2(1.5, 0)
+shape = SubResource("RectangleShape2D_vcna2")
+
+[node name="BugsTab" type="Node2D" parent="Journal"]
+z_index = -10
+z_as_relative = false
+position = Vector2(89, 153)
+
+[node name="Sprite" type="Sprite2D" parent="Journal/BugsTab"]
+texture = ExtResource("4_4olm5")
+region_enabled = true
+region_rect = Rect2(16, 120, 184, 80)
+
+[node name="Area2DBugs" type="Area2D" parent="Journal/BugsTab"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/BugsTab/Area2DBugs"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_vcna2")
+
+[node name="ExclaimTab" type="Node2D" parent="Journal"]
+z_index = -10
+z_as_relative = false
+position = Vector2(94, 223)
+
+[node name="Sprite" type="Sprite2D" parent="Journal/ExclaimTab"]
+texture = ExtResource("5_1quvf")
+region_enabled = true
+region_rect = Rect2(8, 192, 192, 80)
+
+[node name="Area2DExclaim" type="Area2D" parent="Journal/ExclaimTab"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/ExclaimTab/Area2DExclaim"]
+position = Vector2(-1.75, -1)
+shape = SubResource("RectangleShape2D_qwlf0")
+
+[node name="Cover" type="Sprite2D" parent="Journal"]
+position = Vector2(85, 16)
+texture = ExtResource("6_3q0g6")
+centered = false
+region_enabled = true
+region_rect = Rect2(512, 0, 128, 272)
+
+[node name="SettingsMenu" type="PanelContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(300, 190)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 193.0
+offset_top = 52.0
+offset_right = 493.0
+offset_bottom = 242.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_eq8er")
+script = ExtResource("7_drt2r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/bold_font = ExtResource("8_epnlk")
+theme_override_font_sizes/bold_font_size = 25
+bbcode_enabled = true
+text = "[b]Settings"
+fit_content = true
+autowrap_mode = 1
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsMenu/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("9_u64ge")
+bbcode_enabled = true
+text = "Loud!"
+fit_content = true
+
+[node name="HSliderOverall" type="HSlider" parent="SettingsMenu/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.25
+value = 0.5
+tick_count = 5
+ticks_on_borders = true
+
+[node name="BugsMenu" type="PanelContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(300, 190)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 193.0
+offset_top = 52.0
+offset_right = 493.0
+offset_bottom = 242.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_eq8er")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BugsMenu"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="BugsMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/bold_font = ExtResource("8_epnlk")
+theme_override_font_sizes/bold_font_size = 25
+bbcode_enabled = true
+text = "[b]Bugs
+"
+fit_content = true
+autowrap_mode = 1
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExclaimMenu" type="PanelContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(300, 190)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 193.0
+offset_top = 52.0
+offset_right = 493.0
+offset_bottom = 242.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_eq8er")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ExclaimMenu"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ExclaimMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/bold_font = ExtResource("8_epnlk")
+theme_override_font_sizes/bold_font_size = 25
+bbcode_enabled = true
+text = "[b]Exclaim!"
+fit_content = true
+autowrap_mode = 1
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Open/Button" to="." method="_on_button_pressed"]
+[connection signal="input_event" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_input_event"]
+[connection signal="mouse_entered" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_mouse_entered"]
+[connection signal="mouse_exited" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_mouse_exited"]
+[connection signal="input_event" from="Journal/BugsTab/Area2DBugs" to="." method="_on_area_2d_bugs_input_event"]
+[connection signal="mouse_entered" from="Journal/BugsTab/Area2DBugs" to="." method="_on_area_2d_bugs_mouse_entered"]
+[connection signal="mouse_exited" from="Journal/BugsTab/Area2DBugs" to="." method="_on_area_2d_bugs_mouse_exited"]
+[connection signal="input_event" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_input_event"]
+[connection signal="mouse_entered" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_entered"]
+[connection signal="mouse_exited" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_exited"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/VBoxContainer/HSliderOverall" to="SettingsMenu" method="_on_h_slider_overall_value_changed"]

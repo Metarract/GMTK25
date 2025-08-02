@@ -15,7 +15,11 @@ func _ready() -> void:
   #load_tallies(BugBuilder.new().ant().shiny().normalize_stats().build(), 12)
   pass
 
-func load_tallies(stats:BugStats, count:int):
+func get_generic_bug_stat(bug_name: String) -> BugStats: return BugBuilder.new().BugType[bug_name].call()._bug_stats
+
+func load_tallies(bug_name:String, count:int):
+
+  var stats = get_generic_bug_stat(bug_name)
   if not stats or count < 1: return
 
   # assigned loaded bug to pass with signal

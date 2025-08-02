@@ -137,7 +137,7 @@ func close_journal() -> void:
   reset_journal()
   get_tree().paused = false
 
-func build_bug_menu(bug_collection:Dictionary) -> void:
+func build_bug_menu(bug_counts:Dictionary) -> void:
   # bug_collection = {Bug: Int, Bug: Int}
 
   # erase any existing stuffs
@@ -154,7 +154,7 @@ func build_bug_menu(bug_collection:Dictionary) -> void:
   var current_col = 0
 
   # iterate through collection
-  for bug in bug_collection.keys():
+  for bug_type in bug_counts.keys():
     current_col += 1
 
     if current_col == 6:
@@ -167,7 +167,7 @@ func build_bug_menu(bug_collection:Dictionary) -> void:
     # add bug button to current row
     var new_bug_tally = load_bug_tally.instantiate()
     current_row.add_child(new_bug_tally)
-    new_bug_tally.load_tallies(bug, bug_collection[bug])
+    new_bug_tally.load_tallies(bug_type, bug_counts[bug_type])
 
     # connect bug tally signal
     new_bug_tally.connect("bug_tally_pressed", on_bug_tally_pressed)

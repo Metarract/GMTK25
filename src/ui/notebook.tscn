@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://36uan8wcllj7"]
+[gd_scene load_steps=31 format=3 uid="uid://bgpjuw56p46gp"]
 
 [ext_resource type="Script" uid="uid://dhc26rwvyrcwq" path="res://src/ui/notebook.gd" id="1_rga7h"]
 [ext_resource type="Texture2D" uid="uid://51jm4a52dmhg" path="res://assets/Sprites/Menus-UI/menu_notebook_open.png" id="2_y5vph"]
@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://pqtbgfc1vpvb" path="res://src/ui/bug_tally.tscn" id="10_g40sl"]
 [ext_resource type="Texture2D" uid="uid://01j55mg104dg" path="res://assets/Sprites/Menus-UI/sliderhandle.png" id="10_y5vph"]
 [ext_resource type="PackedScene" uid="uid://b6wjw7a5sjajh" path="res://src/ui/bug_stats_distribution_graph.tscn" id="11_g40sl"]
-[ext_resource type="Texture2D" uid="uid://c27bf5gqw6jvc" path="res://assets/Sprites/Menus-UI/notebookpage_exclamation.png" id="12_4olm5"]
-[ext_resource type="Texture2D" uid="uid://ba0t1duex60kh" path="res://assets/Sprites/Menus-UI/circle.png" id="13_1quvf"]
+[ext_resource type="Texture2D" uid="uid://c27bf5gqw6jvc" path="res://assets/Sprites/Menus-UI/notebookpage_exclamation.png" id="12_1quvf"]
+[ext_resource type="Texture2D" uid="uid://ba0t1duex60kh" path="res://assets/Sprites/Menus-UI/circle.png" id="13_3q0g6"]
 
 [sub_resource type="Animation" id="Animation_g40sl"]
 length = 0.001
@@ -26,7 +26,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(193, 52)]
+"values": [Vector2(728, 52)]
 }
 
 [sub_resource type="Animation" id="Animation_q5cew"]
@@ -128,6 +128,9 @@ bg_color = Color(1.56425e-07, 0, 0.19701, 0.333333)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vcna2"]
 size = Vector2(176, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1quvf"]
+atlas = ExtResource("12_1quvf")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qwlf0"]
 size = Vector2(182.5, 64)
@@ -236,7 +239,7 @@ region_rect = Rect2(8, 192, 192, 80)
 
 [node name="NotebookpageExclamation2" type="Sprite2D" parent="Journal/ExclaimTab"]
 position = Vector2(-14, -29)
-texture = ExtResource("12_4olm5")
+texture = SubResource("AtlasTexture_1quvf")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 200, 7, 32)
@@ -422,12 +425,12 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_2ldcp")
 
 [node name="NotebookpageExclamation" type="Sprite2D" parent="ExclaimMenu"]
 position = Vector2(-193, -52)
-texture = ExtResource("12_4olm5")
+texture = ExtResource("12_1quvf")
 centered = false
 
 [node name="DayHighlighter" type="Sprite2D" parent="ExclaimMenu"]
 position = Vector2(-32, 24)
-texture = ExtResource("13_1quvf")
+texture = ExtResource("13_3q0g6")
 
 [connection signal="pressed" from="Open/CloseJournal" to="." method="_on_close_journal_pressed"]
 [connection signal="input_event" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_input_event"]

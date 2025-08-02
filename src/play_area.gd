@@ -1,8 +1,20 @@
 class_name PlayArea
 extends Node2D
 
+signal exit_game
+signal bug_captured(bug_stats: BugStats)
+
 var _bugs_to_capture: Array = []
 @onready var mouse_cap_check := $%MouseCaptureCheck
+var notebook_menu: Notebook = null
+var player_data: Player
+
+func _ready() -> void:
+  $SpawnController.bug_captured.connect(on_bug_captured)
+  notebook_menu = $%Notebook
+  notebook_menu.connect("exit_game", on_exit_game)
+  player_data = get_tree().current_scene.find_child("Player")
+  bug_captured.connect(player_data.add_bug)
 
 func _physics_process(_delta: float) -> void:
   mouse_cap_check.global_position = get_global_mouse_position()
@@ -16,9 +28,6 @@ func _physics_process(_delta: float) -> void:
   for bug in bugs_to_remove:
     bug.is_being_captured = false
     _bugs_to_capture.erase(bug)
-
-func _ready() -> void:
-  $SpawnController.bug_captured.connect(on_bug_captured)
 
 func _unhandled_input(_event: InputEvent) -> void:
   if Input.is_action_just_pressed("capture"):
@@ -41,8 +50,12 @@ func get_hovered_bugs() -> Array:
 func is_bug(coll: CollisionObject2D) -> bool: return coll is Bug
 
 func on_bug_captured(bug_stats: BugStats, _active_bugs: int):
+  bug_captured.emit(bug_stats)
   var i = _bugs_to_capture.find_custom(func (bug): return bug.bug_stats == bug_stats)
   if i == -1:
     printerr("couldn't find our captured bug")
     return
   _bugs_to_capture.remove_at(i)
+
+func on_exit_game():
+  exit_game.emit()

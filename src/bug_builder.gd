@@ -10,6 +10,7 @@ const MAX_STAT := 10.0
 const NORMAL_DIST_DEVIATION := 2.0
 
 var _bug_pck:PackedScene = preload("res://src/bug.tscn")
+var _bug_shader = load("res://src/shaders/bug.gdshader")
 
 # temp vals for building
 var _bug_stats: BugStats
@@ -18,6 +19,11 @@ func build() -> Bug:
   var new_bug: Bug = _bug_pck.instantiate()
   new_bug.bug_stats = _bug_stats
   _bug_stats = null # remove this ref to ensure recounted can do its thing (i think?)
+
+  var smat = ShaderMaterial.new()
+  smat.shader = _bug_shader
+  new_bug.shader_mat = smat
+
   return new_bug
 
 #region get bug functions

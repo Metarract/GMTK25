@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3 uid="uid://cyj4vmysw5ox4"]
+
+[ext_resource type="Script" uid="uid://ba68ggbxy77l4" path="res://src/ui/vendor.gd" id="1_s0efx"]
+[ext_resource type="Texture2D" uid="uid://ctojummfc4qn2" path="res://assets/Sprites/vendors/9patches.png" id="1_x1lrk"]
+[ext_resource type="PackedScene" uid="uid://4fk5oqv8uwiy" path="res://src/ui/speech_bubble.tscn" id="3_ye82p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3cfgd"]
+content_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kmhfv"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 0.470588)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kmhfv"]
+content_margin_left = 20.0
+content_margin_right = 20.0
+
+[node name="Vendor" type="Node2D"]
+script = ExtResource("1_s0efx")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(480, 251)
+texture = ExtResource("1_x1lrk")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3cfgd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="BugInventory" type="PanelContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_kmhfv")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/BugInventory"]
+layout_mode = 2
+follow_focus = true
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/BugInventory/ScrollContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LowerBar" type="PanelContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_kmhfv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/LowerBar"]
+layout_mode = 2
+
+[node name="SellAll" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 12
+text = "Sell All"
+
+[node name="SellAllValue" type="RichTextLabel" parent="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.831373, 0.686275, 0.215686, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/bold_italics_font_size = 12
+bbcode_enabled = true
+text = "[b][i]($0)"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="SayGoodbye" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 12
+text = "Say Goodbye"
+
+[node name="SpeechBubble" parent="CanvasLayer" instance=ExtResource("3_ye82p")]
+offset_left = 555.0
+offset_top = 59.0
+offset_right = 555.0
+offset_bottom = 59.0
+
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer/SellAll" to="." method="_on_sell_all_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer/SayGoodbye" to="." method="_on_say_goodbye_pressed"]

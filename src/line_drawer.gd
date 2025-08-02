@@ -178,6 +178,7 @@ func update_visuals() -> void:
 
 func set_segment_color(c: Color) -> void:
   segment_color = c
+  if shader_mat == null: return
   shader_mat.set_shader_parameter(S_PARAM_LINE_COLOR, segment_color)
 
 ## helper class to keep track of some data

@@ -13,6 +13,7 @@ texture = ExtResource("1_j4w8q")
 centered = false
 
 [node name="LineDrawer" parent="." instance=ExtResource("4_nx0cb")]
+segment_color = Color(0.245171, 0.315736, 0.672773, 1)
 
 [node name="Stage" type="Node2D" parent="."]
 unique_name_in_owner = true

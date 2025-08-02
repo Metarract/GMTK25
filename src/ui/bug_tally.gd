@@ -50,7 +50,7 @@ func load_tallies(b:Bug, count:int):
     var current_col = 0
     
     # do all the full tallies first
-    for range in number_full_tallies:
+    for n in number_full_tallies:
       current_col += 1
 
       if current_col == 3:

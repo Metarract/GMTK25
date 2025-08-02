@@ -9,20 +9,20 @@ signal bug_tally_pressed
 @onready var vbox_container_tallies = $VBoxContainerTallies
 @onready var preload_tallies:PackedScene = preload("res://src/ui/tallies.tscn")
  
-@onready var loaded_bug:Bug = null
+@onready var loaded_bug_stats:BugStats = null
 
 func _ready() -> void:
   #load_tallies(BugBuilder.new().ant().shiny().normalize_stats().build(), 12)
   pass
 
-func load_tallies(b:Bug, count:int):
-  if not b or count < 1: return
+func load_tallies(stats:BugStats, count:int):
+  if not stats or count < 1: return
   
   # assigned loaded bug to pass with signal
-  loaded_bug = b
+  loaded_bug_stats = stats
   
   var doodle_path = ""
-  var split = b.bug_stats.texture_path.split("/")
+  var split = stats.bug_stats.texture_path.split("/")
   var i = 0
   
   # deconstruct the texture path and prepend "doodle_" to the filename
@@ -33,7 +33,7 @@ func load_tallies(b:Bug, count:int):
     if i < split.size(): doodle_path += "/"
   
   texture_rect_doodle.texture = load(doodle_path)
-  rtl_bug_name.text = "[b]" + b.bug_stats.bug_name.strip_edges()
+  rtl_bug_name.text = "[b]" + stats.bug_name.strip_edges()
 
   if count >= 20:
     pass
@@ -82,4 +82,4 @@ func load_tallies(b:Bug, count:int):
 func _on_gui_input(event: InputEvent) -> void:
   if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed:
-      if loaded_bug: emit_signal("bug_tally_pressed", loaded_bug)
+      if loaded_bug_stats: emit_signal("bug_tally_pressed", loaded_bug_stats)

@@ -49,6 +49,8 @@ show_percentage = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_6wl64")
+z_index = -50
+z_as_relative = false
 texture = ExtResource("2_a7w1d")
 
 [node name="Rays" type="Node2D" parent="Sprite2D"]

@@ -1,5 +1,9 @@
 extends Node2D
 
+signal journal_opened
+signal journal_closed
+signal exit_game
+
 var audio_pitch_variation:float = 0.2
 
 var open:bool = false
@@ -9,6 +13,8 @@ var position_start_x:float = 535.0
 var position_hover_x:float = 510.0
 var position_open_x:float = 8.0
 var lerp_weight = 7.5
+
+@onready var player = get_tree().current_scene.player
 
 @onready var animation_player:AnimationPlayer = $AnimationPlayer
 @onready var audio_stream_player:AudioStreamPlayer = $AudioStreamPlayer
@@ -31,6 +37,7 @@ var lerp_weight = 7.5
 
 # Exclaim menu nodes
 @onready var exclaim_menu = $ExclaimMenu
+@onready var day_highlighter = $ExclaimMenu/DayHighlighter
 
 func _on_area_2d_settings_mouse_entered() -> void: hovering = true
 func _on_area_2d_bugs_mouse_entered() -> void: hovering = true
@@ -39,6 +46,8 @@ func _on_area_2d_exclaim_mouse_entered() -> void: hovering = true
 func _on_area_2d_settings_mouse_exited() -> void: hovering = false
 func _on_area_2d_bugs_mouse_exited() -> void: hovering = false
 func _on_area_2d_exclaim_mouse_exited() -> void: hovering = false
+
+func _on_quit_pressed() -> void: emit_signal("exit_game")
 
 func _ready() -> void:
   # set the LOUD slider value to the current audio level
@@ -81,9 +90,10 @@ func _on_close_journal_pressed() -> void:
   # TODO: Get the journal to close proerply so we can get rid of this button
   close_journal()
 
-func on_bug_tally_pressed(b:Bug) -> void:
+func on_bug_tally_pressed(stats:BugStats) -> void:
+  play_sfx("res://assets/Sounds/Library Foliant G Clipped.wav")
   stats_graph_container.visible = true  
-  stats_graph.set_bug_stats(b.bug_stats)
+  stats_graph.set_bug_stats(stats)
 
 #func _unhandled_input(event: InputEvent) -> void: 
 #  if event is InputEventMouseButton:
@@ -103,6 +113,7 @@ func reset_journal() -> void:
 
 func open_journal(i: int) -> void:
   play_sfx("res://assets/Sounds/Library Foliant G Clipped.wav")
+  emit_signal("journal_opened")
   reset_journal()
   if i == 1:
     settings_tab.z_index = 0
@@ -125,9 +136,11 @@ func close_journal() -> void:
   animation_player.play_backwards("slide")
   await animation_player.animation_finished
   reset_journal()
+  emit_signal("journal_closed")
 
 func build_bug_menu(bug_collection:Dictionary) -> void:
-
+  # bug_collection = {Bug: Int, Bug: Int}
+  
   # erase any existing stuffs
   for child in bugs_menu_vbox.get_children(): child.queue_free()
 
@@ -160,24 +173,29 @@ func build_bug_menu(bug_collection:Dictionary) -> void:
     # connect bug tally signal
     new_bug_tally.connect("bug_tally_pressed", on_bug_tally_pressed)
   
-  # bug_collection = {Bug: Int, Bug: Int}
   open_journal(2)
 
-func _on_area_2d_settings_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func build_exclaim_menu() -> void:
+  var positions = {"Mon": Vector2(-73, 21), "Tue": Vector2(-55, 23), "Wed": Vector2(-32, 24), "Thu": Vector2(-3, 26), "Fri": Vector2(17, 24)}
+  var cirlce_position = positions[get_tree().current_scene.time.current_day]
+  day_highlighter.position = cirlce_position
+
+func _on_area_2d_settings_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
   if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed: 
       #get_viewport().set_input_as_handled()
       open_journal(1)
       
-func _on_area_2d_bugs_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_area_2d_bugs_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
   if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed:
       #get_viewport().set_input_as_handled()
-      var bug_collection = {BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1}
-      build_bug_menu(bug_collection)
+      #var bug_collection = {BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1}
+      build_bug_menu(get_tree().current_scene.player.bug_counts)
       
-func _on_area_2d_exclaim_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_area_2d_exclaim_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
  if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed: 
       #get_viewport().set_input_as_handled()
+      build_exclaim_menu()
       open_journal(3)

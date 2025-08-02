@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yht15gpdjwrn"
-path="res://.godot/imported/wormfriend.png-0e2b8d47eba63b5163a089145f2e91ae.ctex"
+uid="uid://cjr14j4huga2l"
+path="res://.godot/imported/zebnco.png-a1d15ea2ba31e0171750038433b6023b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sprites/vendors/wormfriend.png"
-dest_files=["res://.godot/imported/wormfriend.png-0e2b8d47eba63b5163a089145f2e91ae.ctex"]
+source_file="res://assets/Sprites/vendors/zebnco.png"
+dest_files=["res://.godot/imported/zebnco.png-a1d15ea2ba31e0171750038433b6023b.ctex"]
 
 [params]
 

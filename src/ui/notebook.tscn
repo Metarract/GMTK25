@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://36uan8wcllj7"]
+[gd_scene load_steps=30 format=3 uid="uid://36uan8wcllj7"]
 
 [ext_resource type="Script" uid="uid://dhc26rwvyrcwq" path="res://src/ui/notebook.gd" id="1_rga7h"]
 [ext_resource type="Texture2D" uid="uid://51jm4a52dmhg" path="res://assets/Sprites/Menus-UI/menu_notebook_open.png" id="2_y5vph"]
@@ -11,6 +11,23 @@
 [ext_resource type="PackedScene" uid="uid://pqtbgfc1vpvb" path="res://src/ui/bug_tally.tscn" id="10_g40sl"]
 [ext_resource type="Texture2D" uid="uid://01j55mg104dg" path="res://assets/Sprites/Menus-UI/sliderhandle.png" id="10_y5vph"]
 [ext_resource type="PackedScene" uid="uid://b6wjw7a5sjajh" path="res://src/ui/bug_stats_distribution_graph.tscn" id="11_g40sl"]
+[ext_resource type="Texture2D" uid="uid://c27bf5gqw6jvc" path="res://assets/Sprites/Menus-UI/notebookpage_exclamation.png" id="12_4olm5"]
+[ext_resource type="Texture2D" uid="uid://ba0t1duex60kh" path="res://assets/Sprites/Menus-UI/circle.png" id="13_1quvf"]
+
+[sub_resource type="Animation" id="Animation_g40sl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ExclaimMenu:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(193, 52)]
+}
 
 [sub_resource type="Animation" id="Animation_q5cew"]
 resource_name = "slide"
@@ -87,9 +104,22 @@ tracks/5/keys = {
 "update": 0,
 "values": [Vector2(722, 42), Vector2(193, 42)]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ExclaimMenu:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(728, 52), Vector2(193, 52)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t3iph"]
 _data = {
+&"RESET": SubResource("Animation_g40sl"),
 &"slide": SubResource("Animation_q5cew")
 }
 
@@ -111,12 +141,23 @@ size = Vector2(182.5, 64)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g40sl"]
 bg_color = Color(0.12549, 0.156863, 0.32549, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g40sl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_drt2r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_epnlk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u64ge"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3q0g6"]
 content_margin_left = 50.0
 content_margin_top = 25.0
 content_margin_right = 0.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ldcp"]
+
 [node name="Notebook" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_rga7h")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -193,6 +234,13 @@ texture = ExtResource("5_1quvf")
 region_enabled = true
 region_rect = Rect2(8, 192, 192, 80)
 
+[node name="NotebookpageExclamation2" type="Sprite2D" parent="Journal/ExclaimTab"]
+position = Vector2(-14, -29)
+texture = ExtResource("12_4olm5")
+centered = false
+region_enabled = true
+region_rect = Rect2(88, 200, 7, 32)
+
 [node name="Area2DExclaim" type="Area2D" parent="Journal/ExclaimTab"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/ExclaimTab/Area2DExclaim"]
@@ -200,6 +248,8 @@ position = Vector2(-1.75, -1)
 shape = SubResource("RectangleShape2D_qwlf0")
 
 [node name="Cover" type="Sprite2D" parent="Journal"]
+z_index = 100
+z_as_relative = false
 position = Vector2(85, 16)
 texture = ExtResource("6_3q0g6")
 centered = false
@@ -268,6 +318,21 @@ theme_override_styles/grabber_area = SubResource("StyleBoxFlat_g40sl")
 max_value = 1.0
 step = 0.25
 value = 0.5
+
+[node name="Quit" type="Button" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_color = Color(0.12549, 0.156863, 0.32549, 1)
+theme_override_colors/font_focus_color = Color(0.12549, 0.156863, 0.32549, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_epnlk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_g40sl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_drt2r")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_epnlk")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_u64ge")
+text = "Quit"
 
 [node name="BugsMenu" type="PanelContainer" parent="."]
 visible = false
@@ -341,23 +406,28 @@ theme_override_fonts/font = ExtResource("8_epnlk")
 text = "X"
 
 [node name="ExclaimMenu" type="PanelContainer" parent="."]
-visible = false
 custom_minimum_size = Vector2(300, 190)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 193.0
+offset_left = 728.0
 offset_top = 52.0
-offset_right = 493.0
+offset_right = 1028.0
 offset_bottom = 242.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_eq8er")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2ldcp")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ExclaimMenu"]
-layout_mode = 2
+[node name="NotebookpageExclamation" type="Sprite2D" parent="ExclaimMenu"]
+position = Vector2(-193, -52)
+texture = ExtResource("12_4olm5")
+centered = false
+
+[node name="DayHighlighter" type="Sprite2D" parent="ExclaimMenu"]
+position = Vector2(-32, 24)
+texture = ExtResource("13_1quvf")
 
 [connection signal="pressed" from="Open/CloseJournal" to="." method="_on_close_journal_pressed"]
 [connection signal="input_event" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_input_event"]
@@ -370,4 +440,5 @@ layout_mode = 2
 [connection signal="mouse_entered" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_entered"]
 [connection signal="mouse_exited" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_exited"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/PanelContainer/VBoxContainer/HSliderLoud" to="." method="_on_h_slider_loud_value_changed"]
+[connection signal="pressed" from="SettingsMenu/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="BugsMenu/StatsGraph/CloseStatsGraph" to="." method="_on_close_stats_graph_pressed"]

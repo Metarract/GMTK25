@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GMTK25"
-run/main_scene="uid://ogu0bqavhdix"
+run/main_scene="uid://dbl23cvgyxckq"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 

@@ -12,8 +12,8 @@ var _spawn_timeout_cd := SPAWN_TIMEOUT_MS_BASE
 var _spawn_timer := 0
 
 func on_enter() -> void:
-  print("starting random spawner")
   # reset_timer()
+  pass
 
 func on_process(_delta: float) -> void:
   if can_spawn:
@@ -25,7 +25,6 @@ func handle_idle():
   if Time.get_ticks_msec() > _spawn_timer:
     can_spawn = true
 func handle_can_spawn():
-  print("attempting to spawn bug")
   var bug = get_random_bug()
   try_spawn_bug.emit(bug, get_random_gpos())
   # 
@@ -33,20 +32,18 @@ func handle_can_spawn():
   reset_timer()
 
 func get_random_gpos() -> Vector2:
-  print("getting random spawn position")
   var index = randi() % _global_spawn_positions.size()
   return _global_spawn_positions[index]
 
 func get_random_bug() -> Bug:
-  print("getting random bug")
   # for now just spawn a ant, but we should have a way of figuring out what to spawn
-  var builder = BugBuilder.new()
-  var count = builder.BugType.size()
-  var rindex = randi() % count
+  var builder = BugBuilder.new().random().normalize_stats()
+  if randf() < 0.005: # .5% chance of shiny
+    builder.shiny()
   ########### debug
   # var bug = BugBuilder.new().ladybug().normalize_stats().build()
   ########### debug
-  var bug = BugBuilder.new().BugType.values()[rindex].call().normalize_stats().build()
+  var bug = builder.build()
   return bug
 
 func reset_timer():

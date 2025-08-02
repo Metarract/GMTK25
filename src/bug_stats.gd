@@ -12,6 +12,7 @@ var color:Color = Color(1.0, 1.0, 1.0, 1.0)
 var weight:float = 0.0
 var movement_speed:float = 0.0 # likely to move to Brain ?
 
+var capture_resistance = 0.5
 var base_trade_value:float = 10.0
 var trade_value:float:
   set(v):

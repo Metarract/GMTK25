@@ -49,7 +49,6 @@ func set_spawn_strategy(s: SpawningStrategy) -> void:
   spawner.try_spawn_bug.connect(on_spawn_request)
 
 func on_spawn_request(bug: Bug, gpos: Vector2):
-  print("got bug spawn request")
   active_bugs += 1
   stage.add_child(bug)
   bug.global_position = gpos
@@ -59,6 +58,7 @@ func on_spawn_request(bug: Bug, gpos: Vector2):
     sleep()
 
 func on_bug_captured(bug: Bug):
+  prints("caught a buuug:", bug.bug_stats.bug_name)
   bug.on_bug_captured.disconnect(on_bug_captured)
   # decrement active_bug count
   if (active_bugs == 0):
@@ -66,4 +66,5 @@ func on_bug_captured(bug: Bug):
     printerr(bug)
     return
   active_bugs -= 1
-  bug_captured.emit(bug, active_bugs)
+  bug_captured.emit(bug.bug_stats, active_bugs)
+  bug.queue_free()

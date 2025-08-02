@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://da0l82kc6vo7g"
-path="res://.godot/imported/wormfriend.png-3ac27584a62eaf80a14f5cfd886e979d.ctex"
+uid="uid://bv3wcjcvgudwa"
+path="res://.godot/imported/stun_stars.png-935f08ef95cc2a603e913f0544e8a84e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sprites/wormfriend.png"
-dest_files=["res://.godot/imported/wormfriend.png-3ac27584a62eaf80a14f5cfd886e979d.ctex"]
+source_file="res://assets/Sprites/stun_stars.png"
+dest_files=["res://.godot/imported/stun_stars.png-935f08ef95cc2a603e913f0544e8a84e.ctex"]
 
 [params]
 

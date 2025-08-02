@@ -1,15 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy6vvu414roo7"]
+[gd_scene load_steps=8 format=3 uid="uid://dicoetn1vmndh"]
 
+[ext_resource type="Script" uid="uid://gun86ju7je6i" path="res://src/play_area.gd" id="1_1vhf5"]
 [ext_resource type="Texture2D" uid="uid://gyg3ixu6101l" path="res://assets/Backgrounds/bg_paper.png" id="1_j4w8q"]
 [ext_resource type="Script" uid="uid://b633mn77u4jgt" path="res://src/bug_spawning/spawn_controller.gd" id="2_7maq6"]
+[ext_resource type="PackedScene" uid="uid://dp6nqllkro0yj" path="res://src/line_drawer.tscn" id="4_nx0cb"]
+[ext_resource type="PackedScene" uid="uid://b5o8l2iklites" path="res://src/bug.tscn" id="5_qagdb"]
+[ext_resource type="PackedScene" uid="uid://bgpjuw56p46gp" path="res://src/ui/notebook.tscn" id="6_elih2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nx0cb"]
+radius = 5.0
 
 [node name="PlayArea" type="Node2D"]
+script = ExtResource("1_1vhf5")
 
 [node name="Bg" type="Sprite2D" parent="."]
 z_index = -100
 z_as_relative = false
 texture = ExtResource("1_j4w8q")
 centered = false
+
+[node name="LineDrawer" parent="." instance=ExtResource("4_nx0cb")]
+segment_color = Color(0.245171, 0.315736, 0.672773, 1)
+
+[node name="Stage" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Bug" parent="Stage" instance=ExtResource("5_qagdb")]
+position = Vector2(210, 101)
 
 [node name="SpawnController" type="Node" parent="."]
 script = ExtResource("2_7maq6")
@@ -29,5 +46,14 @@ position = Vector2(-24, 226)
 [node name="Marker2D4" type="Marker2D" parent="SpawnPositions"]
 position = Vector2(116, -19)
 
-[node name="Stage" type="Node2D" parent="."]
+[node name="MouseCaptureCheck" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseCaptureCheck"]
+shape = SubResource("CircleShape2D_nx0cb")
+debug_color = Color(0.326168, 0.611061, 0.366771, 0.42)
+
+[node name="Notebook" parent="." instance=ExtResource("6_elih2")]
 unique_name_in_owner = true

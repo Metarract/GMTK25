@@ -8,10 +8,10 @@ var S_PARAM_SEGMENT_RADIUS := "segment_radius"
 var S_PARAM_SEGMENT_COUNT := "segment_count"
 var S_PARAM_SEGMENTS := "segments"
 # "constants"
-@export var MAX_SEGMENT_SIZE: float = 5.0 # set this to influence the size of the line as well
-@export var MIN_SEGMENT_SIZE: float = 2.0
+@export var MAX_SEGMENT_SIZE: float = 3.0 # set this to influence the size of the line as well
+@export var MIN_SEGMENT_SIZE: float = 1.0
 @export var MAX_SEGMENT_COUNT: int = 1000 # absolutely CANNOT go above 1000 without editing the shader
-@export var SEGMENT_TIMEOUT_MS: int = 5000
+@export var SEGMENT_TIMEOUT_MS: int = 3000
 
 # state
 enum DrawState {
@@ -58,6 +58,8 @@ func _unhandled_input(_event: InputEvent) -> void:
       handle_idle_input()
     DrawState.DRAWING:
       handle_drawing_input()
+      if _event is InputEventMouseMotion:
+        get_viewport().set_input_as_handled()
     DrawState.ERASING:
       handle_erasing_input()
 
@@ -178,6 +180,7 @@ func update_visuals() -> void:
 
 func set_segment_color(c: Color) -> void:
   segment_color = c
+  if shader_mat == null: return
   shader_mat.set_shader_parameter(S_PARAM_LINE_COLOR, segment_color)
 
 ## helper class to keep track of some data

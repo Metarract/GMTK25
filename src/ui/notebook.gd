@@ -37,6 +37,7 @@ var lerp_weight = 7.5
 
 # Exclaim menu nodes
 @onready var exclaim_menu = $ExclaimMenu
+@onready var day_highlighter = $ExclaimMenu/DayHighlighter
 
 func _on_area_2d_settings_mouse_entered() -> void: hovering = true
 func _on_area_2d_bugs_mouse_entered() -> void: hovering = true
@@ -174,6 +175,11 @@ func build_bug_menu(bug_collection:Dictionary) -> void:
   
   open_journal(2)
 
+func build_exclaim_menu() -> void:
+  var positions = {"Mon": Vector2(-73, 21), "Tue": Vector2(-55, 23), "Wed": Vector2(-32, 24), "Thu": Vector2(-3, 26), "Fri": Vector2(17, 24)}
+  var cirlce_position = positions[get_tree().current_scene.time.current_day]
+  day_highlighter.position = cirlce_position
+
 func _on_area_2d_settings_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
   if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed: 
@@ -191,4 +197,5 @@ func _on_area_2d_exclaim_input_event(_viewport: Node, event: InputEvent, _shape_
  if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed: 
       #get_viewport().set_input_as_handled()
+      build_exclaim_menu()
       open_journal(3)

@@ -6,6 +6,8 @@
 [node name="PlayArea" type="Node2D"]
 
 [node name="Bg" type="Sprite2D" parent="."]
+z_index = -100
+z_as_relative = false
 texture = ExtResource("1_j4w8q")
 centered = false
 

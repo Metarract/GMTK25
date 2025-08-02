@@ -1,5 +1,9 @@
 extends Node2D
 
+signal journal_opened
+signal journal_closed
+signal exit_game
+
 var audio_pitch_variation:float = 0.2
 
 var open:bool = false
@@ -39,6 +43,8 @@ func _on_area_2d_exclaim_mouse_entered() -> void: hovering = true
 func _on_area_2d_settings_mouse_exited() -> void: hovering = false
 func _on_area_2d_bugs_mouse_exited() -> void: hovering = false
 func _on_area_2d_exclaim_mouse_exited() -> void: hovering = false
+
+func _on_quit_pressed() -> void: emit_signal("exit_game")
 
 func _ready() -> void:
   # set the LOUD slider value to the current audio level
@@ -82,6 +88,7 @@ func _on_close_journal_pressed() -> void:
   close_journal()
 
 func on_bug_tally_pressed(b:Bug) -> void:
+  play_sfx("res://assets/Sounds/Library Foliant G Clipped.wav")
   stats_graph_container.visible = true  
   stats_graph.set_bug_stats(b.bug_stats)
 
@@ -103,6 +110,7 @@ func reset_journal() -> void:
 
 func open_journal(i: int) -> void:
   play_sfx("res://assets/Sounds/Library Foliant G Clipped.wav")
+  emit_signal("journal_opened")
   reset_journal()
   if i == 1:
     settings_tab.z_index = 0
@@ -125,6 +133,7 @@ func close_journal() -> void:
   animation_player.play_backwards("slide")
   await animation_player.animation_finished
   reset_journal()
+  emit_signal("journal_closed")
 
 func build_bug_menu(bug_collection:Dictionary) -> void:
 
@@ -163,20 +172,20 @@ func build_bug_menu(bug_collection:Dictionary) -> void:
   # bug_collection = {Bug: Int, Bug: Int}
   open_journal(2)
 
-func _on_area_2d_settings_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_area_2d_settings_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
   if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed: 
       #get_viewport().set_input_as_handled()
       open_journal(1)
       
-func _on_area_2d_bugs_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_area_2d_bugs_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
   if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed:
       #get_viewport().set_input_as_handled()
       var bug_collection = {BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1}
       build_bug_menu(bug_collection)
       
-func _on_area_2d_exclaim_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_area_2d_exclaim_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
  if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed: 
       #get_viewport().set_input_as_handled()

@@ -36,6 +36,8 @@ rotation = 4.71239
 rotation = 5.49779
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -50
+z_as_relative = false
 texture = ExtResource("2_a7w1d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

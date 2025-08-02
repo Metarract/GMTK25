@@ -20,57 +20,77 @@ particles_anim_loop = false
 offsets = PackedFloat32Array(0.758621, 0.808777)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a7w1d"]
-radius = 6.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_n1vdf"]
+radius = 15.0
 
 [node name="Bug" type="RigidBody2D"]
 collision_mask = 2
 script = ExtResource("2_tcnvp")
 
-[node name="Rays" type="Node2D" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+use_top_left = true
 
-[node name="RayS" type="RayCast2D" parent="Rays"]
-unique_name_in_owner = true
-collision_mask = 2
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -33
 
-[node name="RaySW" type="RayCast2D" parent="Rays"]
+[node name="CaptureProgress" type="ProgressBar" parent="CenterContainer/MarginContainer"]
 unique_name_in_owner = true
-rotation = 0.785398
-collision_mask = 2
-
-[node name="RayW" type="RayCast2D" parent="Rays"]
-unique_name_in_owner = true
-rotation = 1.5708
-collision_mask = 2
-
-[node name="RayNW" type="RayCast2D" parent="Rays"]
-unique_name_in_owner = true
-rotation = 2.35619
-collision_mask = 2
-
-[node name="RayN" type="RayCast2D" parent="Rays"]
-unique_name_in_owner = true
-rotation = 3.14159
-collision_mask = 2
-
-[node name="RayNE" type="RayCast2D" parent="Rays"]
-unique_name_in_owner = true
-rotation = 3.92699
-collision_mask = 2
-
-[node name="RayE" type="RayCast2D" parent="Rays"]
-unique_name_in_owner = true
-rotation = 4.71239
-collision_mask = 2
-
-[node name="RaySE" type="RayCast2D" parent="Rays"]
-unique_name_in_owner = true
-rotation = 5.49779
-collision_mask = 2
+custom_minimum_size = Vector2(64, 8)
+layout_mode = 2
+size_flags_horizontal = 0
+max_value = 1.0
+value = 0.48
+show_percentage = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_6wl64")
 texture = ExtResource("2_a7w1d")
+
+[node name="Rays" type="Node2D" parent="Sprite2D"]
+
+[node name="RayS" type="RayCast2D" parent="Sprite2D/Rays"]
+unique_name_in_owner = true
+collision_mask = 2
+
+[node name="RaySW" type="RayCast2D" parent="Sprite2D/Rays"]
+unique_name_in_owner = true
+rotation = 0.785398
+collision_mask = 2
+
+[node name="RayW" type="RayCast2D" parent="Sprite2D/Rays"]
+unique_name_in_owner = true
+rotation = 1.5708
+collision_mask = 2
+
+[node name="RayNW" type="RayCast2D" parent="Sprite2D/Rays"]
+unique_name_in_owner = true
+rotation = 2.35619
+collision_mask = 2
+
+[node name="RayN" type="RayCast2D" parent="Sprite2D/Rays"]
+unique_name_in_owner = true
+rotation = 3.14159
+collision_mask = 2
+
+[node name="RayNE" type="RayCast2D" parent="Sprite2D/Rays"]
+unique_name_in_owner = true
+rotation = 3.92699
+collision_mask = 2
+
+[node name="RayE" type="RayCast2D" parent="Sprite2D/Rays"]
+unique_name_in_owner = true
+rotation = 4.71239
+collision_mask = 2
+
+[node name="RaySE" type="RayCast2D" parent="Sprite2D/Rays"]
+unique_name_in_owner = true
+rotation = 5.49779
+collision_mask = 2
 
 [node name="StunParticles" type="CPUParticles2D" parent="."]
 unique_name_in_owner = true
@@ -130,8 +150,7 @@ vframes = 2
 frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("CapsuleShape2D_a7w1d")
+shape = SubResource("CircleShape2D_n1vdf")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("bug")]
 unique_name_in_owner = true

@@ -1,13 +1,43 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://pw4k0a18f32v"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://pw4k0a18f32v"]
 
 [ext_resource type="FontFile" uid="uid://cud18yyrj1j0q" path="res://assets/Fonts/RecMonoCasual-Regular-1.085.ttf" id="1_24q3n"]
+[ext_resource type="Texture2D" uid="uid://bis6dlulg4jms" path="res://assets/Sprites/Menus-UI/capture_progress.png" id="1_oblph"]
 [ext_resource type="FontFile" uid="uid://deydr763hra6v" path="res://assets/Fonts/RecMonoCasual-Bold-1.085.ttf" id="1_t1uk1"]
 [ext_resource type="FontFile" uid="uid://xj8m70hp8e3v" path="res://assets/Fonts/RecMonoCasual-BoldItalic-1.085.ttf" id="2_oblph"]
 [ext_resource type="FontFile" uid="uid://qsubdmfpwh5u" path="res://assets/Fonts/RecMonoCasual-Italic-1.085.ttf" id="3_v11j8"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_v11j8"]
+atlas = ExtResource("1_oblph")
+region = Rect2(0, 0, 64, 9)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t1uk1"]
+texture = SubResource("AtlasTexture_v11j8")
+texture_margin_left = 4.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 3.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+region_rect = Rect2(0, 0, 64, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5i7ek"]
+atlas = ExtResource("1_oblph")
+region = Rect2(0, 9, 64, 7)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uxqhr"]
+texture = SubResource("AtlasTexture_5i7ek")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
 [resource]
 default_font = ExtResource("1_24q3n")
 default_font_size = 20
+ProgressBar/styles/background = SubResource("StyleBoxTexture_t1uk1")
+ProgressBar/styles/fill = SubResource("StyleBoxTexture_uxqhr")
 RichTextLabel/fonts/bold_font = ExtResource("1_t1uk1")
 RichTextLabel/fonts/bold_italics_font = ExtResource("2_oblph")
 RichTextLabel/fonts/italics_font = ExtResource("3_v11j8")

@@ -14,6 +14,9 @@ func on_enter() -> void:
   if randf() > 0.5: stun_circ_dir = 1
   else: stun_circ_dir = -1
 
+  # flip accordingly
+  _bug.stun_circle.scale = Vector2(stun_circ_dir, 1)
+
   _bug.stun_particles.emitting = true
   _bug.stun_circle.visible = true
   update_stun_flash(flash_strength)

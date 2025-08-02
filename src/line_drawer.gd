@@ -58,6 +58,8 @@ func _unhandled_input(_event: InputEvent) -> void:
       handle_idle_input()
     DrawState.DRAWING:
       handle_drawing_input()
+      if _event is InputEventMouseMotion:
+        get_viewport().set_input_as_handled()
     DrawState.ERASING:
       handle_erasing_input()
 

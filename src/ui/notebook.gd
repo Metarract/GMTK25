@@ -14,6 +14,8 @@ var position_hover_x:float = 510.0
 var position_open_x:float = 8.0
 var lerp_weight = 7.5
 
+@onready var player = get_tree().current_scene.player
+
 @onready var animation_player:AnimationPlayer = $AnimationPlayer
 @onready var audio_stream_player:AudioStreamPlayer = $AudioStreamPlayer
 
@@ -87,10 +89,10 @@ func _on_close_journal_pressed() -> void:
   # TODO: Get the journal to close proerply so we can get rid of this button
   close_journal()
 
-func on_bug_tally_pressed(b:Bug) -> void:
+func on_bug_tally_pressed(stats:BugStats) -> void:
   play_sfx("res://assets/Sounds/Library Foliant G Clipped.wav")
   stats_graph_container.visible = true  
-  stats_graph.set_bug_stats(b.bug_stats)
+  stats_graph.set_bug_stats(stats)
 
 #func _unhandled_input(event: InputEvent) -> void: 
 #  if event is InputEventMouseButton:
@@ -136,7 +138,8 @@ func close_journal() -> void:
   emit_signal("journal_closed")
 
 func build_bug_menu(bug_collection:Dictionary) -> void:
-
+  # bug_collection = {Bug: Int, Bug: Int}
+  
   # erase any existing stuffs
   for child in bugs_menu_vbox.get_children(): child.queue_free()
 
@@ -169,7 +172,6 @@ func build_bug_menu(bug_collection:Dictionary) -> void:
     # connect bug tally signal
     new_bug_tally.connect("bug_tally_pressed", on_bug_tally_pressed)
   
-  # bug_collection = {Bug: Int, Bug: Int}
   open_journal(2)
 
 func _on_area_2d_settings_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -182,8 +184,8 @@ func _on_area_2d_bugs_input_event(_viewport: Node, event: InputEvent, _shape_idx
   if event is InputEventMouseButton:
     if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed:
       #get_viewport().set_input_as_handled()
-      var bug_collection = {BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1}
-      build_bug_menu(bug_collection)
+      #var bug_collection = {BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1}
+      build_bug_menu(get_tree().current_scene.player.bug_counts)
       
 func _on_area_2d_exclaim_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
  if event is InputEventMouseButton:

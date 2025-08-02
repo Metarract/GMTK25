@@ -1,14 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbl23cvgyxckq"]
+[gd_scene load_steps=10 format=3 uid="uid://dbl23cvgyxckq"]
 
 [ext_resource type="Script" uid="uid://jgulrl8koypv" path="res://src/main.gd" id="1_3cfgd"]
+[ext_resource type="Script" uid="uid://vpfgjn3il2af" path="res://src/audio.gd" id="2_3cfgd"]
 [ext_resource type="Shader" uid="uid://igsg3y2o4ojw" path="res://src/shaders/pixelate.gdshader" id="2_5q4o7"]
+[ext_resource type="Script" uid="uid://dxs30cvd04kj8" path="res://src/time.gd" id="3_3cfgd"]
+[ext_resource type="Script" uid="uid://dh2ibhsg5uius" path="res://src/player.gd" id="4_fyndt"]
 
 [sub_resource type="Animation" id="Animation_5q4o7"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/path = NodePath("Audio/BGMPlayer:volume_db")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -24,7 +27,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/path = NodePath("Audio/BGMPlayer:volume_db")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -47,14 +50,24 @@ shader_parameter/pixel_size = 4.0
 [node name="Main" type="Node2D"]
 script = ExtResource("1_3cfgd")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+script = ExtResource("2_3cfgd")
+
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="Audio"]
 process_mode = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="BGMFader" type="AnimationPlayer" parent="Audio"]
 process_mode = 3
+root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_3cfgd")
 }
+
+[node name="Time" type="Node" parent="."]
+script = ExtResource("3_3cfgd")
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource("4_fyndt")
 
 [node name="Scene" type="Node2D" parent="."]
 

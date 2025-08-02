@@ -11,10 +11,6 @@ signal bug_tally_pressed
 
 @onready var loaded_bug_stats:BugStats = null
 
-func _ready() -> void:
-  #load_tallies(BugBuilder.new().ant().shiny().normalize_stats().build(), 12)
-  pass
-
 func get_generic_bug_stat(bug_name: String) -> BugStats: return BugBuilder.new().BugType[bug_name].call()._bug_stats
 
 func load_tallies(bug_name:String, count:int):
@@ -38,20 +34,43 @@ func load_tallies(bug_name:String, count:int):
 
   texture_rect_doodle.texture = load(doodle_path)
   rtl_bug_name.text = "[b]" + stats.bug_name.strip_edges()
-
+    
+  # create first hbox to hold first row of inventory
+  var current_row = HBoxContainer.new()
+  vbox_container_tallies.add_child(current_row)
+  
+  # keep track of current column #
+  var current_col = 0
+  
   if count >= 20:
-    pass
-    # just make 4 full tallies
+
+    # do all the full tallies first
+    for n in 4:
+      current_col += 1
+
+      if current_col == 3:
+        # create new row hbox
+        current_row = HBoxContainer.new()
+        vbox_container_tallies.add_child(current_row)
+        # reset current_col
+        current_col = 1
+
+      # add tallie object to current row
+      var new_tallies = preload_tallies.instantiate()
+      current_row.add_child(new_tallies)
+
+      # set the sprite to frame 4 which is a full 5 tallies
+      new_tallies.find_child("AnimatedSprite2D").frame = 4
+
+    # check if we're already on the last column
+    if current_col == 2:
+        # create new row hbox
+        current_row = HBoxContainer.new()
+        vbox_container_tallies.add_child(current_row)
+
   else:
     var number_leftover_tallies = (count % 5)
     var number_full_tallies = (count - number_leftover_tallies) / 5
-
-    # create first hbox to hold first row of inventory
-    var current_row = HBoxContainer.new()
-    vbox_container_tallies.add_child(current_row)
-
-    # keep track of current column #
-    var current_col = 0
 
     # do all the full tallies first
     for n in number_full_tallies:
@@ -81,7 +100,6 @@ func load_tallies(bug_name:String, count:int):
     var leftover_tallies = preload_tallies.instantiate()
     current_row.add_child(leftover_tallies)
     leftover_tallies.find_child("AnimatedSprite2D").frame = number_leftover_tallies - 1
-
 
 func _on_gui_input(event: InputEvent) -> void:
   if event is InputEventMouseButton:

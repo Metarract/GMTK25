@@ -45,13 +45,6 @@ func change_state(s:game_states) -> void:
       var play_area: PlayArea = scene.find_child("PlayArea", false, false)
       play_area.connect("exit_game", exit_game)
 
-      # load notebook menu object
-      # var notebook_menu = load("res://src/ui/notebook.tscn").instantiate()
-      # scene.add_child(notebook_menu)
-      # notebook_menu.connect("journal_opened", pause_game)
-      # notebook_menu.connect("journal_closed", unpause_game)
-      # notebook_menu.connect("exit_game", exit_game)
-
     _:
       print("ERR: Main game state unknown")
 

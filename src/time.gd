@@ -6,7 +6,7 @@ extends Node
 signal day_ended(current_day: String)
 
 const DAYS: Array = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-const SECONDS_PER_DAY: float = 15.0 #60.0
+const SECONDS_PER_DAY: float = 60.0
 
 var _active := false
 

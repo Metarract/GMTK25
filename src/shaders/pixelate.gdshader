@@ -8,5 +8,5 @@ void fragment() {
 	float x = FRAGCOORD.x - mod(FRAGCOORD.x, pixel_size);
   float y = FRAGCOORD.y - mod(FRAGCOORD.y, pixel_size);
   float shift = floor(pixel_size / 2.0);
-  COLOR = texture(SCREEN_TEXTURE, vec2(x + shift, y + shift) * SCREEN_PIXEL_SIZE);
+  COLOR = texture(TEXTURE, vec2(x + shift, y + shift) * SCREEN_PIXEL_SIZE);
 }

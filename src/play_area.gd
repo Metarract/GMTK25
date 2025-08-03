@@ -17,7 +17,7 @@ func _ready() -> void:
   $SpawnController.bug_captured.connect(on_bug_captured)
   notebook_menu = $%Notebook
   notebook_menu.connect("exit_game", on_exit_game)
-  notebook_menu.connect("journal_closed", on_player_currency_change)
+  # notebook_menu.connect("journal_closed", on_player_currency_change)
   player_data = get_tree().current_scene.find_child("Player")
   audio_controller = get_tree().current_scene.find_child("Audio")
   bug_captured.connect(player_data.add_bug)
@@ -79,19 +79,8 @@ func on_bug_captured(bug_stats: BugStats, _active_bugs: int):
 func set_dayhand_rotation():
   day_hand.rotation_degrees = remap(time.seconds, 0.0, time.SECONDS_PER_DAY, 0, 90)
 
-func on_day_end(day: String):
-  match day:
-    "Tue":
-      spawn_vendor()
-    "Thu":
-      spawn_vendor()
-    "Sat":
-      spawn_vendor()
-    "Sun":
-      spawn_vendor()
-    _:
-      time.tick_day()
-  pass
+func on_day_end(_day: String):
+  spawn_vendor()
 
 func spawn_vendor():
   notebook_menu._on_delete_this_button_pressed().vendor_closed.connect(on_vendor_closed)

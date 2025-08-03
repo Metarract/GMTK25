@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bgpjuw56p46gp"]
+[gd_scene load_steps=30 format=3 uid="uid://bgpjuw56p46gp"]
 
 [ext_resource type="Script" uid="uid://dhc26rwvyrcwq" path="res://src/ui/notebook.gd" id="1_rga7h"]
 [ext_resource type="Texture2D" uid="uid://51jm4a52dmhg" path="res://assets/Sprites/Menus-UI/menu_notebook_open.png" id="2_y5vph"]
@@ -152,6 +152,9 @@ content_margin_top = 25.0
 content_margin_right = 0.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ldcp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1quvf"]
+bg_color = Color(100, 0, 0, 1)
 
 [node name="Notebook" type="Node2D"]
 process_mode = 3
@@ -427,6 +430,13 @@ centered = false
 position = Vector2(-42, 103)
 texture = ExtResource("13_3q0g6")
 
+[node name="DELETE_THIS_BUTTON" type="Button" parent="ExclaimMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_1quvf")
+text = "DELETE ME"
+
 [connection signal="pressed" from="Open/CloseJournal" to="." method="_on_close_journal_pressed"]
 [connection signal="mouse_entered" from="Journal/SettingsTab/SettingsButton" to="." method="_on_settings_mouse_entered"]
 [connection signal="mouse_exited" from="Journal/SettingsTab/SettingsButton" to="." method="_on_settings_mouse_exited"]
@@ -440,3 +450,4 @@ texture = ExtResource("13_3q0g6")
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/PanelContainer/VBoxContainer/HSliderLoud" to="." method="_on_h_slider_loud_value_changed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="BugsMenu/StatsGraph/CloseStatsGraph" to="." method="_on_close_stats_graph_pressed"]
+[connection signal="pressed" from="ExclaimMenu/DELETE_THIS_BUTTON" to="." method="_on_delete_this_button_pressed"]

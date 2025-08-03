@@ -88,7 +88,7 @@ func spawn_vendor():
   tween.set_ease(Tween.EASE_OUT)
   tween.set_trans(Tween.TRANS_SINE)
   tween.tween_property($%DarkenBg, "color", Color(0,0,0,0.7), 0.3)
-  tween.tween_callback(notebook_menu._on_exclaim_pressed)
+  tween.tween_callback(notebook_menu._on_exclaim_pressed.bind(false))
 
 func on_vendor_closed():
   var tween = create_tween()

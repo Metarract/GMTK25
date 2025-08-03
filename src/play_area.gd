@@ -29,15 +29,16 @@ func _physics_process(_delta: float) -> void:
     bug.is_being_captured = false
     _bugs_to_capture.erase(bug)
 
-func _unhandled_input(_event: InputEvent) -> void:
+func on_capture_check(_event: InputEvent) -> void:
   if Input.is_action_just_pressed("capture"):
     _bugs_to_capture = get_hovered_bugs()
-    for bug in _bugs_to_capture:
-      bug.is_being_captured = true
+    if _bugs_to_capture.size() > 0:
+      get_viewport().set_input_as_handled()
+      for bug in _bugs_to_capture:
+        bug.is_being_captured = true
 
   if Input.is_action_just_released("capture"):
-    print("stopping capture")
-    prints("stopping capture on", _bugs_to_capture.size(), "bugs")
+    if _bugs_to_capture.size() == 0: return
     for bug in _bugs_to_capture:
       if bug == null or bug.is_queued_for_deletion(): continue
       bug.is_being_captured = false

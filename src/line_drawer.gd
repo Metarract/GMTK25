@@ -13,14 +13,7 @@ var S_PARAM_SEGMENTS := "segments"
 @export var MAX_SEGMENT_COUNT: int = 1000 # absolutely CANNOT go above 1000 without editing the shader
 @export var SEGMENT_TIMEOUT_MS: int = 3000
 
-# state
-enum DrawState {
-  IDLE,
-  DRAWING,
-  ERASING
-}
-
-var draw_state := DrawState.IDLE
+var is_drawing := false
 
 # segment management
 var segment_array: Array = []
@@ -53,15 +46,12 @@ func setup_blank_image() -> void:
   line_sprite.texture.set_image(bmp.convert_to_image());
 
 func _unhandled_input(_event: InputEvent) -> void:
-  match draw_state:
-    DrawState.IDLE:
-      handle_idle_input()
-    DrawState.DRAWING:
-      handle_drawing_input()
-      if _event is InputEventMouseMotion:
-        get_viewport().set_input_as_handled()
-    DrawState.ERASING:
-      handle_erasing_input()
+  if Input.is_action_just_released("draw_line"):
+    is_drawing = false
+  elif Input.is_action_just_pressed("draw_line"):
+    get_viewport().set_input_as_handled()
+    last_mouse_pos = get_global_mouse_position()
+    is_drawing = true
 
 func _process(_delta: float) -> void:
   handle_removal_queue()
@@ -70,39 +60,11 @@ func _physics_process(_delta: float) -> void:
   queue_timeouts()
   queue_segment_cap_removals()
   var mouse_pos = get_global_mouse_position()
-  match draw_state:
-    DrawState.IDLE:
-      return
-    DrawState.DRAWING:
-      var result = try_add_segments(last_mouse_pos, mouse_pos)
-      if result:
-        last_mouse_pos = mouse_pos
-        update_visuals()
-    DrawState.ERASING:
-      var result = try_erase_segments(mouse_pos, 5)
-      if result: update_visuals()
-#endregion
-
-#region state handlers
-func handle_idle_input():
-  if Input.is_action_just_pressed("draw_line"):
-    last_mouse_pos = get_global_mouse_position()
-    draw_state = DrawState.DRAWING
-  elif Input.is_action_just_pressed("erase_line"):
-    draw_state = DrawState.ERASING
-
-func handle_drawing_input():
-  if Input.is_action_just_released("draw_line"):
-    draw_state = DrawState.IDLE
-  elif Input.is_action_just_pressed("erase_line"):
-    draw_state = DrawState.ERASING
-
-func handle_erasing_input():
-  if Input.is_action_just_released("erase_line"):
-    draw_state = DrawState.IDLE
-  elif Input.is_action_just_pressed("draw_line"):
-    last_mouse_pos = get_global_mouse_position()
-    draw_state = DrawState.DRAWING
+  if !is_drawing: return
+  var result = try_add_segments(last_mouse_pos, mouse_pos)
+  if result:
+    last_mouse_pos = mouse_pos
+    update_visuals()
 #endregion
 
 #region segment management

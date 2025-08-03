@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueSet" load_steps=2 format=3 uid="uid://colc0d32vkjos"]
+
+[ext_resource type="Script" uid="uid://cau6p57qfnx3k" path="res://src/dialogue_system/models/dialogue_set.gd" id="1_c5trn"]
+
+[resource]
+script = ExtResource("1_c5trn")
+emotion = 2
+_lines = Array[String](["EARTHLING!", "I have learned your LANGUAGES and come to your PLANET for MANY REASONS!", "Before we get into those, though, eugh, we are absolutely FAMISHED after our interdimensional sojourn.", "You don’t happen to have any... snacks, do you?", "I, the one called Zeb, require JUICY, DELICIOUS earthbugs, human!", "Do you have… any SLUGS, by chance??", "I have many earth coins from my previous visits! I shall give you some for those bugs!"])
+randomizable = false
+metadata/_custom_type_script = "uid://cau6p57qfnx3k"

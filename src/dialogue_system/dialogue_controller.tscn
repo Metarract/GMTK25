@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://4fk5oqv8uwiy" path="res://src/ui/speech_bubble.tscn" id="2_qlt01"]
 
 [node name="DialogueController" type="Node2D" node_paths=PackedStringArray("speech_bubble")]
+process_mode = 3
 script = ExtResource("1_86bbq")
 speech_bubble = NodePath("SpeechBubble")
 

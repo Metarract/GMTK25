@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueSet" load_steps=2 format=3 uid="uid://dkopwbdbu6dio"]
+
+[ext_resource type="Script" uid="uid://cau6p57qfnx3k" path="res://src/dialogue_system/models/dialogue_set.gd" id="1_y47jm"]
+
+[resource]
+script = ExtResource("1_y47jm")
+emotion = 0
+_lines = Array[String](["Very good, very good indeed!", "Most excellent. Perhaps after a few more restful weeks, I shall reveal to you our machinations!"])
+randomizable = true
+metadata/_custom_type_script = "uid://cau6p57qfnx3k"

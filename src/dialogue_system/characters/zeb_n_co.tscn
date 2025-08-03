@@ -67,5 +67,5 @@ animations = [{
 [node name="ZebNCo" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_nbcap")
 animation = &"yappy"
-frame_progress = 0.652036
+frame_progress = 0.271477
 script = ExtResource("1_xb3cn")

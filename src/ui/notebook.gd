@@ -35,6 +35,7 @@ var lerp_weight = 7.5
 @onready var stats_graph = $BugsMenu/StatsGraph/BugStatsDistributionGraph #.set_bug_stats(BugBuilder.new().ladybug()._bug_stats)
 
 # Exclaim menu nodes
+@export var time: TimeController
 @onready var exclaim_menu = $ExclaimMenu
 @onready var day_highlighter = $ExclaimMenu/DayHighlighter
 
@@ -169,7 +170,7 @@ func build_exclaim_menu() -> void:
   var colors = {"Normal": Color.WHITE, "Alert": Color(100, 0, 0)}
   var positions = {"Mon": Vector2(-73, 21), "Tue": Vector2(-55, 23), "Wed": Vector2(-32, 24), "Thu": Vector2(-3, 26), \
                     "Fri": Vector2(17, 24), "Sat": Vector2(-40, 70), "Sun": Vector2(-42,103)}
-  var current_day:String = get_tree().current_scene.time.current_day
+  var current_day:String = time.current_day
   var cirlce_position = positions[current_day]
 
   day_highlighter.position = cirlce_position
@@ -203,7 +204,9 @@ func _on_quit_pressed() -> void: emit_signal("exit_game")
 #endregion
 
 
-func _on_delete_this_button_pressed() -> void:
+func _on_delete_this_button_pressed() -> Vendor:
   var new_vendor = load("res://src/ui/vendor.tscn").instantiate()
   add_child(new_vendor)
   new_vendor.load_inventory(get_tree().current_scene.player.bug_inventory)
+  new_vendor.vendor_closed.connect(close_journal)
+  return new_vendor

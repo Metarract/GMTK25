@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dbl23cvgyxckq"]
+[gd_scene load_steps=9 format=3 uid="uid://dbl23cvgyxckq"]
 
 [ext_resource type="Script" uid="uid://jgulrl8koypv" path="res://src/main.gd" id="1_3cfgd"]
 [ext_resource type="Script" path="res://src/audio.gd" id="2_3cfgd"]
 [ext_resource type="Shader" uid="uid://igsg3y2o4ojw" path="res://src/shaders/pixelate.gdshader" id="2_5q4o7"]
-[ext_resource type="Script" uid="uid://dxs30cvd04kj8" path="res://src/time.gd" id="3_3cfgd"]
 [ext_resource type="Script" uid="uid://dh2ibhsg5uius" path="res://src/player.gd" id="4_fyndt"]
 
 [sub_resource type="Animation" id="Animation_5q4o7"]
@@ -62,9 +61,6 @@ root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_3cfgd")
 }
-
-[node name="Time" type="Node" parent="."]
-script = ExtResource("3_3cfgd")
 
 [node name="Player" type="Node" parent="."]
 script = ExtResource("4_fyndt")

@@ -66,5 +66,5 @@ animations = [{
 
 [node name="Wormfriend" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_lk6o0")
-frame_progress = 0.775183
+frame_progress = 0.974766
 script = ExtResource("1_w73g5")

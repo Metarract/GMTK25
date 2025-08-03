@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueSet" load_steps=2 format=3 uid="uid://bm82ixc700cao"]
+
+[ext_resource type="Script" uid="uid://cau6p57qfnx3k" path="res://src/dialogue_system/models/dialogue_set.gd" id="1_6hk40"]
+
+[resource]
+script = ExtResource("1_6hk40")
+emotion = 2
+_lines = Array[String](["Got anything particularly leggy?", "Oh, hey, fancy meeting you here."])
+randomizable = true
+metadata/_custom_type_script = "uid://cau6p57qfnx3k"

@@ -18,7 +18,6 @@ var previous_scene_path:String
 @onready var audio_controller:Node = $Audio # Controls BGM across scenes. TODO :: Move UI sfx frome Notebook to this controller
 @onready var player:Node = $Player  # Holds bug inventory and currency
 @onready var scene:Node2D = $Scene  # Parents the current active scene and related nodes.
-@onready var time:Node  = $Time     # Controls day cycles and holds the current day / date
 
 func _ready() -> void: change_state(default_state)
 func pause_game() -> void: get_tree().paused = true

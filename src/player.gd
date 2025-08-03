@@ -1,6 +1,10 @@
 extends Node
 class_name Player
 
+var patchy_has_met := false
+var wormfriend_has_met := false
+var zebnco_has_met := false
+
 var bug_inventory:Array = []  # An array of bug_stats for every individual bug we have in our possession
 var bug_counts:Dictionary:    # count by generic BugStats template of bugs currently in our posession
   get:

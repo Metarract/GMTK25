@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueSet" load_steps=2 format=3 uid="uid://v7nwqirv17ab"]
+
+[ext_resource type="Script" uid="uid://cau6p57qfnx3k" path="res://src/dialogue_system/models/dialogue_set.gd" id="1_uv5w5"]
+
+[resource]
+script = ExtResource("1_uv5w5")
+emotion = 0
+_lines = Array[String](["Hoy there, lad! What’ve y’got for ol’ 9 Patches this time?", "Sound fine ta you?"])
+randomizable = true
+metadata/_custom_type_script = "uid://cau6p57qfnx3k"

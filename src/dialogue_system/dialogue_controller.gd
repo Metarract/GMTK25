@@ -1,6 +1,8 @@
 class_name DialogueController
 extends Node2D
 
+const DIALOGUE_ADVANCEMENT_TIMEOUT_S = .25
+
 signal dialogue_completed()
 
 var character_card: CharacterCard
@@ -8,14 +10,11 @@ var dialogue_set: DialogueSet
 @export var speech_bubble: SpeechBubble
 
 var is_awake := false
-
-func _ready() -> void:
-  awake(GameDialogue.get_patchy(), GameDialogue.patchy_first_meeting())
-  _get_next_line()
+var dialogue_advancement_timer := DIALOGUE_ADVANCEMENT_TIMEOUT_S
 
 func awake(char_card: CharacterCard, dialogue: DialogueSet):
-  set_new_character(char_card, dialogue)
   is_awake = true
+  set_new_character(char_card, dialogue)
 
 func set_new_character(char_card: CharacterCard, dialogue: DialogueSet):
   if character_card != null and !character_card.is_queued_for_deletion():
@@ -33,9 +32,15 @@ func set_new_dialogue(dialogue: DialogueSet):
 
   character_card.set_emotion(dialogue_set.emotion)
 
+func _process(delta: float) -> void:
+  if dialogue_advancement_timer > 0: dialogue_advancement_timer -= delta
+
 func _unhandled_input(_event: InputEvent) -> void:
   if !Input.is_action_just_pressed("advance_dialogue"): return
+  if dialogue_advancement_timer > 0: return
   _get_next_line()
+  dialogue_advancement_timer = DIALOGUE_ADVANCEMENT_TIMEOUT_S
+  get_viewport().set_input_as_handled()
 
 func _get_next_line():
   if !is_awake: return

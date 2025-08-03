@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueSet" load_steps=2 format=3 uid="uid://dciqlc0y6p24v"]
+
+[ext_resource type="Script" uid="uid://cau6p57qfnx3k" path="res://src/dialogue_system/models/dialogue_set.gd" id="1_f4ycs"]
+
+[resource]
+script = ExtResource("1_f4ycs")
+emotion = 2
+_lines = Array[String](["Got plenty more where that came from!", "Pleasure doin’ sharin’ with ye, lad."])
+randomizable = true
+metadata/_custom_type_script = "uid://cau6p57qfnx3k"

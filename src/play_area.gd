@@ -9,12 +9,13 @@ var _bugs_to_capture: Array = []
 var notebook_menu: Notebook = null
 var player_data: Player
 var audio_controller: AudioController = null
-
+@onready var current_cash:RichTextLabel = $PanelContainer/CurrentCash
 
 func _ready() -> void:
   $SpawnController.bug_captured.connect(on_bug_captured)
   notebook_menu = $%Notebook
   notebook_menu.connect("exit_game", on_exit_game)
+  notebook_menu.connect("journal_closed", on_player_currency_change)
   player_data = get_tree().current_scene.find_child("Player")
   audio_controller = get_tree().current_scene.find_child("Audio")
   bug_captured.connect(player_data.add_bug)
@@ -31,6 +32,9 @@ func _physics_process(_delta: float) -> void:
   for bug in bugs_to_remove:
     bug.is_being_captured = false
     _bugs_to_capture.erase(bug)
+    
+func on_player_currency_change() -> void:
+  current_cash.text = "$%d" % [player_data.currency]
 
 func on_capture_check(_event: InputEvent) -> void:
   if Input.is_action_just_pressed("capture"):

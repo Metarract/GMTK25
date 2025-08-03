@@ -1,6 +1,8 @@
 extends Node
 class_name Player
 
+signal currency_changed
+
 var bug_inventory:Array = []  # An array of bug_stats for every individual bug we have in our possession
 var bug_counts:Dictionary:    # count by generic BugStats template of bugs currently in our posession
   get:
@@ -16,7 +18,11 @@ var bug_counts:Dictionary:    # count by generic BugStats template of bugs curre
     print('WARNING: should we be setting Player.bug_counts directly?')
     bug_counts = v
 
-var currency:int = 0    # currency rules everything around the Player
+var currency:int = 0:    # currency rules everything around the Player
+  get: return currency
+  set(i):
+    currency = i
+    emit_signal("currency_changed")
 
 func add_bug(bug_stats: BugStats):
   bug_inventory.append(bug_stats)

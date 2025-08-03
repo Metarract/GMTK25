@@ -72,6 +72,9 @@ bus = &"SFX"
 max_polyphony = 10
 bus = &"Drawing"
 
+[node name="UIPlayer" type="AudioStreamPlayer" parent="Audio"]
+bus = &"UI"
+
 [node name="Time" type="Node" parent="."]
 script = ExtResource("3_3cfgd")
 

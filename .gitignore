@@ -22,9 +22,11 @@
 
 ## Fonts
 *.ttf
- 
+
 ### Sources/Misc
 # project files for / anything not covered by the aforementioned sections
+
+*.docx
 
 # Audacity
 *.aup

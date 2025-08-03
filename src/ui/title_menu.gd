@@ -8,7 +8,7 @@ func _process(delta: float) -> void:
   load_time += delta
 
 func _unhandled_input(event: InputEvent) -> void:
-  if event is InputEventMouse or load_time < 0.75: return
+  if load_time < 0.75 or (event is InputEventMouse and event is not InputEventMouseButton): return
   
   #get_tree().change_scene_to_packed(load("res://src/main.tscn"))
   main_controller.change_state(1) # 1 = game_states.PLAYING .. probably better to send a signal, but meh. GAME JAM!

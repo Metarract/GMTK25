@@ -20,7 +20,7 @@ var previous_scene_path:String
 @onready var scene:Node2D = $Scene  # Parents the current active scene and related nodes.
 @onready var time:Node  = $Time     # Controls day cycles and holds the current day / date
 
-func _ready() -> void: change_state(default_state)
+func _ready() -> void: change_state(game_states.TITLE)#default_state)
 func pause_game() -> void: get_tree().paused = true
 func unpause_game() -> void: get_tree().paused = false
 func exit_game() -> void: change_state(game_states.TITLE)

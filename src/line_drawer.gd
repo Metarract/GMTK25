@@ -34,6 +34,7 @@ var last_mouse_pos: Vector2 = Vector2()
   set = set_segment_color
 
 # nodes
+var audio_controller: AudioController
 var line_sprite: Sprite2D
 var shader_mat: ShaderMaterial
 var implement: Sprite2D
@@ -41,6 +42,7 @@ var implement: Sprite2D
 
 #region lifecycle
 func _ready() -> void:
+  audio_controller = get_tree().current_scene.find_child("Audio")
   line_sprite = $%LineSprite
   implement = $%Implement
 
@@ -79,6 +81,7 @@ func _physics_process(delta: float) -> void:
     lerp_hanging_implement(delta, gmouse_pos)
     return
   implement_follow_mouse(delta, gmouse_pos)
+  audio_controller.play_drawing()
   var result = try_add_segments(last_mouse_pos, gmouse_pos)
   if result:
     last_mouse_pos = gmouse_pos

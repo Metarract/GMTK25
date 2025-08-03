@@ -11,7 +11,7 @@ var S_PARAM_SEGMENTS := "segments"
 @export var MAX_SEGMENT_SIZE: float = 3.0 # set this to influence the size of the line as well
 @export var MIN_SEGMENT_SIZE: float = 1.0
 @export var MAX_SEGMENT_COUNT: int = 1000 # absolutely CANNOT go above 1000 without editing the shader
-@export var SEGMENT_TIMEOUT_MS: int = 3000
+@export var SEGMENT_TIMEOUT_MS: int = 1000
 
 const IMPLEMENT_HIDDEN_Y: float = -30
 const IMPLEMENT_HANG_Y: float = 40

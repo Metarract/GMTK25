@@ -60,7 +60,7 @@ func _NULL() -> BugBuilder:
   var cronch = 1.0
   var honor = 1.0
   var juice = 1.0
-  var leg = 6
+  var leg = 6       
   var stink = 1.0
 
   _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
@@ -100,7 +100,7 @@ func cicada() -> BugBuilder:
   var weight = 3.0
   var speed = 15.0
   var base_trade_value = 10.0
-  var capture_res = 0.5
+  var capture_res = 0.65
   var color = Color.DARK_OLIVE_GREEN
   var affability = 4.0
   var cronch = 7.0
@@ -119,15 +119,15 @@ func hornst() -> BugBuilder:
   var tex_path = "res://assets/Sprites/bugs/horns.png"
   var weight = 5.0
   var speed = 20.0
-  var base_trade_value = 15.0
-  var capture_res = 0.5
+  var base_trade_value = 50.0
+  var capture_res = 0.85
   var color = Color.SADDLE_BROWN
-  var affability = 1.0
+  var affability = 6.0
   var cronch = 8.0
-  var honor = 6.0
-  var juice = 4.0
-  var leg = 7
-  var stink = 4.0
+  var honor = 10.0
+  var juice = 2.0
+  var leg = 3
+  var stink = 2.0
 
   _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
   _bug_stats.capture_resistance = capture_res
@@ -140,7 +140,7 @@ func ladybug() -> BugBuilder:
   var weight = 15.0
   var speed = 30.0
   var base_trade_value = 1.0
-  var capture_res = 0.6
+  var capture_res = 0.65
   var color = Color.RED
   var affability = 9.0
   var cronch = 5.0
@@ -160,7 +160,7 @@ func pillar() -> BugBuilder:
   var weight = 3.0
   var speed = 170.0
   var base_trade_value = 17.0
-  var capture_res = 0.5
+  var capture_res = 0.65
   var color = Color.DEEP_SKY_BLUE
   var affability = 1.0
   var cronch = 1.0
@@ -178,9 +178,9 @@ func stick() -> BugBuilder:
   var description = "This one's always got a joke to tell."
   var tex_path = "res://assets/Sprites/bugs/stick.png"
   var weight = 3.0
-  var speed = 10.0
+  var speed = 20.0
   var base_trade_value = 10.0
-  var capture_res = 0.5
+  var capture_res = 0.75
   var color = Color.SADDLE_BROWN
   var affability = 8.0
   var cronch = 9.0
@@ -200,7 +200,7 @@ func slug() -> BugBuilder:
   var weight = 3.0
   var speed = 3.0
   var base_trade_value = 1.0
-  var capture_res = 0.9
+  var capture_res = 0.95
   var color = Color.BISQUE
   var affability = 0.0
   var cronch = 0.0
@@ -220,7 +220,7 @@ func stinkbug() -> BugBuilder:
   var weight = 5.0
   var speed = 50.0
   var base_trade_value = 10.0
-  var capture_res = 0.5
+  var capture_res = 0.55
   var color = Color.YELLOW_GREEN
   var affability = 1.0
   var cronch = 6.0
@@ -260,7 +260,7 @@ func weevil() -> BugBuilder:
   var weight = 8.0
   var speed = 10.0
   var base_trade_value = 10.0
-  var capture_res = 0.5
+  var capture_res = 0.55
   var color = Color.WHITE
   var affability = 5.0
   var cronch = 7.0
@@ -278,7 +278,7 @@ func weevil() -> BugBuilder:
 #region helper functions to do some thangs
 ## randomize the color so we get some cool lookin guy B)
 func shiny() -> BugBuilder:
-  _bug_stats.color = Color(randf_range(0.0, 1.0), randf_range(0.0, 1.0), randf_range(0.0, 1.0), 1.0)
+  _bug_stats.color = Color(randf_range(0.5, 1.0), randf_range(0.5, 1.0), randf_range(0.5, 1.0), 1.0)
   return self
 
 ## randomize all applicable stats across a normal distribution, then clamp

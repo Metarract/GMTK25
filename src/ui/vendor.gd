@@ -20,8 +20,6 @@ func _process(delta: float) -> void:
   else: sell_all_button.text = "Sell All"
 
 func load_inventory(bug_stats:Array) -> void:
-  if not bug_stats: return
-  if bug_stats.size() <1: return
   
   # empty hbox
   for child in bug_inventory_hbox.get_children(): child.queue_free()

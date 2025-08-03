@@ -34,14 +34,14 @@ func load_tallies(bug_name:String, count:int):
 
   texture_rect_doodle.texture = load(doodle_path)
   rtl_bug_name.text = "[b]" + stats.bug_name.strip_edges()
-    
+
   # create first hbox to hold first row of inventory
   var current_row = HBoxContainer.new()
   vbox_container_tallies.add_child(current_row)
-  
+
   # keep track of current column #
   var current_col = 0
-  
+
   if count >= 20:
 
     # do all the full tallies first

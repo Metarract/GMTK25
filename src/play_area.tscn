@@ -59,6 +59,7 @@ offset_top = -8.0
 offset_right = 651.0
 offset_bottom = 367.0
 mouse_filter = 1
+mouse_default_cursor_shape = 7
 
 [node name="Notebook" parent="." instance=ExtResource("6_elih2")]
 unique_name_in_owner = true

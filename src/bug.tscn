@@ -25,6 +25,7 @@ radius = 15.0
 
 [node name="Bug" type="RigidBody2D"]
 collision_mask = 2
+input_pickable = true
 script = ExtResource("2_tcnvp")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -158,3 +159,6 @@ shape = SubResource("CircleShape2D_n1vdf")
 unique_name_in_owner = true
 script = ExtResource("3_euec3")
 bug = NodePath("..")
+
+[connection signal="mouse_entered" from="." to="." method="on_mouse_over"]
+[connection signal="mouse_exited" from="." to="." method="on_mouse_out"]

@@ -110,6 +110,7 @@ func stun():
 func capture():
   is_being_captured = false
   on_bug_captured.emit(self)
+  Input.set_custom_mouse_cursor(Globals.mouse_pen_shadow, Input.CURSOR_CAN_DROP, Globals.MOUSE_SHADOW_HOTSPOT)
 
 func reset_capture_resistance():
   base_cap_resistance = bug_stats.capture_resistance
@@ -127,3 +128,8 @@ func check_ray_coll_count() -> int:
   if ray_se.is_colliding(): count += 1
 
   return count
+
+func on_mouse_over():
+  Input.set_custom_mouse_cursor(Globals.mouse_grab_hand, Input.CURSOR_CAN_DROP, Globals.MOUSE_GRAB_HOTSPOT)
+func on_mouse_out():
+  Input.set_custom_mouse_cursor(Globals.mouse_pen_shadow, Input.CURSOR_CAN_DROP, Globals.MOUSE_SHADOW_HOTSPOT)

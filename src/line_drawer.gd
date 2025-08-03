@@ -1,19 +1,29 @@
 class_name LineDrawer
 extends Node2D
 
-# constants (real)
+#region "constants"
 # see: src/shaders/linedraw_bitmap_processor.gdshader
 var S_PARAM_LINE_COLOR := "line_color"
 var S_PARAM_SEGMENT_RADIUS := "segment_radius"
 var S_PARAM_SEGMENT_COUNT := "segment_count"
 var S_PARAM_SEGMENTS := "segments"
-# "constants"
+
 @export var MAX_SEGMENT_SIZE: float = 3.0 # set this to influence the size of the line as well
 @export var MIN_SEGMENT_SIZE: float = 1.0
 @export var MAX_SEGMENT_COUNT: int = 1000 # absolutely CANNOT go above 1000 without editing the shader
 @export var SEGMENT_TIMEOUT_MS: int = 3000
 
+const IMPLEMENT_HIDDEN_Y: float = -30
+const IMPLEMENT_HANG_Y: float = 40
+const IMPLEMENT_HANG_Y_MOD: float = 20
+const IMPLEMENT_HANG_FOLLOW_SPEED := 6.0
+
+const IMPLEMENT_MAX_DEFLECTION = 80
+const IMPLEMENT_DEFLECTION_SPEED = 9.0
+#endregion
+
 var is_drawing := false
+var implement_tween_done = false
 
 # segment management
 var segment_array: Array = []
@@ -25,13 +35,17 @@ var last_mouse_pos: Vector2 = Vector2()
 
 # nodes
 var line_sprite: Sprite2D
-var coll_body: StaticBody2D
 var shader_mat: ShaderMaterial
+var implement: Sprite2D
+@onready var coll_body: StaticBody2D = $%Collider
 
 #region lifecycle
 func _ready() -> void:
   line_sprite = $%LineSprite
-  coll_body = $%Collider
+  implement = $%Implement
+
+  implement.position.y = IMPLEMENT_HIDDEN_Y
+
   shader_mat = line_sprite.material as ShaderMaterial
   set_segment_color(segment_color)
   setup_blank_image()
@@ -49,6 +63,7 @@ func _unhandled_input(_event: InputEvent) -> void:
   if Input.is_action_just_released("draw_line"):
     is_drawing = false
   elif Input.is_action_just_pressed("draw_line"):
+    snap_tween_implement_to_mouse()
     get_viewport().set_input_as_handled()
     last_mouse_pos = get_global_mouse_position()
     is_drawing = true
@@ -56,14 +71,17 @@ func _unhandled_input(_event: InputEvent) -> void:
 func _process(_delta: float) -> void:
   handle_removal_queue()
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
   queue_timeouts()
   queue_segment_cap_removals()
-  var mouse_pos = get_global_mouse_position()
-  if !is_drawing: return
-  var result = try_add_segments(last_mouse_pos, mouse_pos)
+  var gmouse_pos = get_global_mouse_position()
+  if !is_drawing:
+    lerp_hanging_implement(delta, gmouse_pos)
+    return
+  implement_follow_mouse(delta, gmouse_pos)
+  var result = try_add_segments(last_mouse_pos, gmouse_pos)
   if result:
-    last_mouse_pos = mouse_pos
+    last_mouse_pos = gmouse_pos
     update_visuals()
 #endregion
 
@@ -144,6 +162,38 @@ func set_segment_color(c: Color) -> void:
   segment_color = c
   if shader_mat == null: return
   shader_mat.set_shader_parameter(S_PARAM_LINE_COLOR, segment_color)
+
+#region implement stuff
+func lerp_hanging_implement(delta: float, gmouse_pos: Vector2):
+  var gmouse_y = remap(gmouse_pos.y, 0, 360, IMPLEMENT_HANG_Y - IMPLEMENT_HANG_Y_MOD, IMPLEMENT_HANG_Y + IMPLEMENT_HANG_Y_MOD)
+  var hanging_gpos = Vector2(gmouse_pos.x, gmouse_y)
+  implement.global_position = implement.global_position.lerp(hanging_gpos, delta * IMPLEMENT_HANG_FOLLOW_SPEED)
+  pass
+
+func snap_tween_implement_to_mouse():
+  implement_tween_done = false
+  var tween = create_tween()
+  tween.set_ease(Tween.EASE_OUT)
+  tween.set_trans(Tween.TRANS_SINE)
+  tween.tween_property(implement, "global_position", get_global_mouse_position(), 0.05)
+  tween.tween_callback(set_implement_tween_done)
+
+func set_implement_tween_done(): implement_tween_done = true
+
+func implement_follow_mouse(delta: float, gmouse_pos: Vector2):
+  if implement_tween_done: implement.global_position = gmouse_pos
+  deflect_implement(delta, gmouse_pos)
+
+func deflect_implement(delta: float, gmouse_pos: Vector2):
+  var dir = sign(last_mouse_pos.x - gmouse_pos.x)
+  var strength = clampf(last_mouse_pos.distance_to(gmouse_pos), 0, IMPLEMENT_MAX_DEFLECTION)
+  # implement.rotation_degrees = dir * strength
+  implement.rotation = lerp_angle(implement.rotation, deg_to_rad(dir * strength), delta * IMPLEMENT_DEFLECTION_SPEED)
+
+func hide_implement(delta: float):
+  var hidden_gpos = Vector2(implement.global_position.x, IMPLEMENT_HIDDEN_Y)
+  implement.global_position = implement.global_position.lerp(hidden_gpos, delta * IMPLEMENT_HANG_FOLLOW_SPEED)
+#endregion
 
 ## helper class to keep track of some data
 class Segment extends RefCounted:

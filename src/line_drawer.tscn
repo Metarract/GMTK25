@@ -30,6 +30,6 @@ collision_mask = 0
 unique_name_in_owner = true
 z_index = -49
 z_as_relative = false
-position = Vector2(315, -124)
+position = Vector2(315, -122)
 texture = ExtResource("3_oexo5")
 offset = Vector2(5, -56)

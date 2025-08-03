@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bgpjuw56p46gp"]
+[gd_scene load_steps=29 format=3 uid="uid://bgpjuw56p46gp"]
 
 [ext_resource type="Script" uid="uid://dhc26rwvyrcwq" path="res://src/ui/notebook.gd" id="1_rga7h"]
 [ext_resource type="Texture2D" uid="uid://51jm4a52dmhg" path="res://assets/Sprites/Menus-UI/menu_notebook_open.png" id="2_y5vph"]
@@ -126,14 +126,8 @@ _data = {
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4olm5"]
 bg_color = Color(1.56425e-07, 0, 0.19701, 0.333333)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcna2"]
-size = Vector2(176, 68)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_1quvf"]
 atlas = ExtResource("12_1quvf")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qwlf0"]
-size = Vector2(182.5, 64)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eq8er"]
 
@@ -205,11 +199,11 @@ texture = ExtResource("3_g40sl")
 region_enabled = true
 region_rect = Rect2(8, 40, 184, 80)
 
-[node name="Area2DSettings" type="Area2D" parent="Journal/SettingsTab"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/SettingsTab/Area2DSettings"]
-position = Vector2(1.5, 0)
-shape = SubResource("RectangleShape2D_vcna2")
+[node name="SettingsButton" type="TextureButton" parent="Journal/SettingsTab"]
+offset_left = -86.0
+offset_top = -31.0
+offset_right = 3.0
+offset_bottom = 34.0
 
 [node name="BugsTab" type="Node2D" parent="Journal"]
 z_index = -10
@@ -221,11 +215,11 @@ texture = ExtResource("4_4olm5")
 region_enabled = true
 region_rect = Rect2(16, 120, 184, 80)
 
-[node name="Area2DBugs" type="Area2D" parent="Journal/BugsTab"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/BugsTab/Area2DBugs"]
-position = Vector2(1, 0)
-shape = SubResource("RectangleShape2D_vcna2")
+[node name="BugsButton" type="TextureButton" parent="Journal/BugsTab"]
+offset_left = -90.0
+offset_top = -33.0
+offset_right = 1.0
+offset_bottom = 33.0
 
 [node name="ExclaimTab" type="Node2D" parent="Journal"]
 z_index = -10
@@ -244,11 +238,11 @@ centered = false
 region_enabled = true
 region_rect = Rect2(88, 200, 7, 32)
 
-[node name="Area2DExclaim" type="Area2D" parent="Journal/ExclaimTab"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Journal/ExclaimTab/Area2DExclaim"]
-position = Vector2(-1.75, -1)
-shape = SubResource("RectangleShape2D_qwlf0")
+[node name="ExclaimButton" type="TextureButton" parent="Journal/ExclaimTab"]
+offset_left = -92.0
+offset_top = -30.0
+offset_right = -2.0
+offset_bottom = 30.0
 
 [node name="Cover" type="Sprite2D" parent="Journal"]
 z_index = 100
@@ -433,15 +427,15 @@ position = Vector2(-32, 24)
 texture = ExtResource("13_3q0g6")
 
 [connection signal="pressed" from="Open/CloseJournal" to="." method="_on_close_journal_pressed"]
-[connection signal="input_event" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_input_event"]
-[connection signal="mouse_entered" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_mouse_entered"]
-[connection signal="mouse_exited" from="Journal/SettingsTab/Area2DSettings" to="." method="_on_area_2d_settings_mouse_exited"]
-[connection signal="input_event" from="Journal/BugsTab/Area2DBugs" to="." method="_on_area_2d_bugs_input_event"]
-[connection signal="mouse_entered" from="Journal/BugsTab/Area2DBugs" to="." method="_on_area_2d_bugs_mouse_entered"]
-[connection signal="mouse_exited" from="Journal/BugsTab/Area2DBugs" to="." method="_on_area_2d_bugs_mouse_exited"]
-[connection signal="input_event" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_input_event"]
-[connection signal="mouse_entered" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_entered"]
-[connection signal="mouse_exited" from="Journal/ExclaimTab/Area2DExclaim" to="." method="_on_area_2d_exclaim_mouse_exited"]
+[connection signal="mouse_entered" from="Journal/SettingsTab/SettingsButton" to="." method="_on_settings_mouse_entered"]
+[connection signal="mouse_exited" from="Journal/SettingsTab/SettingsButton" to="." method="_on_settings_mouse_exited"]
+[connection signal="pressed" from="Journal/SettingsTab/SettingsButton" to="." method="_on_settings_pressed"]
+[connection signal="mouse_entered" from="Journal/BugsTab/BugsButton" to="." method="_on_bugs_mouse_entered"]
+[connection signal="mouse_exited" from="Journal/BugsTab/BugsButton" to="." method="_on_bugs_mouse_exited"]
+[connection signal="pressed" from="Journal/BugsTab/BugsButton" to="." method="_on_bugs_pressed"]
+[connection signal="mouse_entered" from="Journal/ExclaimTab/ExclaimButton" to="." method="_on_exclaim_mouse_entered"]
+[connection signal="mouse_exited" from="Journal/ExclaimTab/ExclaimButton" to="." method="_on_exclaim_mouse_exited"]
+[connection signal="pressed" from="Journal/ExclaimTab/ExclaimButton" to="." method="_on_exclaim_pressed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/PanelContainer/VBoxContainer/HSliderLoud" to="." method="_on_h_slider_loud_value_changed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="BugsMenu/StatsGraph/CloseStatsGraph" to="." method="_on_close_stats_graph_pressed"]

@@ -38,16 +38,6 @@ var lerp_weight = 7.5
 @onready var exclaim_menu = $ExclaimMenu
 @onready var day_highlighter = $ExclaimMenu/DayHighlighter
 
-func _on_area_2d_settings_mouse_entered() -> void: hovering = true
-func _on_area_2d_bugs_mouse_entered() -> void: hovering = true
-func _on_area_2d_exclaim_mouse_entered() -> void: hovering = true
-
-func _on_area_2d_settings_mouse_exited() -> void: hovering = false
-func _on_area_2d_bugs_mouse_exited() -> void: hovering = false
-func _on_area_2d_exclaim_mouse_exited() -> void: hovering = false
-
-func _on_quit_pressed() -> void: emit_signal("exit_game")
-
 func _ready() -> void:
   # set the LOUD slider value to the current audio level
   settings_hslider_loud.value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master")))
@@ -179,22 +169,28 @@ func build_exclaim_menu() -> void:
   var cirlce_position = positions[get_tree().current_scene.time.current_day]
   day_highlighter.position = cirlce_position
 
-func _on_area_2d_settings_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-  if event is InputEventMouseButton:
-    if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed:
-      #get_viewport().set_input_as_handled()
-      open_journal(1)
 
-func _on_area_2d_bugs_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-  if event is InputEventMouseButton:
-    if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed:
-      #get_viewport().set_input_as_handled()
-      #var bug_collection = {BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1}
-      build_bug_menu(get_tree().current_scene.player.bug_counts)
+#region events
+# hovers
+func _on_settings_mouse_entered() -> void: hovering = true
+func _on_bugs_mouse_entered() -> void: hovering = true
+func _on_exclaim_mouse_entered() -> void: hovering = true
 
-func _on_area_2d_exclaim_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-  if event is InputEventMouseButton:
-    if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.pressed:
-      #get_viewport().set_input_as_handled()
-      build_exclaim_menu()
-      open_journal(3)
+func _on_settings_mouse_exited() -> void: hovering = false
+func _on_bugs_mouse_exited() -> void: hovering = false
+func _on_exclaim_mouse_exited() -> void: hovering = false
+
+# clicks
+func _on_settings_pressed() -> void:
+  open_journal(1)
+
+func _on_bugs_pressed() -> void:
+  #var bug_collection = {BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1}
+  build_bug_menu(get_tree().current_scene.player.bug_counts)
+
+func _on_exclaim_pressed() -> void:
+  build_exclaim_menu()
+  open_journal(3)
+
+func _on_quit_pressed() -> void: emit_signal("exit_game")
+#endregion

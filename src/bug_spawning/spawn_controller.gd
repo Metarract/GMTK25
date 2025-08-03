@@ -4,6 +4,8 @@ extends Node
 const SPAWN_CAP_DEFAULT := 20 # 5
 const SPAWN_CAP_MOD := 1
 
+var cap_particles_pck = preload("res://src/fx/capture_particles.tscn")
+
 ## for use by the play zone to do some fanfare or sum shit
 signal bug_spawned(bug_stats: BugStats, count: int)
 ## pass me up from listening on the bug to the play zone
@@ -66,5 +68,10 @@ func on_bug_captured(bug: Bug):
     printerr(bug)
     return
   active_bugs -= 1
+
+  var cap_part: CPUParticles2D = cap_particles_pck.instantiate()
+  get_parent().add_child(cap_part)
+  cap_part.global_position = bug.global_position + (Vector2.UP * 33)
+
   bug_captured.emit(bug.bug_stats, active_bugs)
   bug.queue_free()

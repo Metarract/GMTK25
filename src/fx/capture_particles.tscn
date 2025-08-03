@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://5btncvosu5qs"]
+
+[ext_resource type="Texture2D" uid="uid://bv3wcjcvgudwa" path="res://assets/Sprites/stun_stars.png" id="1_fmb75"]
+[ext_resource type="Script" uid="uid://ctsj734x6f5wo" path="res://src/fx/capture_particles.gd" id="2_cbx3v"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cbx3v"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_t631b"]
+offsets = PackedFloat32Array(0.714286, 0.883721)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="CaptureParticles" type="CPUParticles2D"]
+material = SubResource("CanvasItemMaterial_cbx3v")
+emitting = false
+amount = 6
+texture = ExtResource("1_fmb75")
+lifetime = 0.7
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(32, 1)
+direction = Vector2(0, -1)
+gravity = Vector2(0, 700)
+initial_velocity_min = 200.0
+initial_velocity_max = 200.0
+angle_min = -720.0
+angle_max = 720.0
+color_ramp = SubResource("Gradient_t631b")
+anim_offset_max = 1.0
+script = ExtResource("2_cbx3v")

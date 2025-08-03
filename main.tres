@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=10 format=3 uid="uid://pw4k0a18f32v"]
 
 [ext_resource type="FontFile" uid="uid://cud18yyrj1j0q" path="res://assets/Fonts/RecMonoCasual-Regular-1.085.ttf" id="1_24q3n"]
-[ext_resource type="Texture2D" uid="uid://bis6dlulg4jms" path="res://assets/Sprites/Menus-UI/capture_progress.png" id="1_oblph"]
+[ext_resource type="Texture2D" uid="uid://gi0bri30o15m" path="res://assets/Sprites/Menus-UI/capturebar.png" id="1_oblph"]
 [ext_resource type="FontFile" uid="uid://deydr763hra6v" path="res://assets/Fonts/RecMonoCasual-Bold-1.085.ttf" id="1_t1uk1"]
 [ext_resource type="FontFile" uid="uid://xj8m70hp8e3v" path="res://assets/Fonts/RecMonoCasual-BoldItalic-1.085.ttf" id="2_oblph"]
 [ext_resource type="FontFile" uid="uid://qsubdmfpwh5u" path="res://assets/Fonts/RecMonoCasual-Italic-1.085.ttf" id="3_v11j8"]

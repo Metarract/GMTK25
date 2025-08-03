@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bis6dlulg4jms"
-path="res://.godot/imported/capture_progress.png-07427041009006cc3cb3940414bf385a.ctex"
+uid="uid://knkrm1rwefa8"
+path="res://.godot/imported/9patches_talk_sheet.png-ae2a9d8d8dacb2f7b906351580b25a71.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sprites/Menus-UI/capture_progress.png"
-dest_files=["res://.godot/imported/capture_progress.png-07427041009006cc3cb3940414bf385a.ctex"]
+source_file="res://assets/Sprites/vendors/9patches_talk_sheet.png"
+dest_files=["res://.godot/imported/9patches_talk_sheet.png-ae2a9d8d8dacb2f7b906351580b25a71.ctex"]
 
 [params]
 

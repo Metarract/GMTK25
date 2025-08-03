@@ -1,4 +1,4 @@
-﻿class_name BugState
+class_name BugState
 extends RefCounted
 
 var _bug: Bug

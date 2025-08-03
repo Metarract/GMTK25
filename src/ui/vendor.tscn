@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cyj4vmysw5ox4"]
+[gd_scene load_steps=8 format=3 uid="uid://cyj4vmysw5ox4"]
 
 [ext_resource type="Script" uid="uid://ba68ggbxy77l4" path="res://src/ui/vendor.gd" id="1_s0efx"]
 [ext_resource type="Texture2D" uid="uid://ctojummfc4qn2" path="res://assets/Sprites/vendors/9patches.png" id="1_x1lrk"]
+[ext_resource type="FontFile" uid="uid://deydr763hra6v" path="res://assets/Fonts/RecMonoCasual-Bold-1.085.ttf" id="3_s0efx"]
 [ext_resource type="PackedScene" uid="uid://4fk5oqv8uwiy" path="res://src/ui/speech_bubble.tscn" id="3_ye82p"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3cfgd"]
@@ -64,13 +65,22 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_kmhfv")
 layout_mode = 2
 
 [node name="SellAll" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer"]
+custom_minimum_size = Vector2(66, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.831373, 0.686275, 0.215686, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.831373, 0.686275, 0.215686, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_s0efx")
 theme_override_font_sizes/font_size = 12
 text = "Sell All"
 
-[node name="SellAllValue" type="RichTextLabel" parent="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer"]
+[node name="CurrentCash" type="RichTextLabel" parent="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer"]
 layout_mode = 2
 theme_override_colors/default_color = Color(0.831373, 0.686275, 0.215686, 1)
 theme_override_constants/outline_size = 4
@@ -85,6 +95,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_s0efx")
 theme_override_font_sizes/font_size = 12
 text = "Say Goodbye"
 
@@ -94,5 +105,7 @@ offset_top = 59.0
 offset_right = 555.0
 offset_bottom = 59.0
 
+[connection signal="mouse_entered" from="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer/SellAll" to="." method="_on_sell_all_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer/SellAll" to="." method="_on_sell_all_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer/SellAll" to="." method="_on_sell_all_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer/SayGoodbye" to="." method="_on_say_goodbye_pressed"]

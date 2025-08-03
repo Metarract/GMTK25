@@ -1,7 +1,7 @@
 class_name DialogueController
 extends Node2D
 
-const DIALOGUE_ADVANCEMENT_TIMEOUT_S = .25
+const DIALOGUE_ADVANCEMENT_TIMEOUT_S = .2
 
 signal dialogue_completed()
 

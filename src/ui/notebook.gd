@@ -87,8 +87,9 @@ func reset_journal() -> void:
   bugs_menu.visible = false
   exclaim_menu.visible = false
 
-func open_journal(i: int) -> void:
+func open_journal(i: int, show_close_button := true) -> void:
   audio_controller.play_journal_open()
+  $%CloseJournal.visible = show_close_button
   get_tree().paused = true
   reset_journal()
   if i == 1:
@@ -182,9 +183,9 @@ func _on_bugs_pressed() -> void:
   #var bug_collection = {BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1,BugBuilder.new().ant().shiny().normalize_stats().build(): 16, BugBuilder.new().slug().shiny().normalize_stats().build(): 7, BugBuilder.new().ladybug().shiny().normalize_stats().build(): 1}
   build_bug_menu(get_tree().current_scene.player.bug_counts)
 
-func _on_exclaim_pressed() -> void:
+func _on_exclaim_pressed(show_close_button := true) -> void:
   build_exclaim_menu()
-  open_journal(3)
+  open_journal(3, show_close_button)
 
 func _on_quit_pressed() -> void: emit_signal("exit_game")
 #endregion

@@ -104,15 +104,6 @@ theme_override_fonts/font = ExtResource("3_s0efx")
 theme_override_font_sizes/font_size = 12
 text = "Say Goodbye"
 
-[node name="Block Close" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -203.0
-offset_bottom = 199.0
-grow_horizontal = 0
-
 [connection signal="mouse_entered" from="CanvasLayer/SellWindow/VBoxContainer/LowerBar/HBoxContainer/SellAll" to="." method="_on_sell_all_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/SellWindow/VBoxContainer/LowerBar/HBoxContainer/SellAll" to="." method="_on_sell_all_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/SellWindow/VBoxContainer/LowerBar/HBoxContainer/SellAll" to="." method="_on_sell_all_pressed"]

@@ -245,6 +245,7 @@ offset_right = -2.0
 offset_bottom = 30.0
 
 [node name="Cover" type="Sprite2D" parent="Journal"]
+visible = false
 z_index = 100
 z_as_relative = false
 position = Vector2(85, 16)
@@ -423,7 +424,7 @@ texture = ExtResource("12_1quvf")
 centered = false
 
 [node name="DayHighlighter" type="Sprite2D" parent="ExclaimMenu"]
-position = Vector2(-32, 24)
+position = Vector2(-42, 103)
 texture = ExtResource("13_3q0g6")
 
 [connection signal="pressed" from="Open/CloseJournal" to="." method="_on_close_journal_pressed"]

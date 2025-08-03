@@ -34,9 +34,15 @@ func build() -> Bug:
 ## USAGE: BugBuilder.new().BugType["key_name"].call().build()
 var BugType := {
   "Ant": ant,
-  "Slug": slug,
+  "Cicada": cicada,
+  "Hornst": hornst,
+  "Ladybug": ladybug,
+  "17apeed": pillar,
   "Pillbug": pillbug,
-  "Ladybug": ladybug
+  "Slug": slug,
+  "Schtick": stick,
+  "Stinkbug": stinkbug,
+  "Da'Weevil": weevil
 }
 
 ## DO NOT USE THIS SPECIFIC ONE
@@ -87,6 +93,106 @@ func ant() -> BugBuilder:
   _bug_stats.capture_resistance = capture_res
   return self
 
+func cicada() -> BugBuilder:
+  var name = "Cicada"
+  var description = "They say these things only come out every 21 years."
+  var tex_path = "res://assets/Sprites/bugs/cicada.png"
+  var weight = 3.0
+  var speed = 15.0
+  var base_trade_value = 10.0
+  var capture_res = 0.5
+  var color = Color.DARK_OLIVE_GREEN
+  var affability = 4.0
+  var cronch = 7.0
+  var honor = 2.0
+  var juice = 2.0
+  var leg = 6
+  var stink = 8.0
+
+  _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
+  _bug_stats.capture_resistance = capture_res
+  return self
+
+func hornst() -> BugBuilder:
+  var name = "Hornst"
+  var description = "A very real bug indeed."
+  var tex_path = "res://assets/Sprites/bugs/horns.png"
+  var weight = 5.0
+  var speed = 20.0
+  var base_trade_value = 15.0
+  var capture_res = 0.5
+  var color = Color.SADDLE_BROWN
+  var affability = 1.0
+  var cronch = 8.0
+  var honor = 6.0
+  var juice = 4.0
+  var leg = 7
+  var stink = 4.0
+
+  _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
+  _bug_stats.capture_resistance = capture_res
+  return self
+
+func ladybug() -> BugBuilder:
+  var name = "Ladybug"
+  var description = "Don't be fooled by her appearance, this lady is a killer"
+  var tex_path = "res://assets/Sprites/bugs/ladybug.png"
+  var weight = 15.0
+  var speed = 30.0
+  var base_trade_value = 1.0
+  var capture_res = 0.6
+  var color = Color.RED
+  var affability = 9.0
+  var cronch = 5.0
+  var honor = 4.0
+  var juice = 6.0
+  var leg = 6
+  var stink = 7.0
+
+  _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
+  _bug_stats.capture_resistance = capture_res
+  return self
+  
+func pillar() -> BugBuilder:
+  var name = "17apeed"
+  var description = "Try counting the legs. I dare ya."
+  var tex_path = "res://assets/Sprites/bugs/pillar.png"
+  var weight = 3.0
+  var speed = 170.0
+  var base_trade_value = 17.0
+  var capture_res = 0.5
+  var color = Color.DEEP_SKY_BLUE
+  var affability = 1.0
+  var cronch = 1.0
+  var honor = 1.0
+  var juice = 8.0
+  var leg = 17
+  var stink = 10.0
+  
+  _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
+  _bug_stats.capture_resistance = capture_res
+  return self
+
+func stick() -> BugBuilder:
+  var name = "Schtick"
+  var description = "This one's always got a joke to tell."
+  var tex_path = "res://assets/Sprites/bugs/stick.png"
+  var weight = 3.0
+  var speed = 10.0
+  var base_trade_value = 10.0
+  var capture_res = 0.5
+  var color = Color.SADDLE_BROWN
+  var affability = 8.0
+  var cronch = 9.0
+  var honor = 7.0
+  var juice = 1.0
+  var leg = 6
+  var stink = 2.0
+
+  _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
+  _bug_stats.capture_resistance = capture_res
+  return self
+
 func slug() -> BugBuilder:
   var name = "Slug"
   var description = "The biggest pos this side of the garden"
@@ -102,6 +208,26 @@ func slug() -> BugBuilder:
   var juice = 10.0
   var leg = 0
   var stink = 7.0
+
+  _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
+  _bug_stats.capture_resistance = capture_res
+  return self
+
+func stinkbug() -> BugBuilder:
+  var name = "Stinkbug"
+  var description = "You get it."
+  var tex_path = "res://assets/Sprites/bugs/stinkbug.png"
+  var weight = 5.0
+  var speed = 50.0
+  var base_trade_value = 10.0
+  var capture_res = 0.5
+  var color = Color.YELLOW_GREEN
+  var affability = 1.0
+  var cronch = 6.0
+  var honor = 1.0
+  var juice = 2.0
+  var leg = 6
+  var stink = 10.0
 
   _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
   _bug_stats.capture_resistance = capture_res
@@ -127,21 +253,21 @@ func pillbug() -> BugBuilder:
   _bug_stats.capture_resistance = capture_res
   return self
 
-func ladybug() -> BugBuilder:
-  var name = "Ladybug"
-  var description = "Don't be fooled by her appearance, this lady is a killer"
-  var tex_path = "res://assets/Sprites/bugs/ladybug.png"
-  var weight = 15.0
-  var speed = 30.0
-  var base_trade_value = 1.0
-  var capture_res = 0.6
-  var color = Color.RED
-  var affability = 9.0
-  var cronch = 5.0
-  var honor = 4.0
+func weevil() -> BugBuilder:
+  var name = "Da'Weevil"
+  var description = "Did you know some weevils have neck knuckles? GROSS."
+  var tex_path = "res://assets/Sprites/bugs/weevil.png"
+  var weight = 8.0
+  var speed = 10.0
+  var base_trade_value = 10.0
+  var capture_res = 0.5
+  var color = Color.WHITE
+  var affability = 5.0
+  var cronch = 7.0
+  var honor = 9.0
   var juice = 6.0
   var leg = 6
-  var stink = 7.0
+  var stink = 5.0
 
   _bug_stats = BugStats.new(name, description, tex_path, weight, speed, base_trade_value, color, affability, cronch, honor, juice, leg, stink)
   _bug_stats.capture_resistance = capture_res

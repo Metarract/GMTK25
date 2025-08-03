@@ -78,7 +78,12 @@ var vendor_index = {
   2: "zebnco"
 }
 
-func get_random_vendor_index() -> int: return randi_range(0, vendor_index.values().size()-1)
+func get_random_vendor_index() -> int: 
+  var rand_index = player.last_vendor_index
+  while rand_index == player.last_vendor_index:
+    rand_index = randi_range(0, vendor_index.values().size()-1)
+  player.last_vendor_index = rand_index
+  return rand_index
 
 func get_initial_dialogue():
   match current_vendor_index:

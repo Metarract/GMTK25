@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp6nqllkro0yj"]
+[gd_scene load_steps=5 format=3 uid="uid://dp6nqllkro0yj"]
 
 [ext_resource type="Script" uid="uid://ciivkn2gahlbu" path="res://src/line_drawer.gd" id="1_1hx7k"]
+[ext_resource type="Texture2D" uid="uid://dvbawd227rpnr" path="res://assets/Sprites/fatlilpen.png" id="3_oexo5"]
 [ext_resource type="Shader" uid="uid://ddihx6hrxmvbl" path="res://src/shaders/linedraw_bitmap_processor.gdshader" id="3_qyik7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qyik7"]
@@ -15,6 +16,8 @@ script = ExtResource("1_1hx7k")
 
 [node name="LineSprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+z_index = -51
+z_as_relative = false
 material = SubResource("ShaderMaterial_qyik7")
 centered = false
 
@@ -22,3 +25,11 @@ centered = false
 unique_name_in_owner = true
 collision_layer = 2
 collision_mask = 0
+
+[node name="Implement" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+z_index = -49
+z_as_relative = false
+position = Vector2(315, -124)
+texture = ExtResource("3_oexo5")
+offset = Vector2(5, -56)

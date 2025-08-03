@@ -5,7 +5,8 @@ signal vendor_closed()
 
 var preload_inventory_button = preload("res://src/ui/bug_inventory_button.tscn")
 
-@onready var player: Player = get_tree().current_scene.player
+@onready var player:Player = get_tree().current_scene.player
+@onready var audio_controller:AudioController = get_tree().current_scene.audio_controller
 
 @onready var bug_inventory_hbox: HBoxContainer = $%BugHBoxContainer
 @onready var current_cash: RichTextLabel = $%CurrentCash
@@ -56,12 +57,14 @@ func sell_bug(b: BugStats) -> void:
   get_sale_dialogue()
   player.currency += b.trade_value
   player.bug_inventory.erase(b)
+  audio_controller.play_coins()
   load_inventory(player.bug_inventory)
 
 func _on_sell_all_pressed() -> void:
   get_sale_dialogue()
   player.currency += sell_all_value
   player.bug_inventory.clear()
+  audio_controller.play_coins()
   load_inventory(player.bug_inventory)
 
 func _on_say_goodbye_pressed() -> void:

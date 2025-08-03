@@ -19,7 +19,10 @@ var trade_value:float:
     print('WARNING: should we be setting BugStats.trade_value directly?')
     trade_value = v
   get():
-    return base_trade_value + ((10 * affability) + (10 * cronch) + (10 * honor) + (10 * juice) + (10 * leg) + (10 * stink))
+    var mult = 1.0
+    var original_color = BugBuilder.new().BugType[bug_name].call().build().bug_stats.color
+    if color != original_color: mult = 2.0
+    return base_trade_value + mult * (((10 * affability) + (10 * cronch) + (10 * honor) + (10 * juice) + (10 * leg) + (10 * stink)))
 
 # stats
 var affability:float = 0.0

@@ -27,6 +27,7 @@
 # project files for / anything not covered by the aforementioned sections
 
 *.docx
+*.pdf
 
 # Audacity
 *.aup

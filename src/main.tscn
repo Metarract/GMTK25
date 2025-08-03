@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dbl23cvgyxckq"]
 
 [ext_resource type="Script" uid="uid://jgulrl8koypv" path="res://src/main.gd" id="1_3cfgd"]
-[ext_resource type="Script" path="res://src/audio.gd" id="2_3cfgd"]
+[ext_resource type="Script" uid="uid://vpfgjn3il2af" path="res://src/audio.gd" id="2_3cfgd"]
 [ext_resource type="Shader" uid="uid://igsg3y2o4ojw" path="res://src/shaders/pixelate.gdshader" id="2_5q4o7"]
 [ext_resource type="Script" uid="uid://dh2ibhsg5uius" path="res://src/player.gd" id="4_fyndt"]
 
@@ -53,8 +53,6 @@ script = ExtResource("1_3cfgd")
 process_mode = 3
 script = ExtResource("2_3cfgd")
 
-[node name="BGMPlayer" type="AudioStreamPlayer" parent="Audio"]
-
 [node name="BGMFader" type="AnimationPlayer" parent="Audio"]
 process_mode = 3
 root_node = NodePath("../..")
@@ -62,6 +60,26 @@ libraries = {
 &"": SubResource("AnimationLibrary_3cfgd")
 }
 
+<<<<<<< HEAD
+=======
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="Audio"]
+bus = &"BGM"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="Audio"]
+max_polyphony = 10
+bus = &"SFX"
+
+[node name="DrawPlayer" type="AudioStreamPlayer" parent="Audio"]
+max_polyphony = 10
+bus = &"Drawing"
+
+[node name="UIPlayer" type="AudioStreamPlayer" parent="Audio"]
+bus = &"UI"
+
+[node name="Time" type="Node" parent="."]
+script = ExtResource("3_3cfgd")
+
+>>>>>>> main
 [node name="Player" type="Node" parent="."]
 script = ExtResource("4_fyndt")
 

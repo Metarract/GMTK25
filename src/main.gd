@@ -19,7 +19,7 @@ var previous_scene_path:String
 @onready var player:Node = $Player  # Holds bug inventory and currency
 @onready var scene:Node2D = $Scene  # Parents the current active scene and related nodes.
 
-func _ready() -> void: change_state(default_state)
+func _ready() -> void: change_state(game_states.TITLE) #default_state)
 func pause_game() -> void: get_tree().paused = true
 func unpause_game() -> void: get_tree().paused = false
 func exit_game() -> void: change_state(game_states.TITLE)
@@ -43,6 +43,7 @@ func change_state(s:game_states) -> void:
 
       var play_area: PlayArea = scene.find_child("PlayArea", false, false)
       play_area.connect("exit_game", exit_game)
+      player.connect("currency_changed", play_area.on_player_currency_change)
 
     _:
       print("ERR: Main game state unknown")

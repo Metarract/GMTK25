@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="GMTK25"
+config/name="Sircle The Bugs"
 run/main_scene="uid://dbl23cvgyxckq"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://bfe63aael1io7"
 
 [autoload]
 

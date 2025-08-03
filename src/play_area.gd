@@ -99,4 +99,5 @@ func on_vendor_closed():
   time.tick_day()
 
 func on_exit_game():
+  get_tree().paused = false
   exit_game.emit()

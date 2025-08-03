@@ -3,6 +3,7 @@ extends Node2D
 var preload_inventory_button = preload("res://src/ui/bug_inventory_button.tscn")
 
 @onready var player:Player = get_tree().current_scene.player
+@onready var audio_controller:AudioController = get_tree().current_scene.audio_controller
 
 @onready var sprite:Sprite2D = $Sprite
 @onready var bug_inventory_hbox:HBoxContainer = $CanvasLayer/PanelContainer/VBoxContainer/BugInventory/ScrollContainer/HBoxContainer
@@ -49,11 +50,13 @@ func load_dialogue() -> void:
 func sell_bug(b:BugStats) -> void:
   player.currency += b.trade_value
   player.bug_inventory.erase(b)
+  audio_controller.play_coins()
   load_inventory(player.bug_inventory)
   
 func _on_sell_all_pressed() -> void:
   player.currency += sell_all_value
   player.bug_inventory.clear()
+  audio_controller.play_coins()
   load_inventory(player.bug_inventory)
   
 func _on_say_goodbye_pressed() -> void:

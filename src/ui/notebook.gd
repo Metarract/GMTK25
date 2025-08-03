@@ -14,6 +14,7 @@ var position_open_x:float = 8.0
 var lerp_weight = 7.5
 
 @onready var player = get_tree().current_scene.player
+@onready var audio_controller = get_tree().current_scene.audio_controller
 
 @onready var animation_player:AnimationPlayer = $AnimationPlayer
 @onready var audio_stream_player:AudioStreamPlayer = $AudioStreamPlayer
@@ -52,24 +53,9 @@ func _process(delta:float) -> void:
       if journal.position.x != position_start_x:
         journal.position.x =  lerp(journal.position.x, position_start_x, lerp_weight * delta)
 
-func play_sfx(path:String) -> void:
-  if not path: return
-
-  var clip = load(path)
-  if not clip: return
-
-  # vary the pitch of SFX to prevent audio fatigue
-  var pitch_variation = randf_range(-audio_pitch_variation, audio_pitch_variation)
-  audio_stream_player.pitch_scale = 1.0 + pitch_variation
-
-  # load and play
-
-  audio_stream_player.stream = clip
-  audio_stream_player.play()
-
 func _on_h_slider_loud_value_changed(value: float) -> void:
   AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value))
-  play_sfx("res://assets/Sounds/Library Scribbling B.wav")
+  audio_controller.play_scribble()
 
 func _on_close_stats_graph_pressed() -> void:
   # TODO: Get the stats graph to close proerply so we can get rid of this button
@@ -80,7 +66,7 @@ func _on_close_journal_pressed() -> void:
   close_journal()
 
 func on_bug_tally_pressed(stats:BugStats) -> void:
-  play_sfx("res://assets/Sounds/Library Foliant G Clipped.wav")
+  audio_controller.play_journal_open()
   stats_graph_container.visible = true
   stats_graph.set_bug_stats(stats)
 
@@ -101,7 +87,7 @@ func reset_journal() -> void:
   exclaim_menu.visible = false
 
 func open_journal(i: int) -> void:
-  play_sfx("res://assets/Sounds/Library Foliant G Clipped.wav")
+  audio_controller.play_journal_open()
   get_tree().paused = true
   reset_journal()
   if i == 1:
@@ -121,7 +107,7 @@ func open_journal(i: int) -> void:
 
 func close_journal() -> void:
   open = false
-  play_sfx("res://assets/Sounds/Library Foliant A.wav")
+  audio_controller.play_journal_closed()
   animation_player.play_backwards("slide")
   await animation_player.animation_finished
   reset_journal()

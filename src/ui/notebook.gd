@@ -175,9 +175,16 @@ func build_bug_menu(bug_counts:Dictionary) -> void:
   open_journal(2)
 
 func build_exclaim_menu() -> void:
-  var positions = {"Mon": Vector2(-73, 21), "Tue": Vector2(-55, 23), "Wed": Vector2(-32, 24), "Thu": Vector2(-3, 26), "Fri": Vector2(17, 24)}
-  var cirlce_position = positions[get_tree().current_scene.time.current_day]
+  
+  var colors = {"Normal": Color.WHITE, "Alert": Color(100, 0, 0)}
+  var positions = {"Mon": Vector2(-73, 21), "Tue": Vector2(-55, 23), "Wed": Vector2(-32, 24), "Thu": Vector2(-3, 26), \
+                    "Fri": Vector2(17, 24), "Sat": Vector2(-40, 70), "Sun": Vector2(-42,103)}
+  var current_day:String = get_tree().current_scene.time.current_day
+  var cirlce_position = positions[current_day]
+  
   day_highlighter.position = cirlce_position
+  if current_day.contains("S"): day_highlighter.modulate = colors["Alert"]
+  else: day_highlighter.modulate = colors["Normal"]
 
 func _on_area_2d_settings_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
   if event is InputEventMouseButton:

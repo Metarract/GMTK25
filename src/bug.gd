@@ -22,6 +22,7 @@ var current_cap_resistance := CAP_RES_MAX
 var sprite:Sprite2D = null
 var collision_shape:CollisionShape2D = null
 var state_machine: StateMachine = null
+var audio_controller: AudioController = null
 
 @onready var stun_particles: CPUParticles2D = $%StunParticles
 @onready var stun_circle: Node2D = $%StunCircle
@@ -46,7 +47,8 @@ func _ready() -> void:
   sprite = $Sprite2D
   collision_shape = $CollisionShape2D
   state_machine = $%StateMachine
-
+  audio_controller = get_tree().current_scene.find_child("Audio")
+  
   ############
   ## fallbackS if not assigned at build time
   if not bug_stats:
@@ -103,9 +105,11 @@ func update_rotation_from_move():
 
 func stun():
   if state_machine.current_state is StunBug: return
+  audio_controller.play_stun_bug()
   state_machine.change_state(StunBug.new())
   base_cap_resistance /= 2
   current_cap_resistance /= 2
+  
 
 func capture():
   is_being_captured = false

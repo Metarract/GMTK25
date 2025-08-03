@@ -8,12 +8,15 @@ var _bugs_to_capture: Array = []
 @onready var mouse_cap_check := $%MouseCaptureCheck
 var notebook_menu: Notebook = null
 var player_data: Player
+var audio_controller: AudioController = null
+
 
 func _ready() -> void:
   $SpawnController.bug_captured.connect(on_bug_captured)
   notebook_menu = $%Notebook
   notebook_menu.connect("exit_game", on_exit_game)
   player_data = get_tree().current_scene.find_child("Player")
+  audio_controller = get_tree().current_scene.find_child("Audio")
   bug_captured.connect(player_data.add_bug)
 
 func _physics_process(_delta: float) -> void:
@@ -51,6 +54,7 @@ func get_hovered_bugs() -> Array:
 func is_bug(coll: CollisionObject2D) -> bool: return coll is Bug
 
 func on_bug_captured(bug_stats: BugStats, _active_bugs: int):
+  audio_controller.play_capture_bug()
   bug_captured.emit(bug_stats)
   var i = _bugs_to_capture.find_custom(func (bug): return bug.bug_stats == bug_stats)
   if i == -1:

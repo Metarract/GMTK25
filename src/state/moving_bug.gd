@@ -1,7 +1,7 @@
 class_name MovingBug
 extends BugState
 
-const TARGET_DIST_THRESHHOLD := 1.0
+const TARGET_DIST_THRESHHOLD := 3.0
 
 var _target_gpos: Vector2
 

@@ -1,0 +1,70 @@
+[gd_scene load_steps=12 format=3 uid="uid://c3is2vbqxj06o"]
+
+[ext_resource type="Texture2D" uid="uid://qqtwpbv1o17s" path="res://assets/Sprites/vendors/wormfriend_nasty.png" id="1_1tdwj"]
+[ext_resource type="Script" uid="uid://cd422xobs0evd" path="res://src/dialogue_system/models/character_card.gd" id="1_w73g5"]
+[ext_resource type="Texture2D" uid="uid://yht15gpdjwrn" path="res://assets/Sprites/vendors/wormfriend.png" id="2_u8dnp"]
+[ext_resource type="Texture2D" uid="uid://cmklt1siyeylc" path="res://assets/Sprites/vendors/wormfriend_sleep.png" id="3_aahax"]
+[ext_resource type="Texture2D" uid="uid://bivjiw06nmhp" path="res://assets/Sprites/vendors/wormfriend_talk_sheet.png" id="4_t57n5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g52tg"]
+atlas = ExtResource("1_1tdwj")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2frto"]
+atlas = ExtResource("2_u8dnp")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq5rf"]
+atlas = ExtResource("3_aahax")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2llf"]
+atlas = ExtResource("4_t57n5")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awwa6"]
+atlas = ExtResource("4_t57n5")
+region = Rect2(320, 0, 320, 500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lk6o0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g52tg")
+}],
+"loop": true,
+"name": &"angy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2frto")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aq5rf")
+}],
+"loop": true,
+"name": &"eepy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2llf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awwa6")
+}],
+"loop": true,
+"name": &"yappy",
+"speed": 4.0
+}]
+
+[node name="Wormfriend" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_lk6o0")
+frame_progress = 0.775183
+script = ExtResource("1_w73g5")

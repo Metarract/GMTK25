@@ -1,0 +1,71 @@
+[gd_scene load_steps=12 format=3 uid="uid://dlqurtivx6a2"]
+
+[ext_resource type="Script" uid="uid://cd422xobs0evd" path="res://src/dialogue_system/models/character_card.gd" id="1_xb3cn"]
+[ext_resource type="Texture2D" uid="uid://d10ytx2aaws7m" path="res://assets/Sprites/vendors/zebnco_mad.png" id="1_yhb4g"]
+[ext_resource type="Texture2D" uid="uid://cjr14j4huga2l" path="res://assets/Sprites/vendors/zebnco.png" id="2_q671f"]
+[ext_resource type="Texture2D" uid="uid://dvi4423ot88a1" path="res://assets/Sprites/vendors/zebnco_sleep.png" id="3_dywl8"]
+[ext_resource type="Texture2D" uid="uid://bxluotlirvmcg" path="res://assets/Sprites/vendors/zebnco_talk_sheet.png" id="4_u7bl4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdo3b"]
+atlas = ExtResource("1_yhb4g")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8u8cj"]
+atlas = ExtResource("2_q671f")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gaho"]
+atlas = ExtResource("3_dywl8")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tg0e5"]
+atlas = ExtResource("4_u7bl4")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lc4wk"]
+atlas = ExtResource("4_u7bl4")
+region = Rect2(320, 0, 320, 500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nbcap"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdo3b")
+}],
+"loop": true,
+"name": &"angy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8u8cj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gaho")
+}],
+"loop": true,
+"name": &"eepy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tg0e5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lc4wk")
+}],
+"loop": true,
+"name": &"yappy",
+"speed": 4.0
+}]
+
+[node name="ZebNCo" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_nbcap")
+animation = &"yappy"
+frame_progress = 0.652036
+script = ExtResource("1_xb3cn")

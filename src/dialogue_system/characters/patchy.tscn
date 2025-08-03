@@ -1,0 +1,69 @@
+[gd_scene load_steps=12 format=3 uid="uid://df33ugtctn1lf"]
+
+[ext_resource type="Texture2D" uid="uid://cudr6fpgog6wq" path="res://assets/Sprites/vendors/9patches_mad.png" id="1_ptmij"]
+[ext_resource type="Texture2D" uid="uid://ctojummfc4qn2" path="res://assets/Sprites/vendors/9patches.png" id="2_nmct6"]
+[ext_resource type="Texture2D" uid="uid://bd35l6xnbapm5" path="res://assets/Sprites/vendors/9patches_sleep.png" id="3_m7sms"]
+[ext_resource type="Texture2D" uid="uid://knkrm1rwefa8" path="res://assets/Sprites/vendors/9patches_talk_sheet.png" id="4_rbi8k"]
+[ext_resource type="Script" uid="uid://cd422xobs0evd" path="res://src/dialogue_system/models/character_card.gd" id="5_ls44o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqxyl"]
+atlas = ExtResource("1_ptmij")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ouxwr"]
+atlas = ExtResource("2_nmct6")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2dt5c"]
+atlas = ExtResource("3_m7sms")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1lgn"]
+atlas = ExtResource("4_rbi8k")
+region = Rect2(0, 0, 320, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vohq"]
+atlas = ExtResource("4_rbi8k")
+region = Rect2(320, 0, 320, 500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_318er"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pqxyl")
+}],
+"loop": true,
+"name": &"angy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ouxwr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2dt5c")
+}],
+"loop": true,
+"name": &"eepy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1lgn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vohq")
+}],
+"loop": true,
+"name": &"yappy",
+"speed": 5.0
+}]
+
+[node name="Patchy" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_318er")
+script = ExtResource("5_ls44o")

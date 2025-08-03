@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bep8rsyapxtwg"]
+
+[ext_resource type="Script" uid="uid://cty47oecqbvb" path="res://src/dialogue_system/dialogue_controller.gd" id="1_86bbq"]
+[ext_resource type="PackedScene" uid="uid://4fk5oqv8uwiy" path="res://src/ui/speech_bubble.tscn" id="2_qlt01"]
+
+[node name="DialogueController" type="Node2D" node_paths=PackedStringArray("speech_bubble")]
+script = ExtResource("1_86bbq")
+speech_bubble = NodePath("SpeechBubble")
+
+[node name="SpeechBubble" parent="." instance=ExtResource("2_qlt01")]
+z_index = 5
+offset_left = 355.0
+offset_top = 192.0
+offset_right = 355.0
+offset_bottom = 192.0

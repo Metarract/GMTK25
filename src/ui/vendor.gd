@@ -1,16 +1,25 @@
 extends Node2D
 
-@onready var player = get_tree().current_scene.player
+var preload_inventory_button = preload("res://src/ui/bug_inventory_button.tscn")
+
+@onready var player:Player = get_tree().current_scene.player
 
 @onready var sprite:Sprite2D = $Sprite
 @onready var bug_inventory_hbox:HBoxContainer = $CanvasLayer/PanelContainer/VBoxContainer/BugInventory/ScrollContainer/HBoxContainer
-@onready var sell_all_value:RichTextLabel = $CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer/SellAllValue
+@onready var current_cash:RichTextLabel = $CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer/CurrentCash
 
-var preload_inventory_button = preload("res://src/ui/bug_inventory_button.tscn")
+@onready var sell_all_button:Button = $CanvasLayer/PanelContainer/VBoxContainer/LowerBar/HBoxContainer/SellAll
+var sell_all_value:int = 0
+var hovering_sell_all:bool = false
+
+func _on_sell_all_mouse_entered() -> void: hovering_sell_all = true
+func _on_sell_all_mouse_exited() -> void: hovering_sell_all = false
+
+func _process(delta: float) -> void:
+  if hovering_sell_all: sell_all_button.text = "($%d)" % [sell_all_value]
+  else: sell_all_button.text = "Sell All"
 
 func load_inventory(bug_stats:Array) -> void:
-  if not bug_stats: return
-  if bug_stats.size() <1: return
   
   # empty hbox
   for child in bug_inventory_hbox.get_children(): child.queue_free()
@@ -26,7 +35,8 @@ func load_inventory(bug_stats:Array) -> void:
     new_inventory_button.connect("bug_inventory_button_pressed", sell_bug)
     val += stats.trade_value
     
-  sell_all_value.text = "(" + str(val) + ")"
+  sell_all_value = val
+  current_cash.text = "$%d" % [player.currency]
   
 func load_dialogue() -> void:
   pass
@@ -37,9 +47,9 @@ func sell_bug(b:BugStats) -> void:
   load_inventory(player.bug_inventory)
   
 func _on_sell_all_pressed() -> void:
+  player.currency += sell_all_value
   player.bug_inventory.clear()
-  player.currency += int(sell_all_value.text)
+  load_inventory(player.bug_inventory)
   
 func _on_say_goodbye_pressed() -> void:
-  pass # Replace with function body.
-  # queue_free() prolly?
+  queue_free() #prolly?

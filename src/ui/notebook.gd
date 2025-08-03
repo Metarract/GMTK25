@@ -201,3 +201,9 @@ func _on_exclaim_pressed() -> void:
 
 func _on_quit_pressed() -> void: emit_signal("exit_game")
 #endregion
+
+
+func _on_delete_this_button_pressed() -> void:
+  var new_vendor = load("res://src/ui/vendor.tscn").instantiate()
+  add_child(new_vendor)
+  new_vendor.load_inventory(get_tree().current_scene.player.bug_inventory)

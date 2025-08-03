@@ -20,5 +20,5 @@ func load_bug() -> bool:
 
   icon = load(assigned_bug_stats.texture_path)
   add_theme_color_override("icon_normal_color", assigned_bug_stats.color)
-  rich_text_label.text = "$" + str(assigned_bug_stats.trade_value)
+  rich_text_label.text = "$%d" % [assigned_bug_stats.trade_value]
   return true

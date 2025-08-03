@@ -16,7 +16,7 @@ var bug_counts:Dictionary:    # count by generic BugStats template of bugs curre
     print('WARNING: should we be setting Player.bug_counts directly?')
     bug_counts = v
 
-var currency:float = 0.0    # currency rules everything around the Player
+var currency:int = 0    # currency rules everything around the Player
 
 func add_bug(bug_stats: BugStats):
   bug_inventory.append(bug_stats)

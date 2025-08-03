@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueSet" load_steps=2 format=3 uid="uid://bbg4un4lg3hb3"]
+
+[ext_resource type="Script" uid="uid://cau6p57qfnx3k" path="res://src/dialogue_system/models/dialogue_set.gd" id="1_mxmu6"]
+
+[resource]
+script = ExtResource("1_mxmu6")
+emotion = 3
+_lines = Array[String](["Good, go on and get away from me, boy. It’s time for me ta rest. With me snacks.", "UNTIL NEXT TIME!"])
+randomizable = true
+metadata/_custom_type_script = "uid://cau6p57qfnx3k"

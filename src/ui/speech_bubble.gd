@@ -5,6 +5,7 @@ extends Control
 # @onready var _left_tail := $%TailLeft
 # @onready var _right_tail := $%TailRight
 @onready var _text_label := $%Text
+@onready var _next_icon := $%NextIcon
 
 enum AnchorSide {
   LEFT,
@@ -33,6 +34,8 @@ enum AnchorSide {
 
 func set_label_text(text: String):
   _text_label.text = text
+
+func set_next_icon_visible(value: bool): _next_icon.visible = value
 
 # TODO
 # needs signals for when dialogue has been fully written

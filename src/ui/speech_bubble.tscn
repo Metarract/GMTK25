@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://4fk5oqv8uwiy"]
+[gd_scene load_steps=9 format=3 uid="uid://4fk5oqv8uwiy"]
 
 [ext_resource type="Script" uid="uid://b7hor7lkbbi14" path="res://src/ui/speech_bubble.gd" id="1_13if6"]
 [ext_resource type="Texture2D" uid="uid://bt07tmco0xvoc" path="res://assets/Sprites/Menus-UI/speech_bubble.png" id="1_qgd0u"]
+[ext_resource type="Texture2D" uid="uid://cp6s22mjby620" path="res://assets/Sprites/Cursors/cursor_pointer.png" id="3_sti1x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_13if6"]
 atlas = ExtResource("1_qgd0u")
@@ -10,6 +11,28 @@ region = Rect2(4, 4, 54, 28)
 [sub_resource type="AtlasTexture" id="AtlasTexture_sti1x"]
 atlas = ExtResource("1_qgd0u")
 region = Rect2(40, 45, 8, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r03da"]
+atlas = ExtResource("3_sti1x")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ht36x"]
+atlas = ExtResource("3_sti1x")
+region = Rect2(6, 0, 58, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wwkpv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r03da")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ht36x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="SpeechBubble" type="Control"]
 layout_mode = 3
@@ -86,8 +109,28 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 
-[node name="Text" type="Label" parent="AnchorContainer/TextMargins"]
+[node name="HBoxContainer" type="HBoxContainer" parent="AnchorContainer/TextMargins"]
+layout_mode = 2
+
+[node name="Text" type="RichTextLabel" parent="AnchorContainer/TextMargins/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+size_flags_horizontal = 3
+theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "holy gravy, holy meat, holy moly let us eat"
+fit_content = true
+scroll_active = false
+
+[node name="Control" type="Control" parent="AnchorContainer/TextMargins/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.1
+
+[node name="NextIcon" type="AnimatedSprite2D" parent="AnchorContainer/TextMargins/HBoxContainer/Control"]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_wwkpv")
+autoplay = "default"
+frame_progress = 0.350519
+centered = false
+offset = Vector2(-17.48, -40.645)

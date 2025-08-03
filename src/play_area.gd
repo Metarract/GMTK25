@@ -8,6 +8,8 @@ var _bugs_to_capture: Array = []
 @onready var mouse_cap_check := $%MouseCaptureCheck
 var notebook_menu: Notebook = null
 var player_data: Player
+@onready var day_hand := $%DayHand
+var time: TimeController
 var audio_controller: AudioController = null
 @onready var current_cash:RichTextLabel = $PanelContainer/CurrentCash
 
@@ -15,10 +17,18 @@ func _ready() -> void:
   $SpawnController.bug_captured.connect(on_bug_captured)
   notebook_menu = $%Notebook
   notebook_menu.connect("exit_game", on_exit_game)
-  notebook_menu.connect("journal_closed", on_player_currency_change)
+  # notebook_menu.connect("journal_closed", on_player_currency_change)
   player_data = get_tree().current_scene.find_child("Player")
   audio_controller = get_tree().current_scene.find_child("Audio")
   bug_captured.connect(player_data.add_bug)
+
+  time = $%TimeController
+  time.day_ended.connect(on_day_end)
+  time.reset_day_seconds()
+  time._active = true
+
+func _process(_delta: float) -> void:
+  set_dayhand_rotation()
 
 func _physics_process(_delta: float) -> void:
   mouse_cap_check.global_position = get_global_mouse_position()
@@ -66,5 +76,28 @@ func on_bug_captured(bug_stats: BugStats, _active_bugs: int):
     return
   _bugs_to_capture.remove_at(i)
 
+func set_dayhand_rotation():
+  day_hand.rotation_degrees = remap(time.seconds, 0.0, time.SECONDS_PER_DAY, 0, 90)
+
+func on_day_end(_day: String):
+  spawn_vendor()
+
+func spawn_vendor():
+  notebook_menu._on_delete_this_button_pressed().vendor_closed.connect(on_vendor_closed)
+  var tween = create_tween()
+  tween.set_ease(Tween.EASE_OUT)
+  tween.set_trans(Tween.TRANS_SINE)
+  tween.tween_property($%DarkenBg, "color", Color(0,0,0,0.7), 0.7)
+  tween.tween_interval(0.2)
+  tween.tween_callback(notebook_menu._on_exclaim_pressed)
+
+func on_vendor_closed():
+  var tween = create_tween()
+  tween.set_ease(Tween.EASE_OUT)
+  tween.set_trans(Tween.TRANS_SINE)
+  tween.tween_property($%DarkenBg, "color", Color(0,0,0,0), 0.3)
+  time.tick_day()
+
 func on_exit_game():
+  get_tree().paused = false
   exit_game.emit()

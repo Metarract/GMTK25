@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueSet" load_steps=2 format=3 uid="uid://cyg038pp4b87r"]
+
+[ext_resource type="Script" uid="uid://cau6p57qfnx3k" path="res://src/dialogue_system/models/dialogue_set.gd" id="1_w2u3v"]
+
+[resource]
+script = ExtResource("1_w2u3v")
+emotion = 2
+_lines = Array[String](["HUMAN! We, the composite being collectively known as ZeTiGlo, have RETURNED!", "Could we… purchase a few more from you, perhaps? We have money.", "We are hungry. The earthbugs we crave are proving… more tenacious than we expected. Sell us some!"])
+randomizable = true
+metadata/_custom_type_script = "uid://cau6p57qfnx3k"

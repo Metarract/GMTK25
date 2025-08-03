@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueSet" load_steps=2 format=3 uid="uid://bapqwurnpcng6"]
+
+[ext_resource type="Script" uid="uid://cau6p57qfnx3k" path="res://src/dialogue_system/models/dialogue_set.gd" id="1_81x71"]
+
+[resource]
+script = ExtResource("1_81x71")
+emotion = 0
+_lines = Array[String](["Yeah, that’s the stuff!", "Yep, that’ll do."])
+randomizable = true
+metadata/_custom_type_script = "uid://cau6p57qfnx3k"

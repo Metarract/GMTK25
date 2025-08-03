@@ -1,6 +1,9 @@
 extends Node
 class_name Player
 
+var patchy_has_met := false
+var wormfriend_has_met := false
+var zebnco_has_met := false
 signal currency_changed
 
 var bug_inventory:Array = []  # An array of bug_stats for every individual bug we have in our possession

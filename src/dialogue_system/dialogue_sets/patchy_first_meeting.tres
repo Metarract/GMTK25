@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueSet" load_steps=2 format=3 uid="uid://io4f7q365v5s"]
+
+[ext_resource type="Script" uid="uid://cau6p57qfnx3k" path="res://src/dialogue_system/models/dialogue_set.gd" id="1_m6e2n"]
+
+[resource]
+script = ExtResource("1_m6e2n")
+emotion = 2
+_lines = Array[String](["THE APPOINTED HOUR HAS ARRIVED!", "It is time… TO EAT! And EAT I SHALL! I -", "Oh. Hoy there.", "9 Patches, they call me. ‘Tis time for my weekly feedin, and I’ve QUITE the unholy hankerin… FOR SOULS!", "Or bugs. Bugs actually be soundin’ weirdly good right now.", "Can I ‘ave at yer soul, lad? Or at least some a them ants in yer pocket there?", "Aye? You’ll share your ants with ol’ 9 Patches?", "… For a PRICE?? That’s not sharin’ a’tall!", "Fine, fine. I ain’t usin’ these doubloons no-how anyway."])
+metadata/_custom_type_script = "uid://cau6p57qfnx3k"

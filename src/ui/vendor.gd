@@ -15,6 +15,11 @@ var hovering_sell_all:bool = false
 func _on_sell_all_mouse_entered() -> void: hovering_sell_all = true
 func _on_sell_all_mouse_exited() -> void: hovering_sell_all = false
 
+func _ready() -> void:
+  z_as_relative = false
+  z_index = 999
+  pass
+
 func _process(delta: float) -> void:
   if hovering_sell_all: sell_all_button.text = "($%d)" % [sell_all_value]
   else: sell_all_button.text = "Sell All"
